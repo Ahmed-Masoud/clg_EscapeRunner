@@ -17,7 +17,6 @@ namespace EscapeRunner.Animations
     {
         protected int imageIndex;
         public Point AnimationPosition { get; set; } = Point.Empty;
-
         protected int animationWidth, animationHeight;
 
         protected IReciever reciever = new AnimationFactory();
@@ -30,7 +29,7 @@ namespace EscapeRunner.Animations
         /// <summary>
         /// Draws the target animation
         /// </summary>
-        public virtual void DrawFrame(Graphics g, Directions direction, Bitmap animationImage)
+        public virtual void DrawFrame(Graphics g, Bitmap animationImage)
         {
             g.DrawImage(animationImage, AnimationPosition.X, AnimationPosition.Y, animationWidth, animationHeight);
         }

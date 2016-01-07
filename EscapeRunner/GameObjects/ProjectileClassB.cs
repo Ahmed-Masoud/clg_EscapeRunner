@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace EscapeRunner.GameObjects
 {
@@ -8,6 +9,19 @@ namespace EscapeRunner.GameObjects
         {
             //ExplosionPosition = Point.Empty;
             Index = index;
+        }
+
+        public Point BulletStartPosition
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public Point ExplosionPosition

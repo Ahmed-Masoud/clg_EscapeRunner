@@ -5,33 +5,37 @@ using System.Drawing;
 
 namespace EscapeRunner.GameObjects
 {
+    /// <summary>
+    /// Object Pool
+    /// </summary>
     public class ProjectilePool
     {
-        public static int NumberOfProjectiles = 10;
-        private static List<IWeapon> projectiles;
         private readonly int verticalOffset = 35, horizontalOffset = 35, chHeight = 10, chWidth = 10;
+        public static int NumberOfProjectiles = 10;
+
+        private static List<IWeapon> projectiles;
+        private static ProjectilePool instance;
+
+        // The singleton
+        public static ProjectilePool Instance { get { return instance == null ? instance = new ProjectilePool() : instance; } }
 
         static ProjectilePool()
         {
             projectiles = new List<IWeapon>(10);
 
+            // Create normal weapon spawns
             for (int i = 0; i < NumberOfProjectiles - 3; i++)
             {
                 projectiles.Add(new ProjectileClassA(i));
                 projectiles[i].Used = false;
             }
+
+            // Create super weapon spawns
             for (int i = NumberOfProjectiles - 3; i < NumberOfProjectiles - 1; i++)
             {
                 projectiles.Add(new ProjectileClassB(i));
                 projectiles[i].Used = false;
             }
-        }
-
-        private static ProjectilePool instance = new ProjectilePool();
-
-        public static ProjectilePool Instance
-        {
-            get { return instance; }
         }
 
         public IWeapon Acquire(Point position, bool isSuperWeapon)
@@ -44,6 +48,9 @@ namespace EscapeRunner.GameObjects
                     {
                         position = SetExplosionPlace(Player.Direction, position);
                         projectiles[i].ExplosionPosition = position;
+                        projectiles[i].BulletStartPosition = position;
+
+                        projectiles[i].Used = true;
                         return projectiles[i];
                     }
                 }
@@ -56,6 +63,8 @@ namespace EscapeRunner.GameObjects
                     if (!projectiles[i].Used)
                     {
                         projectiles[i].ExplosionPosition = SetExplosionPlace(Player.Direction, position);
+                        projectiles[i].BulletStartPosition = position;
+
                         projectiles[i].Used = true;
                         return projectiles[i];
                     }
@@ -64,11 +73,12 @@ namespace EscapeRunner.GameObjects
             }
         }
 
-        public void Dispose(IWeapon projectile)
-        {
-            projectile.Used = false;
-        }
-
+        /// <summary>
+        /// Configure the explosion position based on the character's position
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <param name="position"></param>
+        /// <returns>The actual explosion position</returns>
         private Point SetExplosionPlace(Directions direction, Point position)
         {
             switch (direction)

@@ -8,16 +8,15 @@
         ExplosionAnimation
     }
 
+    /// <summary>
+    /// Command design pattern
+    /// </summary>
     public class AnimationFactory : IReciever
     {
         private AnimationType animationName;
 
         public AnimationType Type
         { set { animationName = value; } }
-
-        public AnimationFactory()
-        {
-        }
 
         public Animation GetAnimationCommandResult()
         {
