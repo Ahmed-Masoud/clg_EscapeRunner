@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 
-namespace EscapeRunner
+namespace EscapeRunner.Animations
 {
     /// <summary>
     /// Moving directions
@@ -16,21 +15,26 @@ namespace EscapeRunner
 
     public abstract class Animation
     {
-
         protected int imageIndex;
-        public Point AnimationPosition { get; set; }
+        public Point AnimationPosition { get; set; } = Point.Empty;
 
         protected int animationWidth, animationHeight;
+
+        protected IReciever reciever = new AnimationFactory();
+
+        public Animation(AnimationType animationType)
+        {
+            reciever.Type = animationType;
+        }
+
         /// <summary>
         /// Draws the target animation
         /// </summary>
-        public void Draw(Graphics g, Directions direction, Bitmap animationImage)
+        public virtual void DrawFrame(Graphics g, Directions direction, Bitmap animationImage)
         {
-            // The object isn't yet initialized
             g.DrawImage(animationImage, AnimationPosition.X, AnimationPosition.Y, animationWidth, animationHeight);
         }
 
         public abstract void LoadNextAnimationImage();
-        
     }
 }

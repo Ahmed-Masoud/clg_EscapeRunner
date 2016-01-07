@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EscapeRunner.Animations
+﻿namespace EscapeRunner.Animations
 {
     /// <summary>
     /// Represents a generic prototype pattern interface
     /// </summary>
-    interface IPrototype<T>
+    internal interface IPrototype<T>
     {
+        // The interface is used for explosion animations
         T Clone();
     }
 }

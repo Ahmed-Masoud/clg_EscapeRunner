@@ -1,6 +1,4 @@
-﻿using EscapeRunner.Animations;
-
-namespace EscapeRunner
+﻿namespace EscapeRunner.Animations
 {
     public enum AnimationType
     {
@@ -10,27 +8,38 @@ namespace EscapeRunner
         ExplosionAnimation
     }
 
-    public class AnimationFactory
+    public class AnimationFactory : IReciever
     {
-        public Animation CreateAnimation(AnimationType animationName)
+        private AnimationType animationName;
+
+        public AnimationType Type
+        { set { animationName = value; } }
+
+        public AnimationFactory()
+        {
+        }
+
+        public Animation GetAnimationCommandResult()
         {
             switch (animationName)
             {
                 case AnimationType.PlayerAnimation:
                     return new PlayerAnimation();
 
-                case AnimationType.BulletAnimation:
-                    return new BulletAnimation();
-
                 case AnimationType.MonsterAnimation:
                     return null; // new MonsterAnimation();
 
+                // The animation point will be set when its requested from the pool
+                case AnimationType.BulletAnimation:
+                    return new BulletAnimation();
+
+                // The animation point will be set when its requested from the pool
                 case AnimationType.ExplosionAnimation:
                     return new ExplosionAnimation();
-            }
 
-            // Invalid case
-            return null;
+                default:
+                    return null;
+            }
         }
     }
 }

@@ -31,7 +31,15 @@ namespace EscapeRunner
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
+            // 
+            // refreshTimer
+            // 
+            this.refreshTimer.Enabled = true;
+            this.refreshTimer.Interval = 42;
+            this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
             // 
             // MainWindow
             // 
@@ -51,8 +59,10 @@ namespace EscapeRunner
 
         }
 
-       
+
         #endregion
+
+        private Timer refreshTimer;
     }
 }
 
