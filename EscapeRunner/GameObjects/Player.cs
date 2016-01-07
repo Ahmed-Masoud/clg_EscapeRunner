@@ -13,7 +13,7 @@ namespace EscapeRunner
 
         public static Player PlayerInstance
         {
-            get { return playerInstance == null ? new Player() : playerInstance; }
+            get { return playerInstance == null ? playerInstance = new Player() : playerInstance; }
             private set { playerInstance = value; }
         }
 

@@ -6,6 +6,7 @@ namespace EscapeRunner.Animations
     public sealed class PlayerAnimation : Animation
     {
         private static List<Bitmap> animationImages;
+        
 
         public PlayerAnimation() : base(AnimationType.PlayerAnimation)
         {
@@ -44,7 +45,7 @@ namespace EscapeRunner.Animations
                 }
 
                 // Call the base class method to draw the image
-                base.DrawFrame(g, direction, animationImage);
+                base.DrawFrame(g, animationImage);
             }
         }
 
