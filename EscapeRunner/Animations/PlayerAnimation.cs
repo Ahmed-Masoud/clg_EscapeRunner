@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace EscapeRunner.Animations
 {
-    public class PlayerAnimation : Animation
+    public sealed class PlayerAnimation : Animation
     {
-        private int imageMaxIndex;
+        static List<Bitmap> animationImages;
 
         public PlayerAnimation()
         {
@@ -13,28 +14,45 @@ namespace EscapeRunner.Animations
 
             if (animationImages == null)
             {
-                animationImages = new List<Bitmap>();
-                LoadAnimationFromDisk();
+                animationImages = DataSource.LoadCharacterAnimationFromDisk();
             }
             animationHeight = 50;
             animationWidth = 50;
-
         }
 
-        public override void LoadAnimationFromDisk()
+        public void Draw(Graphics g, Directions direction)
         {
-            // Animation images are included in the base class as a protected List<Bitmap>
-            animationImages.Add(Properties.Resources.wingMan1);
-            animationImages.Add(Properties.Resources.wingMan2);
-            animationImages.Add(Properties.Resources.wingMan3);
-            animationImages.Add(Properties.Resources.wingMan4);
-            animationImages.Add(Properties.Resources.wingMan5);
-            animationImages.Add(Properties.Resources.wingMan6);
-            animationImages.Add(Properties.Resources.wingMan7);
-            animationImages.Add(Properties.Resources.wingMan8);
-            animationImages.Add(Properties.Resources.wingMan9);
+            Bitmap animationImage = animationImages[imageIndex];
+            // Cll the method in a suitable way
+            if (animationImages != null)
+            {
+                switch (direction)
+                {
+                    case Directions.Up:
+                        break;
 
-            imageMaxIndex = animationImages.Count;
+                    case Directions.Down:
+                        break;
+
+                    case Directions.Left:
+                        break;
+
+                    case Directions.Right:
+                        break;
+
+                    default:
+                        break;
+                }
+
+                // Call the base class method to draw the image
+                base.Draw(g, direction, animationImage);
+            }
+        }
+
+        public override void LoadNextAnimationImage()
+        {
+            imageIndex++;
+            imageIndex %= animationImages.Count;
         }
     }
 }

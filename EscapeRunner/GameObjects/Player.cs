@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace EscapeRunner
 {
-    public class Player
+    public class Player : IDrawable
     {
         private static int windowSideMargin = 70;
         private static int windowButtomMargin = 90;
@@ -29,10 +29,11 @@ namespace EscapeRunner
         /// </summary>
         public static int Dy { get; } = 5;
 
+        public Point Position { get { return playerAnimation.AnimationPosition; } }
+
         /// <summary>
         /// Position of the player
         /// </summary>
-
 
         private Player()
         {
@@ -70,7 +71,6 @@ namespace EscapeRunner
                 case Directions.Right:
                     return playerAnimation.AnimationPosition.X + Dx <= MainWindow.RightBound - windowSideMargin ? true : false;
             }
-
             // Invalid case
             return false;
         }
@@ -97,28 +97,7 @@ namespace EscapeRunner
                 case Directions.Right:
                     newPosition.X += deltaVertical;
                     break;
-
-                case Directions.UpLeft:
-                    newPosition.Y -= deltaVertical;
-                    newPosition.X -= deltaHorizontal;
-                    break;
-
-                case Directions.UpRight:
-                    newPosition.Y -= deltaVertical;
-                    newPosition.X += deltaVertical;
-                    break;
-                case Directions.DownLeft:
-                    newPosition.Y += deltaVertical;
-                    newPosition.X += deltaVertical;
-                    break;
-                case Directions.DownRight:
-                    newPosition.Y += deltaVertical;
-                    newPosition.X += deltaVertical;
-                    break;
-                default:
-                    break;
             }
-
 
             // Change the displayed image
             playerAnimation.LoadNextAnimationImage();
@@ -127,51 +106,9 @@ namespace EscapeRunner
             playerAnimation.AnimationPosition = newPosition;
         }
 
-        public void UpdateDrawing(Graphics g)
+        public void UpdateGraphics(Graphics g)
         {
-            playerAnimation.Draw(g);
+            playerAnimation.Draw(g, Direction);
         }
-
-        //private void UpdatePosition(int value, bool negativeVal,bool isHorizontalAxis = true)
-        //{
-        //    Point newPosition = playerAnimation.AnimationPosition;
-        //    if (isHorizontalAxis)
-        //    {
-        //        if (value >= 0)
-        //            newPosition.X += value;
-        //        else
-        //            newPosition.X -= value;
-        //    }
-        //    else
-        //    {
-        //        if (value >= 0)
-        //            newPosition.Y += value;
-        //        else
-        //            newPosition.Y -= value;
-        //    }
-
-        //    // Update the position
-        //    playerAnimation.AnimationPosition = newPosition;
-        //}
-
-        //private void UpdatePosition(int horizontalValue, int verticalValue)
-        //{
-        //    Point newPosition = playerAnimation.AnimationPosition;
-
-        //    // Update horizontal value
-        //    if (horizontalValue >= 0)
-        //        newPosition.X += horizontalValue;
-        //    else
-        //        newPosition.X -= horizontalValue;
-
-        //    // Update vertical value
-        //    if (verticalValue >= 0)
-        //        newPosition.Y += verticalValue;
-        //    else
-        //        newPosition.Y -= verticalValue;
-
-        //    // Update the position
-        //    playerAnimation.AnimationPosition = newPosition;
-        //}
     }
 }

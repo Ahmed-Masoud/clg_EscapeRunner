@@ -12,15 +12,11 @@ namespace EscapeRunner
         Down,
         Left,
         Right,
-        UpLeft,
-        UpRight,
-        DownLeft,
-        DownRight
     }
 
     public abstract class Animation
     {
-        protected List<Bitmap> animationImages;
+
         protected int imageIndex;
         public Point AnimationPosition { get; set; }
 
@@ -28,22 +24,13 @@ namespace EscapeRunner
         /// <summary>
         /// Draws the target animation
         /// </summary>
-        public virtual void Draw(Graphics g)
+        public void Draw(Graphics g, Directions direction, Bitmap animationImage)
         {
             // The object isn't yet initialized
-            if (animationImages != null)
-                g.DrawImage(animationImages[imageIndex], AnimationPosition.X, AnimationPosition.Y, animationWidth, animationHeight);
+            g.DrawImage(animationImage, AnimationPosition.X, AnimationPosition.Y, animationWidth, animationHeight);
         }
 
-        /// <summary>
-        /// Loads the set of image that represent the animation
-        /// </summary>
-        public abstract void LoadAnimationFromDisk();
-
-        public virtual void LoadNextAnimationImage()
-        {
-            imageIndex++;
-            imageIndex %= animationImages.Count;
-        }
+        public abstract void LoadNextAnimationImage();
+        
     }
 }

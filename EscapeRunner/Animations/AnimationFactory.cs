@@ -7,7 +7,7 @@ namespace EscapeRunner
         PlayerAnimation,
         BulletAnimation,
         MonsterAnimation,
-        SecondaryWeaponAnimation
+        ExplosionAnimation
     }
 
     public class AnimationFactory
@@ -25,8 +25,8 @@ namespace EscapeRunner
                 case AnimationType.MonsterAnimation:
                     return null; // new MonsterAnimation();
 
-                case AnimationType.SecondaryWeaponAnimation:
-                    return null; // new SecondaryWeaponAnimation();
+                case AnimationType.ExplosionAnimation:
+                    return new ExplosionAnimation();
             }
 
             // Invalid case
