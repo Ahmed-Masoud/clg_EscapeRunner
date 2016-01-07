@@ -11,7 +11,7 @@ namespace EscapeRunner.GameObjects
         private static ExplosionAnimation prototypeExplosion = new ExplosionAnimation();
         public ExplosionAnimation explosionAnimation;   // Change ExplosionAnimation class to public to make this work
 
-        int paintedFrames = 0;
+        private int paintedFrames = 0;
 
         //private BulletAnimation bulletAnimation;
         private Point explosionPosition = Point.Empty;

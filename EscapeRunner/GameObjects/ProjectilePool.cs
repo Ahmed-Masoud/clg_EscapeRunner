@@ -66,21 +66,20 @@ namespace EscapeRunner.GameObjects
 
         public void Dispose(IWeapon projectile)
         {
-            // TODO check if the location and image counter are reset
             projectile.Used = false;
-
         }
 
         private Point SetExplosionPlace(Directions direction, Point position)
         {
-
             switch (direction)
             {
                 case Directions.Up:
+                    position.X += (int)(chWidth * 0.75);
                     position.Y += verticalOffset + chHeight;
                     break;
 
                 case Directions.Down:
+                    position.X += (int)(chWidth * 0.75);
                     position.Y -= verticalOffset;
                     break;
 
