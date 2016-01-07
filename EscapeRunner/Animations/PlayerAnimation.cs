@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 
 namespace EscapeRunner.Animations
 {
     public sealed class PlayerAnimation : Animation
     {
-        static List<Bitmap> animationImages;
+        private static List<Bitmap> animationImages;
 
-        public PlayerAnimation()
+        public PlayerAnimation() : base(AnimationType.PlayerAnimation)
         {
             imageIndex = 0;
 
@@ -45,7 +44,7 @@ namespace EscapeRunner.Animations
                 }
 
                 // Call the base class method to draw the image
-                base.Draw(g, direction, animationImage);
+                base.DrawFrame(g, direction, animationImage);
             }
         }
 

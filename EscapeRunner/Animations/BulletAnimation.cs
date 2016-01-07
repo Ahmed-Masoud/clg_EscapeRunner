@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 
@@ -11,9 +10,11 @@ namespace EscapeRunner.Animations
         private CancellationTokenSource cts;
 
         // List is marked static to avoid loading the resources from the hard disk each time an explosion occurs
-        static List<Bitmap> animationImages;
+        private static List<Bitmap> animationImages;
 
-        public BulletAnimation()
+        private new int imageIndex;
+
+        public BulletAnimation() : base(AnimationType.BulletAnimation)
         {
             imageIndex = 0;
 
@@ -37,10 +38,6 @@ namespace EscapeRunner.Animations
         {
             // Move the bullet image to the end of the screen / until it collides
             // The bullet object disposes when it hits a wall / end of screen
-
-
         }
-
-
     }
 }

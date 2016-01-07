@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EscapeRunner.Animations;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
@@ -8,13 +9,13 @@ namespace EscapeRunner
 {
     internal abstract class MovingObject
     {
-        public enum Directions { up, down, left, right };
+        public enum Direction { up, down, left, right };
 
         public abstract void Draw(Graphics g);
 
-        public abstract void Move(Directions direction);
+        public abstract void Move(Direction direction);
 
-        public abstract bool CanMove(Directions direction);
+        public abstract bool CanMove(Direction direction);
     }
 
     internal class Hero : MovingObject
@@ -29,7 +30,7 @@ namespace EscapeRunner
         private static int rightImageCode;
         public static List<Image> motionR = new List<Image>();
         public static List<Image> motionL = new List<Image>();
-        public static Directions direction;
+        public static Direction direction;
 
         private Hero()
         {
@@ -81,25 +82,25 @@ namespace EscapeRunner
             g.DrawImage(texture, hiddenRectangle);
         }
 
-        public override void Move(Directions direction)
+        public override void Move(Direction direction)
         {
             if (CanMove(direction))
             {
-                if (direction == Directions.up)
+                if (direction == Direction.up)
                 {
                     location.Y -= dy;
                     Hero.direction = direction;
                     hiddenRectangle.Y = location.Y;
                     leftImageCode = 0; rightImageCode = 0;
                 }
-                else if (direction == Directions.down)
+                else if (direction == Direction.down)
                 {
                     location.Y += dy;
                     Hero.direction = direction;
                     hiddenRectangle.Y = location.Y;
                     leftImageCode = 0; rightImageCode = 0;
                 }
-                else if (direction == Directions.left)
+                else if (direction == Direction.left)
                 {
                     location.X -= dx;
                     Hero.direction = direction;
@@ -109,7 +110,7 @@ namespace EscapeRunner
                     hiddenRectangle.X = location.X;
                     rightImageCode = 0;
                 }
-                else if (direction == Directions.right)
+                else if (direction == Direction.right)
                 {
                     location.X += dx;
                     Hero.direction = direction;
@@ -120,27 +121,27 @@ namespace EscapeRunner
             }
         }
 
-        public override bool CanMove(Directions direction)
+        public override bool CanMove(Direction direction)
         {
-            if (direction == Directions.up)
+            if (direction == Direction.up)
             {
                 if (location.Y - dy >= 0)
                     return true;
                 return false;
             }
-            else if (direction == Directions.down)
+            else if (direction == Direction.down)
             {
                 if (location.Y + dy <= MainWindow.LowerBound)
                     return true;
                 return false;
             }
-            else if (direction == Directions.left)
+            else if (direction == Direction.left)
             {
                 if (location.X - dx >= 0)
                     return true;
                 return false;
             }
-            else if (direction == Directions.right)
+            else if (direction == Direction.right)
             {
                 if (location.X + dx <= MainWindow.RightBound)
                     return true;
@@ -164,12 +165,12 @@ namespace EscapeRunner
         {
             isShotInAir = false;
             isShotPrinted = false;
-            if (Player.Direction == EscapeRunner.Directions.Right)
+            if (Player.Direction == Directions.Right)
             {
                 location = new Point(Hero.Location.X - 20, Hero.Location.Y + 20);
                 hiddenRectangle = new Rectangle(Hero.Location.X - 20, Hero.Location.Y + 20, 10, 10);
             }
-            else if (Player.Direction == EscapeRunner.Directions.Left)
+            else if (Player.Direction == Directions.Left)
             {
                 location = new Point(Hero.Location.X + 50, Hero.Location.Y + 20);
                 hiddenRectangle = new Rectangle(Hero.Location.X + 50, Hero.Location.Y + 20, 10, 10);
@@ -206,27 +207,27 @@ namespace EscapeRunner
             set { dy = value; }
         }
 
-        public override bool CanMove(Directions direction)
+        public override bool CanMove(Direction direction)
         {
-            if (direction == Directions.left)
+            if (direction == Direction.left)
             {
                 if (location.X >= 0)
                     return true;
                 return false;
             }
-            else if (direction == Directions.right)
+            else if (direction == Direction.right)
             {
                 if (location.X <= MainWindow.RightBound)
                     return true;
                 return false;
             }
-            else if (direction == Directions.up)
+            else if (direction == Direction.up)
             {
                 if (location.Y >= 0)
                     return true;
                 return false;
             }
-            else if (direction == Directions.down)
+            else if (direction == Direction.down)
             {
                 if (location.Y <= MainWindow.LowerBound)
                     return true;
@@ -240,15 +241,15 @@ namespace EscapeRunner
             g.DrawImage(texture, hiddenRectangle);
         }
 
-        public override void Move(Directions direction)
+        public override void Move(Direction direction)
         {
             if (CanMove(direction))
             {
-                if (direction == Directions.right)
+                if (direction == Direction.right)
                 {
                     Task.Run(() =>
                     {
-                        while (CanMove(Directions.left))
+                        while (CanMove(Direction.left))
                         {
                             location.X -= dx;
                             hiddenRectangle.X = location.X;
@@ -258,11 +259,11 @@ namespace EscapeRunner
                         isShotInAir = false;
                     });
                 }
-                else if (direction == Directions.left)
+                else if (direction == Direction.left)
                 {
                     Task.Run(() =>
                     {
-                        while (CanMove(Directions.right))
+                        while (CanMove(Direction.right))
                         {
                             location.X += dx;
                             hiddenRectangle.X = location.X;
@@ -290,12 +291,12 @@ namespace EscapeRunner
             fartImageCode = 0;
             hiddenRectangle.Width = 20;
             hiddenRectangle.Height = 20;
-            if (Hero.direction == Directions.right)
+            if (Hero.direction == Direction.right)
             {
                 hiddenRectangle.X = Hero.Location.X - 20;
                 hiddenRectangle.Y = Hero.Location.Y + 20;
             }
-            else if (Hero.direction == Directions.left)
+            else if (Hero.direction == Direction.left)
             {
                 hiddenRectangle.X = Hero.Location.X + 50;
                 hiddenRectangle.Y = Hero.Location.Y + 20;
@@ -327,7 +328,7 @@ namespace EscapeRunner
 
         public void shoot()
         {
-            if (Hero.direction == Directions.right)
+            if (Hero.direction == Direction.right)
             {
                 Task.Run(() =>
                 {
@@ -339,7 +340,7 @@ namespace EscapeRunner
                     fartImageCode = 0;
                 });
             }
-            else if (Hero.direction == Directions.left)
+            else if (Hero.direction == Direction.left)
             {
                 Task.Run(() =>
                 {
@@ -353,12 +354,12 @@ namespace EscapeRunner
             }
         }
 
-        public override void Move(Directions direction)
+        public override void Move(Direction direction)
         {
             throw new NotImplementedException();
         }
 
-        public override bool CanMove(Directions direction)
+        public override bool CanMove(Direction direction)
         {
             throw new NotImplementedException();
         }

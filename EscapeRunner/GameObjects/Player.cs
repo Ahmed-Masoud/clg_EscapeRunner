@@ -29,7 +29,7 @@ namespace EscapeRunner
         /// </summary>
         public static int Dy { get; } = 5;
 
-        public Point Position { get { return playerAnimation.AnimationPosition; } }
+        public static Point Position { get { return playerAnimation.AnimationPosition; } }
 
         /// <summary>
         /// Position of the player
@@ -38,10 +38,10 @@ namespace EscapeRunner
         private Player()
         {
             AnimationFactory factory = new AnimationFactory();
-            playerAnimation = (PlayerAnimation)factory.CreateAnimation(AnimationType.PlayerAnimation);
+            playerAnimation = (PlayerAnimation)factory.GetAnimationCommandResult();
 
             // Initialize the player location to the top of the screen
-            playerAnimation.AnimationPosition = new Point(5, 5);
+            playerAnimation.AnimationPosition = new Point(100, 100);
             Direction = Directions.Right;
         }
 
@@ -77,7 +77,6 @@ namespace EscapeRunner
 
         private void Move(Directions direction, int deltaHorizontal, int deltaVertical)
         {
-            // TODO check if the player position is actually changing
             // Get a handle to the player position because we can't change the contents of the points
             Point newPosition = playerAnimation.AnimationPosition;
             switch (direction)

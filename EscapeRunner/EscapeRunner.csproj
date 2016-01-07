@@ -52,6 +52,7 @@
     <Compile Include="Animations\BulletAnimation.cs" />
     <Compile Include="Animations\IDrawable.cs" />
     <Compile Include="Animations\IPrototype.cs" />
+    <Compile Include="Animations\IReciever.cs" />
     <Compile Include="Animations\MonsterAnimation.cs" />
     <Compile Include="Animations\PlayerAnimation.cs" />
     <Compile Include="Animations\ExplosionAnimation.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="GameObjects\Player.cs" />
     <Compile Include="GameObjects\ProjectileClassA.cs" />
     <Compile Include="GameObjects\ProjectileClassB.cs" />
+    <Compile Include="GameObjects\ProjectilePool.cs" />
     <Compile Include="Levels\LevelBuilder.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
