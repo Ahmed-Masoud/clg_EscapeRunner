@@ -5,8 +5,13 @@ namespace EscapeRunner.Animations
 {
     public sealed class PlayerAnimation : Animation
     {
+        #region Private Fields
+
         private static List<Bitmap> animationImages;
-        
+
+        #endregion
+
+        #region Public Constructors
 
         public PlayerAnimation() : base(AnimationType.PlayerAnimation)
         {
@@ -19,6 +24,10 @@ namespace EscapeRunner.Animations
             animationHeight = 50;
             animationWidth = 50;
         }
+
+        #endregion
+
+        #region Public Methods
 
         public void Draw(Graphics g, Directions direction)
         {
@@ -35,17 +44,15 @@ namespace EscapeRunner.Animations
                         break;
 
                     case Directions.Left:
-                        break;
-
-                    case Directions.Right:
-                        break;
-
-                    default:
+                        animationImage = RotateAnimation(animationImage, RotateFlipType.RotateNoneFlipX, RotateFlipType.RotateNoneFlipX);
                         break;
                 }
 
                 // Call the base class method to draw the image
                 base.DrawFrame(g, animationImage);
+
+                // Remove this to keep the bird constant
+                //LoadNextAnimationImage();
             }
         }
 
@@ -54,5 +61,7 @@ namespace EscapeRunner.Animations
             imageIndex++;
             imageIndex %= animationImages.Count;
         }
+
+        #endregion
     }
 }

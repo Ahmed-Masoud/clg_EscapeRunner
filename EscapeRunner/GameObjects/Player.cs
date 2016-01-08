@@ -5,17 +5,30 @@ namespace EscapeRunner
 {
     public class Player : IDrawable
     {
-        private static int windowSideMargin = 70;
-        private static int windowButtomMargin = 90;
+        #region Private Fields
 
         private static PlayerAnimation playerAnimation;
         private static Player playerInstance;
+        private static int windowButtomMargin = 90;
+        private static int windowSideMargin = 70;
 
-        public static Player PlayerInstance
+        #endregion
+
+        #region Private Constructors
+
+        private Player()
         {
-            get { return playerInstance == null ? playerInstance = new Player() : playerInstance; }
-            private set { playerInstance = value; }
+            AnimationFactory factory = new AnimationFactory();
+            playerAnimation = (PlayerAnimation)factory.GetAnimationCommandResult();
+
+            // Initialize the player location to the top of the screen
+            playerAnimation.AnimationPosition = new Point(100, 100);
+            Direction = Directions.Right;
         }
+
+        #endregion
+
+        #region Public Properties
 
         public static Directions Direction { get; set; }
 
@@ -29,22 +42,21 @@ namespace EscapeRunner
         /// </summary>
         public static int Dy { get; } = 5;
 
+        public static Player PlayerInstance
+        {
+            get { return playerInstance == null ? playerInstance = new Player() : playerInstance; }
+            private set { playerInstance = value; }
+        }
+
         public static Point Position { get { return playerAnimation.AnimationPosition; } }
+
+        #endregion
+
+        #region Public Methods
 
         /// <summary>
         /// Position of the player
         /// </summary>
-
-        private Player()
-        {
-            AnimationFactory factory = new AnimationFactory();
-            playerAnimation = (PlayerAnimation)factory.GetAnimationCommandResult();
-
-            // Initialize the player location to the top of the screen
-            playerAnimation.AnimationPosition = new Point(100, 100);
-            Direction = Directions.Right;
-        }
-
         public void Move(Directions direction)
         {
             // Move the animation of the player
@@ -53,6 +65,15 @@ namespace EscapeRunner
                 Move(direction, Dx, Dy);
             }
         }
+
+        public void UpdateGraphics(Graphics g)
+        {
+            playerAnimation.Draw(g, Direction);
+        }
+
+        #endregion
+
+        #region Private Methods
 
         private static bool CanMove(Directions direction)
         {
@@ -98,16 +119,14 @@ namespace EscapeRunner
                     break;
             }
 
-            // Change the displayed image
+            // Change the displayed image ( enable this when the image is constant when the player
+            // is idle ) and disable the same method in PlayerAnimation.cs
             playerAnimation.LoadNextAnimationImage();
 
             Direction = direction;
             playerAnimation.AnimationPosition = newPosition;
         }
 
-        public void UpdateGraphics(Graphics g)
-        {
-            playerAnimation.Draw(g, Direction);
-        }
+        #endregion
     }
 }

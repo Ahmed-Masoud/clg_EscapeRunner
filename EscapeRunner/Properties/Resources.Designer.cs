@@ -213,6 +213,26 @@ namespace EscapeRunner.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bunny1_walk1 {
+            get {
+                object obj = ResourceManager.GetObject("bunny1_walk1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bunny1_walk2 {
+            get {
+                object obj = ResourceManager.GetObject("bunny1_walk2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap wingMan1 {
             get {
                 object obj = ResourceManager.GetObject("wingMan1", resourceCulture);

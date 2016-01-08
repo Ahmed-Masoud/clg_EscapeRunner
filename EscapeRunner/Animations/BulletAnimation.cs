@@ -5,14 +5,22 @@ namespace EscapeRunner.Animations
 {
     internal sealed class BulletAnimation : Animation, IPrototype<Animation>
     {
-        // List is marked static to avoid loading the resources from the hard disk each time an explosion occurs
-        private static readonly List<Bitmap> bulletImages = DataSource.LoadBulletClassA();
-        bool needDirection = true;
-        Directions bulletDirection;
+        #region Private Fields
 
-        private int verticalDisplacement = 6, horizontalDisplacement = 6;
+        // List is marked static to avoid loading the resources from the hard disk each time an
+        // explosion occurs
+        private static readonly List<Bitmap> bulletImages = DataSource.LoadBulletClassA();
+
+        private Directions bulletDirection;
         private new int imageIndex;
-        public int ImageCount { get; private set; }
+        private bool needDirection = true;
+
+        // Horizontal displacement is bigger because the screen is always horizontally bigger
+        private int verticalDisplacement = 9, horizontalDisplacement = 18;
+
+        #endregion
+
+        #region Public Constructors
 
         public BulletAnimation() : base(AnimationType.BulletAnimation)
         {
@@ -25,15 +33,51 @@ namespace EscapeRunner.Animations
             animationWidth = 30;
         }
 
+        #endregion
+
+        #region Public Properties
+
+        public int ImageCount { get; private set; }
+
+        #endregion
+
+        #region Public Methods
+
+        public bool BulletReachedEnd()
+        {
+            // The bullet is reads to be redrawn when it reaches the end of the screen or collides
+            // with an object
+            return needDirection;
+        }
+
         public void DrawFrame(Graphics g)
         {
-            // Move the bullet image to the end of the screen / until it collides
-            // The bullet object disposes when it hits a wall / end of screen
+            // Move the bullet image to the end of the screen / until it collides The bullet object
+            // disposes when it hits a wall / end of screen
 
             // Change animation position because the bullet moves
             SetBulletPlace();
-            DrawFrame(g, bulletImages[imageIndex]);
+
+            if (bulletDirection == Directions.Up || bulletDirection == Directions.Down)
+            {
+                Bitmap temp = bulletImages[imageIndex];
+
+                DrawFrame(g, RotateAnimation(temp, RotateFlipType.Rotate90FlipNone, RotateFlipType.Rotate270FlipNone));
+            }
+            else
+            {
+                DrawFrame(g, bulletImages[imageIndex]);
+            }
+
             LoadNextAnimationImage();
+        }
+
+        Animation IPrototype<Animation>.Clone()
+        {
+            BulletAnimation clone = (BulletAnimation)this.MemberwiseClone();
+            // The clone starts animating from the first frame
+            clone.imageIndex = 0;
+            return clone;
         }
 
         public override void LoadNextAnimationImage()
@@ -49,18 +93,10 @@ namespace EscapeRunner.Animations
             }
         }
 
-        public bool BulletReachedEnd()
-        {
-            // The bullet is reads to be redrawn when it reaches the end of the screen or collides with an object
-            return needDirection;
-        }
-        Animation IPrototype<Animation>.Clone()
-        {
-            BulletAnimation clone = (BulletAnimation)this.MemberwiseClone();
-            // The clone starts animating from the first frame
-            clone.imageIndex = 0;
-            return clone;
-        }
+        #endregion
+
+        #region Private Methods
+
         private void SetBulletPlace()
         {
             Point position = AnimationPosition;
@@ -93,5 +129,7 @@ namespace EscapeRunner.Animations
             // Set the bullet's new position
             AnimationPosition = position;
         }
+
+        #endregion
     }
 }
