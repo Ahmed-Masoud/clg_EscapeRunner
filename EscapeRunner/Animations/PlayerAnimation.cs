@@ -6,7 +6,6 @@ namespace EscapeRunner.Animations
     public sealed class PlayerAnimation : Animation
     {
         private static List<Bitmap> animationImages;
-        
 
         public PlayerAnimation() : base(AnimationType.PlayerAnimation)
         {

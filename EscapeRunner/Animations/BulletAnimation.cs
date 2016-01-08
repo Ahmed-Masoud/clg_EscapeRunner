@@ -7,8 +7,9 @@ namespace EscapeRunner.Animations
     {
         // List is marked static to avoid loading the resources from the hard disk each time an explosion occurs
         private static readonly List<Bitmap> bulletImages = DataSource.LoadBulletClassA();
-        bool needDirection = true;
-        Directions bulletDirection;
+
+        private bool needDirection = true;
+        private Directions bulletDirection;
 
         private int verticalDisplacement = 6, horizontalDisplacement = 6;
         private new int imageIndex;
@@ -54,6 +55,7 @@ namespace EscapeRunner.Animations
             // The bullet is reads to be redrawn when it reaches the end of the screen or collides with an object
             return needDirection;
         }
+
         Animation IPrototype<Animation>.Clone()
         {
             BulletAnimation clone = (BulletAnimation)this.MemberwiseClone();
@@ -61,6 +63,7 @@ namespace EscapeRunner.Animations
             clone.imageIndex = 0;
             return clone;
         }
+
         private void SetBulletPlace()
         {
             Point position = AnimationPosition;

@@ -16,6 +16,7 @@ namespace EscapeRunner.GameObjects
 
         //private BulletAnimation bulletAnimation;
         private Point explosionPosition = Point.Empty;
+
         private Point bulletStartPosition = Point.Empty;
         private bool used;
         private bool explosionAwake;
