@@ -98,7 +98,8 @@ namespace EscapeRunner
                     break;
             }
 
-            // Change the displayed image
+            // Change the displayed image ( enable this when the image is constant when the player is idle )
+            // and disable the same method in PlayerAnimation.cs
             playerAnimation.LoadNextAnimationImage();
 
             Direction = direction;

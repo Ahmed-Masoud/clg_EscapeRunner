@@ -34,6 +34,7 @@ namespace EscapeRunner.Animations
                         break;
 
                     case Directions.Left:
+                        animationImage = RotateAnimation(animationImage, RotateFlipType.RotateNoneFlipX, RotateFlipType.RotateNoneFlipX);
                         break;
 
                     case Directions.Right:
@@ -45,6 +46,9 @@ namespace EscapeRunner.Animations
 
                 // Call the base class method to draw the image
                 base.DrawFrame(g, animationImage);
+
+                // Remove this to keep the bird constant
+                //LoadNextAnimationImage();
             }
         }
 

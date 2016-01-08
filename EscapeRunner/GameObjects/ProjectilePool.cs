@@ -62,7 +62,8 @@ namespace EscapeRunner.GameObjects
                 {
                     if (!projectiles[i].Used)
                     {
-                        projectiles[i].ExplosionPosition = SetExplosionPlace(Player.Direction, position);
+                        position = SetExplosionPlace(Player.Direction, position);
+                        projectiles[i].ExplosionPosition = position;
                         projectiles[i].BulletStartPosition = position;
 
                         projectiles[i].Used = true;

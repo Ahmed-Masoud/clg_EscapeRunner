@@ -12,15 +12,17 @@ namespace EscapeRunner
         {
             List<Bitmap> characterAnimation = new List<Bitmap>();
             // Animation images are included in the base class as a protected List<Bitmap>
-            characterAnimation.Add(Properties.Resources.wingMan1);
-            characterAnimation.Add(Properties.Resources.wingMan2);
-            characterAnimation.Add(Properties.Resources.wingMan3);
-            characterAnimation.Add(Properties.Resources.wingMan4);
-            characterAnimation.Add(Properties.Resources.wingMan5);
-            characterAnimation.Add(Properties.Resources.wingMan6);
-            characterAnimation.Add(Properties.Resources.wingMan7);
-            characterAnimation.Add(Properties.Resources.wingMan8);
-            characterAnimation.Add(Properties.Resources.wingMan9);
+            //characterAnimation.Add(Properties.Resources.wingMan1);
+            //characterAnimation.Add(Properties.Resources.wingMan2);
+            //characterAnimation.Add(Properties.Resources.wingMan3);
+            //characterAnimation.Add(Properties.Resources.wingMan4);
+            //characterAnimation.Add(Properties.Resources.wingMan5);
+            //characterAnimation.Add(Properties.Resources.wingMan6);
+            //characterAnimation.Add(Properties.Resources.wingMan7);
+            //characterAnimation.Add(Properties.Resources.wingMan8);
+            //characterAnimation.Add(Properties.Resources.wingMan9);
+            characterAnimation.Add(Properties.Resources.bunny1_walk1);
+            characterAnimation.Add(Properties.Resources.bunny1_walk2);
             return characterAnimation;
         }
 

@@ -11,6 +11,7 @@ namespace EscapeRunner
         public static Player player;
         public ProjectilePool projectilePool;
         private static List<IDrawable> drawableObjects = new List<IDrawable>();
+        Timer refreshTimer = new Timer();
 
         public static int UpperBound { get; } = 0;
         public static int LowerBound { get; private set; }
@@ -24,6 +25,10 @@ namespace EscapeRunner
             this.WindowState = FormWindowState.Maximized;
             this.UpdateBounds();
             player = Player.PlayerInstance;
+
+            refreshTimer.Enabled = true;
+            refreshTimer.Interval = 20;
+            refreshTimer.Tick += new EventHandler(this.refreshTimer_Tick);
 
             //drawableObjects.Add(player);
             Bullet.Dx = 20;

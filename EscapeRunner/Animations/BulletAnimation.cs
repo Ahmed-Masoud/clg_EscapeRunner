@@ -10,8 +10,10 @@ namespace EscapeRunner.Animations
 
         private bool needDirection = true;
         private Directions bulletDirection;
+        
 
-        private int verticalDisplacement = 6, horizontalDisplacement = 6;
+        // Horizontal displacement is bigger because the screen is always horizontally bigger
+        private int verticalDisplacement = 9, horizontalDisplacement = 18;
         private new int imageIndex;
         public int ImageCount { get; private set; }
 
@@ -33,7 +35,18 @@ namespace EscapeRunner.Animations
 
             // Change animation position because the bullet moves
             SetBulletPlace();
-            DrawFrame(g, bulletImages[imageIndex]);
+
+            if (bulletDirection == Directions.Up || bulletDirection == Directions.Down)
+            {
+                Bitmap temp = bulletImages[imageIndex];
+
+                DrawFrame(g, RotateAnimation(temp,RotateFlipType.Rotate90FlipNone,RotateFlipType.Rotate270FlipNone));
+            }
+            else
+            {
+                DrawFrame(g, bulletImages[imageIndex]);
+            }
+
             LoadNextAnimationImage();
         }
 
@@ -73,6 +86,7 @@ namespace EscapeRunner.Animations
             {
                 bulletDirection = Player.Direction;
                 needDirection = false;
+
             }
 
             switch (bulletDirection)
