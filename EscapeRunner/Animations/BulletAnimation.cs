@@ -13,7 +13,7 @@ namespace EscapeRunner.Animations
 
         private Directions bulletDirection;
         private new int imageIndex;
-        private bool needDirection = true;
+        private bool needDirection = true, bulletLocked = false;
 
         // Horizontal displacement is bigger because the screen is always horizontally bigger
         private int verticalDisplacement = 9, horizontalDisplacement = 18;

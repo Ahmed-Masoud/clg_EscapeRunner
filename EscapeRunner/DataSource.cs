@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Resources;
 
 namespace EscapeRunner
 {
@@ -8,6 +9,7 @@ namespace EscapeRunner
     /// </summary>
     internal class DataSource
     {
+
         #region Public Methods
 
         public static List<Bitmap> LoadBulletClassA()
@@ -18,7 +20,6 @@ namespace EscapeRunner
             bullets.Add(Properties.Resources.Bullet02);
             bullets.Add(Properties.Resources.Bullet03);
             bullets.Add(Properties.Resources.Bullet04);
-
             return bullets;
         }
 
