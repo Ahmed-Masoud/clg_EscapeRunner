@@ -35,6 +35,7 @@ namespace EscapeRunner.Animations
 
         #region Public Properties
 
+        // Trigger an event to allert the bullet that it has been relocated, and set its lock state
         public Point AnimationPosition { get; set; } = Point.Empty;
 
         #endregion
