@@ -34,7 +34,13 @@ namespace EscapeRunner.Animations
         {
             g.DrawImage(animationImage, AnimationPosition.X, AnimationPosition.Y, animationWidth, animationHeight);
         }
-
+        /// <summary>
+        /// Rotates a given animation
+        /// </summary>
+        /// <param name="image">Target image</param>
+        /// <param name="rotation">Desired rotation</param>
+        /// <param name="counterRotation">The complement of the desired rotation</param>
+        /// <returns>Transformed image</returns>
         public virtual Bitmap RotateAnimation(Bitmap image, RotateFlipType rotation, RotateFlipType counterRotation)
         {
             // The idea lies in rotating the returnBitmap and "drawing" the "image" on the rotated returnBitmap

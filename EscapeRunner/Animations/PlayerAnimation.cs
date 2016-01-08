@@ -36,12 +36,6 @@ namespace EscapeRunner.Animations
                     case Directions.Left:
                         animationImage = RotateAnimation(animationImage, RotateFlipType.RotateNoneFlipX, RotateFlipType.RotateNoneFlipX);
                         break;
-
-                    case Directions.Right:
-                        break;
-
-                    default:
-                        break;
                 }
 
                 // Call the base class method to draw the image
