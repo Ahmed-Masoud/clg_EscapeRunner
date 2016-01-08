@@ -6,18 +6,12 @@
     //    private List<Bitmap> content;
     //    private int maxCount;
 
-    //    public BitmapIterator(List<Bitmap> contentImages)
-    //    {
-    //        this.content = contentImages;
+    // public BitmapIterator(List<Bitmap> contentImages) { this.content = contentImages;
 
-    //        maxCount = content.Count;
-    //    }
+    // maxCount = content.Count; }
 
-    //    public IEnumerator<Bitmap> GetEnumerator()
-    //    {
-    //        for (int i = 0; i < maxCount; i++)
-    //            yield return content[i];
-    //    }
+    // public IEnumerator<Bitmap> GetEnumerator() { for (int i = 0; i < maxCount; i++) yield return
+    // content[i]; }
 
     //    IEnumerator IEnumerable.GetEnumerator()
     //    {

@@ -8,6 +8,20 @@ namespace EscapeRunner
     /// </summary>
     internal class DataSource
     {
+        #region Public Methods
+
+        public static List<Bitmap> LoadBulletClassA()
+        {
+            List<Bitmap> bullets = new List<Bitmap>();
+            bullets.Add(Properties.Resources.Bullet0);
+            bullets.Add(Properties.Resources.Bullet01);
+            bullets.Add(Properties.Resources.Bullet02);
+            bullets.Add(Properties.Resources.Bullet03);
+            bullets.Add(Properties.Resources.Bullet04);
+
+            return bullets;
+        }
+
         public static List<Bitmap> LoadCharacterAnimationFromDisk()
         {
             List<Bitmap> characterAnimation = new List<Bitmap>();
@@ -45,16 +59,6 @@ namespace EscapeRunner
             return explosionAnimation;
         }
 
-        public static List<Bitmap> LoadBulletClassA()
-        {
-            List<Bitmap> bullets = new List<Bitmap>();
-            bullets.Add(Properties.Resources.Bullet0);
-            bullets.Add(Properties.Resources.Bullet01);
-            bullets.Add(Properties.Resources.Bullet02);
-            bullets.Add(Properties.Resources.Bullet03);
-            bullets.Add(Properties.Resources.Bullet04);
-
-            return bullets;
-        }
+        #endregion
     }
 }

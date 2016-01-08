@@ -7,11 +7,19 @@ namespace EscapeRunner.GameObjects
     /// </summary>
     public interface IWeapon
     {
+        #region Public Properties
+
+        Point BulletStartPosition { get; set; }
+        Point ExplosionPosition { get; set; }
         int Index { get; set; }
         bool Used { get; set; }
-        Point ExplosionPosition { get; set; }
-        Point BulletStartPosition { get; set; }
+
+        #endregion
+
+        #region Public Methods
 
         void Reset();
+
+        #endregion
     }
 }

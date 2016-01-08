@@ -10,14 +10,21 @@ namespace EscapeRunner.GameObjects
     /// </summary>
     public class ProjectilePool
     {
-        private readonly int verticalOffset = 35, horizontalOffset = 35, chHeight = 10, chWidth = 10;
+        #region Public Fields
+
         public static int NumberOfProjectiles = 10;
 
-        private static List<IWeapon> projectiles;
-        private static ProjectilePool instance;
+        #endregion
 
-        // The singleton
-        public static ProjectilePool Instance { get { return instance == null ? instance = new ProjectilePool() : instance; } }
+        #region Private Fields
+
+        private static ProjectilePool instance;
+        private static List<IWeapon> projectiles;
+        private readonly int verticalOffset = 35, horizontalOffset = 35, chHeight = 10, chWidth = 10;
+
+        #endregion
+
+        #region Public Constructors
 
         static ProjectilePool()
         {
@@ -37,6 +44,17 @@ namespace EscapeRunner.GameObjects
                 projectiles[i].Used = false;
             }
         }
+
+        #endregion
+
+        #region Public Properties
+
+        // The singleton
+        public static ProjectilePool Instance { get { return instance == null ? instance = new ProjectilePool() : instance; } }
+
+        #endregion
+
+        #region Public Methods
 
         public IWeapon Acquire(Point position, bool isSuperWeapon)
         {
@@ -74,6 +92,10 @@ namespace EscapeRunner.GameObjects
             }
         }
 
+        #endregion
+
+        #region Private Methods
+
         /// <summary>
         /// Configure the explosion position based on the character's position
         /// </summary>
@@ -108,5 +130,7 @@ namespace EscapeRunner.GameObjects
 
             return position;
         }
+
+        #endregion
     }
 }
