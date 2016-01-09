@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace EscapeRunner.GameObjects
 {
-    internal class ProjectileClassB : IWeapon
+    internal class ProjectileClassB : IWeapon, IDrawable
     {
         #region Internal Constructors
 
@@ -61,6 +61,11 @@ namespace EscapeRunner.GameObjects
         {
             //ExplosionPosition = Point.Empty;
             Used = false;
+        }
+
+        public void UpdateGraphics(Graphics g)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

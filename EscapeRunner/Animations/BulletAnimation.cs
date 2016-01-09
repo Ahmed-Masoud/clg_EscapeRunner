@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using EscapeRunner.GameObjects;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace EscapeRunner.Animations
