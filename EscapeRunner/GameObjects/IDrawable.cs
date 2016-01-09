@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace EscapeRunner.Animations
+namespace EscapeRunner.GameObjects
 {
     /// <summary>
     /// Interface to declare the objects that can be drawn, used to update the GUI easily

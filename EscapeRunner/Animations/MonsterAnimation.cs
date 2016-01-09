@@ -1,6 +1,12 @@
-﻿namespace EscapeRunner.Animations
+﻿using System;
+
+namespace EscapeRunner.Animations
 {
-    internal class MonsterAnimation
+    internal class MonsterAnimation : Animation
     {
+        public override void LoadNextAnimationImage()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -50,7 +50,7 @@
     <Compile Include="Animations\AnimationFactory.cs" />
     <Compile Include="Animations\BitmapIterator.cs" />
     <Compile Include="Animations\BulletAnimation.cs" />
-    <Compile Include="Animations\IDrawable.cs" />
+    <Compile Include="GameObjects\IDrawable.cs" />
     <Compile Include="Animations\IPrototype.cs" />
     <Compile Include="Animations\IReciever.cs" />
     <Compile Include="Animations\MonsterAnimation.cs" />
@@ -86,6 +86,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
