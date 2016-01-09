@@ -40,7 +40,7 @@ namespace LevelBuilder
         private int[,] map;
         private int[,] resize_map;
 
-        private BackupMap backup_map;
+        private Map backup_map;
 
         private Stack<HistoryNode> undo;
         private Stack<HistoryNode> redo;
@@ -495,7 +495,7 @@ namespace LevelBuilder
             // select brush as default tool
             SelectTool(ToolType.selection);
 
-            backup_map = new BackupMap();
+            backup_map = new Map();
 
             undo = new Stack<HistoryNode>();
             undoToolStripMenuItem.Enabled = false;

@@ -7,17 +7,17 @@ using System.Windows.Forms;
 
 namespace LevelBuilder
 {
-    class Tile
+    public class Tile
     {
         #region private members
 
-        private int _id;
-        private string _name;
-        private bool _walkable;
-        private int _width;
-        private int _height;
-        private string _path;
-        PictureBox _pictureBox;
+        private int id;
+        private string name;
+        private bool walkable;
+        private int width;
+        private int height;
+        private string path;
+        PictureBox pictureBox;
 
         #endregion
 
@@ -25,52 +25,52 @@ namespace LevelBuilder
 
         public Tile()
         {
-            _walkable = true;
-            _width = 0;
-            _height = 0;
-            _path = "";
+            walkable = true;
+            width = 0;
+            height = 0;
+            path = "";
         }
 
         public int TileID
         {
-            get { return _id; }
-            set { _id = value; }
+            get { return id; }
+            set { id = value; }
         }
 
         public string TileName
         {
-            get { return _name; }
-            set { _name = value; }
+            get { return name; }
+            set { name = value; }
         }
 
         public bool TileWalkable
         {
-            get { return _walkable; }
-            set { _walkable = value; }
+            get { return walkable; }
+            set { walkable = value; }
         }
 
         public int TileWidth
         {
-            get { return _width; }
-            set { _width = value; }
+            get { return width; }
+            set { width = value; }
         }
 
         public int TileHeight
         {
-            get { return _height; }
-            set { _height = value; }
+            get { return height; }
+            set { height = value; }
         }
 
         public string TilePath
         {
-            get { return _path; }
-            set { _path = value; }
+            get { return path; }
+            set { path = value; }
         }
 
         public PictureBox TilePictureBox
         {
-            get { return _pictureBox; }
-            set { _pictureBox = value; }
+            get { return pictureBox; }
+            set { pictureBox = value; }
         }
 
         #endregion

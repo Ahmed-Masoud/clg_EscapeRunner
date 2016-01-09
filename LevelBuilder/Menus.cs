@@ -99,7 +99,7 @@ namespace LevelBuilder
             MapSetupWindow.Show();
             MapSetupWindow.TopMost = true;
 
-            backup_map.SetBackupMap(map_width, map_height, tile_width, tile_height, map, false);
+            backup_map.SetMap(map_width, map_height, tile_width, tile_height, map, false);
             saveMapToolStripMenuItem.Enabled = false;
         }
 

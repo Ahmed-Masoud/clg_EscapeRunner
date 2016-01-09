@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MapEditor));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LevelBuilder));
             this.pnlDesign = new System.Windows.Forms.Panel();
             this.tctrlDesign = new System.Windows.Forms.TabControl();
             this.tpgDesign = new System.Windows.Forms.TabPage();
