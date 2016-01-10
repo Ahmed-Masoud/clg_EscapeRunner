@@ -103,22 +103,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\btnToolBrush.Image.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\eraser-icon.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\fill-icon.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\selectcolor-icon.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\selection.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\brush-icon.gif" />
+    <Content Include="Resources\Cursors\brush.png" />
+    <Content Include="Resources\Cursors\eraser.png" />
+    <Content Include="Resources\Cursors\fill.png" />
+    <Content Include="Resources\Cursors\selecttile.png" />
+    <Content Include="Resources\Icons\brush-icon.gif" />
+    <Content Include="Resources\Icons\btnToolBrush.Image.gif" />
+    <Content Include="Resources\Icons\eraser-icon.gif" />
+    <Content Include="Resources\Icons\fill-icon.gif" />
+    <Content Include="Resources\Icons\selectcolor-icon.gif" />
+    <Content Include="Resources\Icons\selection.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

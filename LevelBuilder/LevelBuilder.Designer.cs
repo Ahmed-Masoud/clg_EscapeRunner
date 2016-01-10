@@ -922,11 +922,8 @@ namespace LevelBuilder
             // 
             // btnToolFill
             // 
-            try
-            {
-                this.btnToolFill.Image = ((System.Drawing.Image)(resources.GetObject("btnToolFill")));
-            }
-            catch (Exception ex) { }
+            //this.btnToolFill.Image = ((System.Drawing.Image)(resources.GetObject("btnToolFill")));
+            this.btnToolFill.Image = Properties.Resources.fill_icon;
             this.btnToolFill.Location = new System.Drawing.Point(76, 19);
             this.btnToolFill.Name = "btnToolFill";
             this.btnToolFill.Size = new System.Drawing.Size(28, 28);
@@ -936,11 +933,8 @@ namespace LevelBuilder
             // 
             // btnToolSelection
             // 
-            try
-            {
-                this.btnToolSelection.Image = ((System.Drawing.Image)(resources.GetObject("btnToolSelection")));
-            }
-            catch (Exception ex) { }
+            //this.btnToolSelection.Image = ((System.Drawing.Image)(resources.GetObject("btnToolSelection")));
+            this.btnToolSelection.Image = Properties.Resources.selection_icon;
             this.btnToolSelection.Location = new System.Drawing.Point(8, 19);
             this.btnToolSelection.Name = "btnToolSelection";
             this.btnToolSelection.Size = new System.Drawing.Size(28, 28);
@@ -950,11 +944,8 @@ namespace LevelBuilder
             // 
             // btnToolEraser
             // 
-            try
-            {
-                this.btnToolEraser.Image = ((System.Drawing.Image)(resources.GetObject("btnToolEraser")));
-            }
-            catch (Exception ex) { }
+            //this.btnToolEraser.Image = ((System.Drawing.Image)(resources.GetObject("btnToolEraser")));
+            this.btnToolEraser.Image = Properties.Resources.eraser_icon;
             this.btnToolEraser.Location = new System.Drawing.Point(144, 19);
             this.btnToolEraser.Name = "btnToolEraser";
             this.btnToolEraser.Size = new System.Drawing.Size(28, 28);
@@ -964,11 +955,8 @@ namespace LevelBuilder
             // 
             // btnToolSelectTile
             // 
-            try
-            {
-                this.btnToolSelectTile.Image = ((System.Drawing.Image)(resources.GetObject("btnToolSelectTile")));
-            }
-            catch (Exception ex) { }
+            //this.btnToolSelectTile.Image = ((System.Drawing.Image)(resources.GetObject("btnToolSelectTile")));
+            this.btnToolSelectTile.Image = Properties.Resources.selecttile_icon;
             this.btnToolSelectTile.Location = new System.Drawing.Point(110, 19);
             this.btnToolSelectTile.Name = "btnToolSelectTile";
             this.btnToolSelectTile.Size = new System.Drawing.Size(28, 28);
@@ -978,14 +966,10 @@ namespace LevelBuilder
             // 
             // btnToolBrush
             // 
-            
             this.btnToolBrush.AccessibleDescription = "";
             this.btnToolBrush.BackColor = System.Drawing.SystemColors.Control;
-            try
-            {
-                this.btnToolBrush.Image = ((System.Drawing.Image)(resources.GetObject("btnToolBrush")));
-            }
-            catch (Exception ex) { }
+            //this.btnToolBrush.Image = ((System.Drawing.Image)(resources.GetObject("btnToolBrush")));
+            this.btnToolBrush.Image = Properties.Resources.brush_icon;
             this.btnToolBrush.Location = new System.Drawing.Point(42, 19);
             this.btnToolBrush.Name = "btnToolBrush";
             this.btnToolBrush.Size = new System.Drawing.Size(28, 28);
