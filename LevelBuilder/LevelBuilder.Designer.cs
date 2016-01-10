@@ -1,4 +1,6 @@
-﻿namespace LevelBuilder
+﻿using System;
+
+namespace LevelBuilder
 {
     partial class LevelBuilder
     {
@@ -62,8 +64,9 @@
             this.lblMapHeight = new System.Windows.Forms.Label();
             this.lblMapWidth = new System.Windows.Forms.Label();
             this.pbMapSmall = new System.Windows.Forms.PictureBox();
+            this.lblMouse = new System.Windows.Forms.Label();
             this.lblMapCoordinate = new System.Windows.Forms.Label();
-            this.menuStripLevelBuilder = new System.Windows.Forms.MenuStrip();
+            this.menuStripDLMapEditor = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -72,7 +75,7 @@
             this.saveMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveMapAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitLevelBuilderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitDLMapEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,6 +101,7 @@
             this.generateCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cArrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cArrayToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.actionScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.xMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialogLoadTiles = new System.Windows.Forms.FolderBrowserDialog();
             this.saveMapDialog = new System.Windows.Forms.SaveFileDialog();
@@ -106,9 +110,12 @@
             this.pnlTileLibrary = new System.Windows.Forms.Panel();
             this.pnlTiles = new System.Windows.Forms.Panel();
             this.gbTools = new System.Windows.Forms.GroupBox();
+            this.btnToolFill = new System.Windows.Forms.Button();
             this.btnToolSelection = new System.Windows.Forms.Button();
+            this.btnToolEraser = new System.Windows.Forms.Button();
+            this.btnToolSelectTile = new System.Windows.Forms.Button();
+            this.btnToolBrush = new System.Windows.Forms.Button();
             this.gbMapSmall = new System.Windows.Forms.GroupBox();
-            this.lblMouse = new System.Windows.Forms.Label();
             this.contextMenuStripTile = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemWalkable = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
@@ -127,7 +134,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudMapHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMapWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapSmall)).BeginInit();
-            this.menuStripLevelBuilder.SuspendLayout();
+            this.menuStripDLMapEditor.SuspendLayout();
             this.gbTiles.SuspendLayout();
             this.pnlTiles.SuspendLayout();
             this.gbTools.SuspendLayout();
@@ -511,6 +518,16 @@
             this.pbMapSmall.TabIndex = 10;
             this.pbMapSmall.TabStop = false;
             // 
+            // lblMouse
+            // 
+            this.lblMouse.AutoSize = true;
+            this.lblMouse.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMouse.Location = new System.Drawing.Point(9, 186);
+            this.lblMouse.Name = "lblMouse";
+            this.lblMouse.Size = new System.Drawing.Size(82, 13);
+            this.lblMouse.TabIndex = 9;
+            this.lblMouse.Text = "Mouse Position:";
+            // 
             // lblMapCoordinate
             // 
             this.lblMapCoordinate.AutoSize = true;
@@ -521,20 +538,20 @@
             this.lblMapCoordinate.TabIndex = 8;
             this.lblMapCoordinate.Text = "Map Coordinate:";
             // 
-            // menuStripLevelBuilder
+            // menuStripDLMapEditor
             // 
-            this.menuStripLevelBuilder.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStripDLMapEditor.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem1,
             this.viewToolStripMenuItem,
             this.selectToolStripMenuItem,
             this.tilesToolStripMenuItem,
             this.codeToolStripMenuItem});
-            this.menuStripLevelBuilder.Location = new System.Drawing.Point(0, 0);
-            this.menuStripLevelBuilder.Name = "menuStripLevelBuilder";
-            this.menuStripLevelBuilder.Size = new System.Drawing.Size(1016, 24);
-            this.menuStripLevelBuilder.TabIndex = 3;
-            this.menuStripLevelBuilder.Text = "menuStrip1";
+            this.menuStripDLMapEditor.Location = new System.Drawing.Point(0, 0);
+            this.menuStripDLMapEditor.Name = "menuStripDLMapEditor";
+            this.menuStripDLMapEditor.Size = new System.Drawing.Size(1016, 24);
+            this.menuStripDLMapEditor.TabIndex = 3;
+            this.menuStripDLMapEditor.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
@@ -546,7 +563,7 @@
             this.saveMapToolStripMenuItem,
             this.saveMapAsToolStripMenuItem,
             this.toolStripSeparator1,
-            this.exitLevelBuilderToolStripMenuItem});
+            this.exitDLMapEditorToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
@@ -599,13 +616,13 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(222, 6);
             // 
-            // exitLevelBuilderToolStripMenuItem
+            // exitDLMapEditorToolStripMenuItem
             // 
-            this.exitLevelBuilderToolStripMenuItem.Name = "exitLevelBuilderToolStripMenuItem";
-            this.exitLevelBuilderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.exitLevelBuilderToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
-            this.exitLevelBuilderToolStripMenuItem.Text = "E&xit Map Editor";
-            this.exitLevelBuilderToolStripMenuItem.Click += new System.EventHandler(this.exitLevelBuilderToolStripMenuItem_Click);
+            this.exitDLMapEditorToolStripMenuItem.Name = "exitDLMapEditorToolStripMenuItem";
+            this.exitDLMapEditorToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+            this.exitDLMapEditorToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.exitDLMapEditorToolStripMenuItem.Text = "E&xit D2D Map Editor";
+            this.exitDLMapEditorToolStripMenuItem.Click += new System.EventHandler(this.exitDLMapEditorToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem1
             // 
@@ -799,6 +816,7 @@
             this.generateCodeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cArrayToolStripMenuItem,
             this.cArrayToolStripMenuItem1,
+            this.actionScriptToolStripMenuItem,
             this.xMLToolStripMenuItem});
             this.generateCodeToolStripMenuItem.Name = "generateCodeToolStripMenuItem";
             this.generateCodeToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
@@ -822,6 +840,11 @@
             this.cArrayToolStripMenuItem1.Text = "C# A&rray";
             this.cArrayToolStripMenuItem1.Click += new System.EventHandler(this.cArrayToolStripMenuItem1_Click);
             // 
+            // actionScriptToolStripMenuItem
+            // 
+            this.actionScriptToolStripMenuItem.Name = "actionScriptToolStripMenuItem";
+            this.actionScriptToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            // 
             // xMLToolStripMenuItem
             // 
             this.xMLToolStripMenuItem.Name = "xMLToolStripMenuItem";
@@ -833,14 +856,14 @@
             // 
             // saveMapDialog
             // 
-            this.saveMapDialog.DefaultExt = "d2d";
-            this.saveMapDialog.Filter = "D2D Documents (*.d2d) |*.d2d";
+            this.saveMapDialog.DefaultExt = "lv";
+            this.saveMapDialog.Filter = "LV Documents (*.lv) |*.lv";
             this.saveMapDialog.Title = "Save Map As";
             // 
             // openMapDialog
             // 
-            this.openMapDialog.DefaultExt = "d2d";
-            this.openMapDialog.Filter = "D2D Documents (*.d2d) |*.d2d";
+            this.openMapDialog.DefaultExt = "lv";
+            this.openMapDialog.Filter = "LV Documents (*.lv) |*.lv";
             // 
             // gbTiles
             // 
@@ -884,7 +907,11 @@
             // 
             // gbTools
             // 
+            this.gbTools.Controls.Add(this.btnToolFill);
             this.gbTools.Controls.Add(this.btnToolSelection);
+            this.gbTools.Controls.Add(this.btnToolEraser);
+            this.gbTools.Controls.Add(this.btnToolSelectTile);
+            this.gbTools.Controls.Add(this.btnToolBrush);
             this.gbTools.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbTools.Location = new System.Drawing.Point(0, 215);
             this.gbTools.Name = "gbTools";
@@ -893,15 +920,79 @@
             this.gbTools.TabStop = false;
             this.gbTools.Text = "Tools";
             // 
+            // btnToolFill
+            // 
+            try
+            {
+                this.btnToolFill.Image = ((System.Drawing.Image)(resources.GetObject("btnToolFill")));
+            }
+            catch (Exception ex) { }
+            this.btnToolFill.Location = new System.Drawing.Point(76, 19);
+            this.btnToolFill.Name = "btnToolFill";
+            this.btnToolFill.Size = new System.Drawing.Size(28, 28);
+            this.btnToolFill.TabIndex = 5;
+            this.btnToolFill.UseVisualStyleBackColor = true;
+            this.btnToolFill.Click += new System.EventHandler(this.btnToolFill_Click);
+            // 
             // btnToolSelection
             // 
-            this.btnToolSelection.Image = ((System.Drawing.Image)(resources.GetObject("btnToolSelection.Image")));
+            try
+            {
+                this.btnToolSelection.Image = ((System.Drawing.Image)(resources.GetObject("btnToolSelection")));
+            }
+            catch (Exception ex) { }
             this.btnToolSelection.Location = new System.Drawing.Point(8, 19);
             this.btnToolSelection.Name = "btnToolSelection";
             this.btnToolSelection.Size = new System.Drawing.Size(28, 28);
             this.btnToolSelection.TabIndex = 4;
             this.btnToolSelection.UseVisualStyleBackColor = true;
             this.btnToolSelection.Click += new System.EventHandler(this.btnToolSelection_Click);
+            // 
+            // btnToolEraser
+            // 
+            try
+            {
+                this.btnToolEraser.Image = ((System.Drawing.Image)(resources.GetObject("btnToolEraser")));
+            }
+            catch (Exception ex) { }
+            this.btnToolEraser.Location = new System.Drawing.Point(144, 19);
+            this.btnToolEraser.Name = "btnToolEraser";
+            this.btnToolEraser.Size = new System.Drawing.Size(28, 28);
+            this.btnToolEraser.TabIndex = 3;
+            this.btnToolEraser.UseVisualStyleBackColor = true;
+            this.btnToolEraser.Click += new System.EventHandler(this.btnToolEraser_Click);
+            // 
+            // btnToolSelectTile
+            // 
+            try
+            {
+                this.btnToolSelectTile.Image = ((System.Drawing.Image)(resources.GetObject("btnToolSelectTile")));
+            }
+            catch (Exception ex) { }
+            this.btnToolSelectTile.Location = new System.Drawing.Point(110, 19);
+            this.btnToolSelectTile.Name = "btnToolSelectTile";
+            this.btnToolSelectTile.Size = new System.Drawing.Size(28, 28);
+            this.btnToolSelectTile.TabIndex = 2;
+            this.btnToolSelectTile.UseVisualStyleBackColor = true;
+            this.btnToolSelectTile.Click += new System.EventHandler(this.btnToolSelectColor_Click);
+            // 
+            // btnToolBrush
+            // 
+            
+            this.btnToolBrush.AccessibleDescription = "";
+            this.btnToolBrush.BackColor = System.Drawing.SystemColors.Control;
+            try
+            {
+                this.btnToolBrush.Image = ((System.Drawing.Image)(resources.GetObject("btnToolBrush")));
+            }
+            catch (Exception ex) { }
+            this.btnToolBrush.Location = new System.Drawing.Point(42, 19);
+            this.btnToolBrush.Name = "btnToolBrush";
+            this.btnToolBrush.Size = new System.Drawing.Size(28, 28);
+            this.btnToolBrush.TabIndex = 1;
+            this.btnToolBrush.Tag = "";
+            this.btnToolBrush.UseVisualStyleBackColor = false;
+            this.btnToolBrush.Click += new System.EventHandler(this.btnToolBrush_Click);
             // 
             // gbMapSmall
             // 
@@ -916,16 +1007,6 @@
             this.gbMapSmall.TabIndex = 2;
             this.gbMapSmall.TabStop = false;
             this.gbMapSmall.Text = "Map";
-            // 
-            // lblMouse
-            // 
-            this.lblMouse.AutoSize = true;
-            this.lblMouse.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMouse.Location = new System.Drawing.Point(9, 186);
-            this.lblMouse.Name = "lblMouse";
-            this.lblMouse.Size = new System.Drawing.Size(82, 13);
-            this.lblMouse.TabIndex = 9;
-            this.lblMouse.Text = "Mouse Position:";
             // 
             // contextMenuStripTile
             // 
@@ -951,7 +1032,7 @@
             this.toolStripMenuItemDelete.Text = "Delete";
             this.toolStripMenuItemDelete.Click += new System.EventHandler(this.toolStripMenuItemDelete_Click);
             // 
-            // MapEditor
+            // D2DMapEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -959,13 +1040,13 @@
             this.Controls.Add(this.pnlTiles);
             this.Controls.Add(this.pnlProperties);
             this.Controls.Add(this.pnlDesign);
-            this.Controls.Add(this.menuStripLevelBuilder);
+            this.Controls.Add(this.menuStripDLMapEditor);
             this.DoubleBuffered = true;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStripLevelBuilder;
+            //this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStripDLMapEditor;
             this.MinimumSize = new System.Drawing.Size(1024, 768);
             this.Name = "MapEditor";
-            this.Text = "Map Editor";
+            this.Text = "Level Builder";
             this.Resize += new System.EventHandler(this.MapEditor_Resize);
             this.pnlDesign.ResumeLayout(false);
             this.tctrlDesign.ResumeLayout(false);
@@ -987,8 +1068,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudMapHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMapWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapSmall)).EndInit();
-            this.menuStripLevelBuilder.ResumeLayout(false);
-            this.menuStripLevelBuilder.PerformLayout();
+            this.menuStripDLMapEditor.ResumeLayout(false);
+            this.menuStripDLMapEditor.PerformLayout();
             this.gbTiles.ResumeLayout(false);
             this.pnlTiles.ResumeLayout(false);
             this.pnlTiles.PerformLayout();
@@ -1003,8 +1084,7 @@
 
         #endregion
 
-
-        #region Declaration
+        #region Declarations
 
         private System.Windows.Forms.Panel pnlDesign;
         private System.Windows.Forms.Panel pnlProperties;
@@ -1017,13 +1097,13 @@
         public System.Windows.Forms.NumericUpDown nudMapHeight;
         public System.Windows.Forms.NumericUpDown nudMapWidth;
         private System.Windows.Forms.PictureBox pbMap;
-        private System.Windows.Forms.MenuStrip menuStripLevelBuilder;
+        private System.Windows.Forms.MenuStrip menuStripDLMapEditor;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newMapToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadMapToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveMapToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem exitLevelBuilderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitDLMapEditorToolStripMenuItem;
         public System.Windows.Forms.NumericUpDown nudTileHeight;
         public System.Windows.Forms.NumericUpDown nudTileWidth;
         private System.Windows.Forms.Label lblTileHeight;
@@ -1032,6 +1112,7 @@
         private System.Windows.Forms.ToolStripMenuItem AddTilesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearTilesToolStripMenuItem;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogLoadTiles;
+        private System.Windows.Forms.Label lblMouse;
         private System.Windows.Forms.Label lblMapCoordinate;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
@@ -1076,21 +1157,24 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemWalkable;
         private System.Windows.Forms.ToolStripMenuItem deleteSelectedTileToolStripMenuItem;
         private System.Windows.Forms.GroupBox gbTools;
+        private System.Windows.Forms.Button btnToolBrush;
+        private System.Windows.Forms.Button btnToolEraser;
+        private System.Windows.Forms.Button btnToolSelectTile;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
         private System.Windows.Forms.Button btnToolSelection;
+        private System.Windows.Forms.Button btnToolFill;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deselectToolStripMenuItem;
-        private System.Windows.Forms.Label lblMouse;
+        private System.Windows.Forms.ToolStripMenuItem actionScriptToolStripMenuItem;
 
         #endregion
-        
     }
 }
 

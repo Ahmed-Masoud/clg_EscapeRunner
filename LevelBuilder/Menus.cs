@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Drawing;
 
 namespace LevelBuilder
 {
@@ -32,6 +33,7 @@ namespace LevelBuilder
             RenderMap();
             backup_map.IsTileLibraryChanged = true;
         }
+
         #endregion
 
         #endregion
@@ -191,10 +193,11 @@ namespace LevelBuilder
             }
         }
 
-        private void exitLevelBuilderToolStripMenuItem_Click(object sender, EventArgs e)
+        private void exitDLMapEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {   // exit map editor
             Application.Exit();
         }
+
         #endregion
 
         #region Menu Edit
@@ -206,11 +209,11 @@ namespace LevelBuilder
             int nodeId = undo.Peek().Id;
             while (undo.Count > 0 && nodeId == undo.Peek().Id)
             {   // undo
-                HistoryNode undo = this.undo.Pop();
+                HistoryNode undoo = undo.Pop();
                 // save for redo
-                redo.Push(new HistoryNode(undo.Id, undo.MapX, undo.MapY, map[undo.MapX, undo.MapY]));
+                redo.Push(new HistoryNode(undoo.Id, undoo.MapX, undoo.MapY, map[undoo.MapX, undoo.MapY]));
                 // render undo
-                map[undo.MapX, undo.MapY] = undo.Value;
+                map[undoo.MapX, undoo.MapY] = undoo.Value;
             }
 
             RenderMap();
@@ -230,11 +233,11 @@ namespace LevelBuilder
             int nodeId = redo.Peek().Id;
             while (redo.Count > 0 && nodeId == redo.Peek().Id)
             {   // redo
-                HistoryNode redo = this.redo.Pop();
+                HistoryNode redoo = redo.Pop();
                 // save current map for undo
-                undo.Push(new HistoryNode(redo.Id, redo.MapX, redo.MapY, map[redo.MapX, redo.MapY]));
+                undo.Push(new HistoryNode(redoo.Id, redoo.MapX, redoo.MapY, map[redoo.MapX, redoo.MapY]));
                 // render redo
-                map[redo.MapX, redo.MapY] = redo.Value;
+                map[redoo.MapX, redoo.MapY] = redoo.Value;
 
             }
 
@@ -335,6 +338,7 @@ namespace LevelBuilder
                 MessageBox.Show("No selection", "Paste", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
+
         #endregion
 
         #region Menu View
@@ -352,9 +356,9 @@ namespace LevelBuilder
             codeViewToolStripMenuItem.Checked = true;
 
             if (rbCPP.Checked)
-                GenerateCArray();
+                GenerateCPP();
             else if (rbCS.Checked)
-                GenerateCSharpArray();
+                GenerateCSharp();
             else if (rbXML.Checked)
                 GenerateXML();
             else
@@ -394,6 +398,7 @@ namespace LevelBuilder
 
             RenderMap();
         }
+
         #endregion
 
         #region Menu Select
@@ -410,6 +415,7 @@ namespace LevelBuilder
             selection = new SelectionTool();
             RenderMap();
         }
+
         #endregion
 
         #region Menu Tiles
@@ -463,9 +469,9 @@ namespace LevelBuilder
         private void selectedLanguageToolStripMenuItem_Click(object sender, EventArgs e)
         {   // generate codes with selected language 
             if (rbCPP.Checked)
-                GenerateCArray();
+                GenerateCPP();
             else if (rbCS.Checked)
-                GenerateCSharpArray();
+                GenerateCSharp();
             else if (rbXML.Checked)
                 GenerateXML();
 
@@ -474,14 +480,14 @@ namespace LevelBuilder
 
         private void cArrayToolStripMenuItem_Click(object sender, EventArgs e)
         {   // generate C++ codes
-            GenerateCArray();
+            GenerateCPP();
             tctrlDesign.SelectedTab = tpgCode;
             rbCPP.Checked = true;
         }
 
         private void cArrayToolStripMenuItem1_Click(object sender, EventArgs e)
         {   // generate C# codes
-            GenerateCSharpArray();
+            GenerateCSharp();
             tctrlDesign.SelectedTab = tpgCode;
             rbCS.Checked = true;
         }
@@ -492,6 +498,7 @@ namespace LevelBuilder
             tctrlDesign.SelectedTab = tpgCode;
             rbXML.Checked = true;
         }
+
         #endregion
 
         #endregion
@@ -501,6 +508,26 @@ namespace LevelBuilder
         private void btnToolSelection_Click(object sender, EventArgs e)
         {
             SelectTool(ToolType.selection);
+        }
+
+        private void btnToolBrush_Click(object sender, EventArgs e)
+        {
+            SelectTool(ToolType.brush);
+        }
+
+        private void btnToolFill_Click(object sender, EventArgs e)
+        {
+            SelectTool(ToolType.fill);
+        }
+
+        private void btnToolSelectColor_Click(object sender, EventArgs e)
+        {
+            SelectTool(ToolType.selectTile);
+        }
+
+        private void btnToolEraser_Click(object sender, EventArgs e)
+        {
+            SelectTool(ToolType.eraser);
         }
 
         #endregion

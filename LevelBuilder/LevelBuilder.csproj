@@ -46,6 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodesGenerator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomCursor.cs" />
+    <Compile Include="HistoryNode.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Clipboard.cs" />
     <Compile Include="ClipboardNode.cs" />
@@ -58,23 +63,31 @@
     <Compile Include="MapController.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MapSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MapSetup.Designer.cs">
+      <DependentUpon>MapSetup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menus.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectionTool.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TilesController.cs">
       <SubType>Form</SubType>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -88,6 +101,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnToolBrush.Image.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eraser-icon.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fill-icon.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\selectcolor-icon.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\selection.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brush-icon.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

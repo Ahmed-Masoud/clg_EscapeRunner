@@ -14,15 +14,22 @@ namespace LevelBuilder
 
     public enum ToolType
     {
+        brush = 1,
         selectTile = 2,
-        selection = 4
+        eraser = 3,
+        selection = 4,
+        fill = 5
     }
 
     public enum CursorType
     {
         arrow = 1,
         wait = 2,
-        selection = 6
+        brush = 3,
+        selectColor = 4,
+        eraser = 5,
+        selection = 6,
+        fill = 7
     }
 
     public partial class LevelBuilder : Form
@@ -188,6 +195,51 @@ namespace LevelBuilder
                     selection.StartDrag = new Point(mapX, mapY);
                     selection.StopDrag = new Point(mapX, mapY);
                 }
+                else if (selected_tool == ToolType.brush)
+                {   // brush tool
+                    if (pnlTileLibrary.Controls.ContainsKey(pbSelectedTile.Name) == true)
+                    {
+                        if (map[mapX, mapY] != Convert.ToInt32(pbSelectedTile.Name))
+                        {
+                            redo.Clear();
+
+                            int id = 0;
+                            if (undo.Count > 0)
+                                id = undo.Peek().Id + 1;
+
+                            undo.Push(new HistoryNode(id, mapX, mapY, map[mapX, mapY]));
+                            map[mapX, mapY] = Convert.ToInt32(pbSelectedTile.Name);
+                        }
+                    }
+                }
+                else if (selected_tool == ToolType.fill)
+                {   // fill tool
+                    if (pnlTileLibrary.Controls.ContainsKey(pbSelectedTile.Name) == true)
+                    {
+                        if (mapX >= selection.TopLeftX && mapX < selection.BottomRightX && mapY >= selection.TopLeftY && mapY < selection.BottomRightY)
+                        {
+                            redo.Clear();
+
+                            int id = 0;
+                            if (undo.Count > 0)
+                                id = undo.Peek().Id + 1;
+
+                            if (selection.BottomRightX > map_width)
+                                selection.BottomRightX = map_width;
+                            if (selection.BottomRightY > map_height)
+                                selection.BottomRightY = map_height;
+
+                            for (int i = selection.TopLeftX; i < selection.BottomRightX; i++)
+                            {   // fill selected tiles
+                                for (int j = selection.TopLeftY; j < selection.BottomRightY; j++)
+                                {
+                                    undo.Push(new HistoryNode(id, i, j, map[i, j]));
+                                    map[i, j] = Convert.ToInt32(pbSelectedTile.Name);
+                                }
+                            }
+                        }
+                    }
+                }
                 else if (selected_tool == ToolType.selectTile)
                 {   // select color tool
                     if (map[mapX, mapY] > -1)
@@ -205,6 +257,32 @@ namespace LevelBuilder
                     else
                     {
                         ClearSelectedTile();
+                    }
+                }
+                else if (selected_tool == ToolType.eraser)
+                {   // eraser tool
+                    if (selection.StartDrag.X != -1 && selection.StartDrag.Y != -1 && selection.StopDrag.X != -1 && selection.StopDrag.Y != -1)
+                    {   // selection was made
+                        if (mapX >= selection.TopLeftX && mapX < selection.BottomRightX && mapY >= selection.TopLeftY && mapY < selection.BottomRightY)
+                        {
+                            // is in selection
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+
+                    if (map[mapX, mapY] != -1)
+                    {
+                        redo.Clear();
+
+                        int id = 0;
+                        if (undo.Count > 0)
+                            id = undo.Peek().Id + 1;
+
+                        undo.Push(new HistoryNode(id, mapX, mapY, map[mapX, mapY]));
+                        map[mapX, mapY] = -1;
                     }
                 }
 
@@ -234,21 +312,14 @@ namespace LevelBuilder
             if (selected_tool == ToolType.selection)
             {
                 if (mapX < 0)
-                {
                     mapX = 0;
-                }
                 else if (mapY < 0)
-                {
                     mapY = 0;
-                }
+
                 if (mapX >= map_width)
-                {
                     mapX = map_width;
-                }
                 else if (mapY >= map_height)
-                {
                     mapY = map_height;
-                }
             }
             else
             {
@@ -269,8 +340,16 @@ namespace LevelBuilder
                         RenderMap();
                     }
                 }
+                else if (selected_tool == ToolType.brush)
+                {   // brush tool
+                    mapPicBox_MouseDown(sender, e);
+                }
                 else if (selected_tool == ToolType.selectTile)
                 {   // select color tool
+                    mapPicBox_MouseDown(sender, e);
+                }
+                else if (selected_tool == ToolType.eraser)
+                {   // eraser tool
                     mapPicBox_MouseDown(sender, e);
                 }
             }
@@ -291,21 +370,14 @@ namespace LevelBuilder
             int mapY = clickedY / tile_height;
 
             if (mapX < 0)
-            {
                 mapX = 0;
-            }
             else if (mapY < 0)
-            {
                 mapY = 0;
-            }
+
             if (mapX >= map_width)
-            {
                 mapX = map_width;
-            }
             else if (mapY >= map_height)
-            {
                 mapY = map_height;
-            }
 
             if (selected_tool == ToolType.selection && selection.IsDragging)
             {   // selection tool
@@ -321,6 +393,18 @@ namespace LevelBuilder
             if (e.KeyCode == Keys.S)
             {
                 SelectTool(ToolType.selection);
+            }
+            else if (e.KeyCode == Keys.B)
+            {
+                SelectTool(ToolType.brush);
+            }
+            else if (e.KeyCode == Keys.E)
+            {
+                SelectTool(ToolType.eraser);
+            }
+            else if (e.KeyCode == Keys.F)
+            {
+                SelectTool(ToolType.fill);
             }
             else if (e.KeyCode == Keys.T)
             {
@@ -358,7 +442,7 @@ namespace LevelBuilder
         private void rbCPP_CheckedChanged(object sender, EventArgs e)
         {   // radio button for XML is selected
             selectedLanguageToolStripMenuItem.Text = "Generate C++";
-            GenerateCArray();
+            GenerateCPP();
 
             designViewToolStripMenuItem.Checked = false;
             codeViewToolStripMenuItem.Checked = true;
@@ -368,7 +452,7 @@ namespace LevelBuilder
         private void rbCS_CheckedChanged(object sender, EventArgs e)
         {   // radio button for XML is selected
             selectedLanguageToolStripMenuItem.Text = "Generate C#";
-            GenerateCSharpArray();
+            GenerateCSharp();
 
             designViewToolStripMenuItem.Checked = false;
             codeViewToolStripMenuItem.Checked = true;
@@ -398,9 +482,9 @@ namespace LevelBuilder
                 designViewToolStripMenuItem.Checked = false;
 
                 if (rbCPP.Checked)
-                    GenerateCArray();
+                    GenerateCPP();
                 else if (rbCS.Checked)
-                    GenerateCSharpArray();
+                    GenerateCSharp();
                 else if (rbXML.Checked)
                     GenerateXML();
             }
@@ -485,6 +569,10 @@ namespace LevelBuilder
             toolTips.ReshowDelay = 500;
             toolTips.ShowAlways = true;
             toolTips.SetToolTip(btnToolSelection, "Selection(S)");
+            toolTips.SetToolTip(btnToolBrush, "Brush(B)");
+            toolTips.SetToolTip(btnToolEraser, "Eraser(E)");
+            toolTips.SetToolTip(btnToolFill, "Fill(F)");
+            toolTips.SetToolTip(btnToolSelectTile, "Select Tile(T)");
 
             // initialized some variables
             grid_on = true;

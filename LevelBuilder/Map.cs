@@ -77,9 +77,7 @@ namespace LevelBuilder
         public Boolean IsDirty(int mapWidth, int mapHeight, int tileWidth, int tileHeight, int[,] map)
         {
             if (IsTileLibraryChanged || mapWidth != map_width || mapHeight != map_height || tileWidth != tile_width || tileHeight != tile_height)
-            {
                 return true;
-            }
 
             // if everything is same, check if map is changed
             for (int x = 0; x < map_width; x++)
