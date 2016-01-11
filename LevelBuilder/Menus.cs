@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+//using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Drawing;
@@ -65,8 +65,7 @@ namespace LevelBuilder
 
                                     SaveMap(this.saveMapDialog.FileName);
                                     SaveTiles(this.saveMapDialog.FileName);
-                                    //_my_map.SaveMap(this.saveMapDialog.FileName);
-
+                                    
                                     Cursor.Current = Cursors.Default;
                                 }
                                 catch (Exception ex)
@@ -79,7 +78,6 @@ namespace LevelBuilder
                         {
                             SaveMap(current_working_filename);
                             SaveTiles(current_working_filename);
-                            //_my_map.SaveMap(_current_working_filename);
                         }
 
                         Cursor.Current = Cursors.Default;
@@ -177,11 +175,9 @@ namespace LevelBuilder
 
                     SaveMap(this.saveMapDialog.FileName);
                     SaveTiles(this.saveMapDialog.FileName);
-                    //_my_map.SaveMap(this.saveMapDialog.FileName);
-
+                    
                     current_working_filename = this.saveMapDialog.FileName;
-                    //tpgNewMap.Text = Path.GetFileNameWithoutExtension(_current_working_filename);
-
+                    
                     Cursor.Current = Cursors.Default;
 
                     saveMapToolStripMenuItem.Enabled = true;
@@ -300,11 +296,7 @@ namespace LevelBuilder
 
                 int pasteEndX = selection.TopLeftX + clipboard.Width;
                 int pasteEndY = selection.TopLeftY + clipboard.Height;
-                //if (_selection.BottomRightX > pasteEndX)
-                //    pasteEndX = _selection.BottomRightX - ((_selection.BottomRightX - _selection.TopLeftX) % _clipboard.Width);
-                //if (_selection.BottomRightY > pasteEndY)
-                //    pasteEndY = _selection.BottomRightY - ((_selection.BottomRightY - _selection.TopLeftY) % _clipboard.Height);
-
+                
                 if (pasteEndX > map_width)
                     return;
                 if (pasteEndY > map_height)
@@ -322,7 +314,6 @@ namespace LevelBuilder
                         }
                         pos++;
                         pos = pos % clipboard.Data.Count;
-                        //pos = pos % ((pasteEndX - i) * _clipboard.Height);
                     }
                 }
 

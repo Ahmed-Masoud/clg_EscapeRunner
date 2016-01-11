@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+//using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Xml;
 using System.Drawing;
 using System.Collections;
+//using System.Drawing.Imaging;
 
 namespace LevelBuilder
 {
@@ -154,6 +155,7 @@ namespace LevelBuilder
             string tileFileName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName) + "-tile.xml";
             FileStream tfs = new FileStream(tileFileName, FileMode.Create);
             XmlTextWriter textWriter = new XmlTextWriter(tfs, null);
+            bool saved = false;
 
             string pbDirName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName);
             Directory.CreateDirectory(pbDirName);
@@ -184,7 +186,7 @@ namespace LevelBuilder
                 textWriter.WriteEndElement();
 
                 PictureBox pb = tile_library[i].TilePictureBox;
-
+                
                 if (Convert.ToInt32(pb.Name) >= 0)
                 {
                     Image img = pb.Image;
@@ -193,21 +195,28 @@ namespace LevelBuilder
                     string pbFileName = "";
 
                     if (Convert.ToInt32(pb.Name) < 10)
-                        pbFileName = pbDirName + "\\00" + pb.Name.ToString() + ".bmp";
+                        pbFileName = pbDirName + "\\00" + pb.Name.ToString() + ".png";
                     else if (Convert.ToInt32(pb.Name) < 100)
-                        pbFileName = pbDirName + "\\0" + pb.Name.ToString() + ".bmp";
+                        pbFileName = pbDirName + "\\0" + pb.Name.ToString() + ".png";
                     else
-                        pbFileName = pbDirName + "\\" + pb.Name.ToString() + ".bmp";
+                        pbFileName = pbDirName + "\\" + pb.Name.ToString() + ".png";
 
                     try
                     {
-                        bmp.Save(pbFileName, System.Drawing.Imaging.ImageFormat.Bmp);
+                        bmp.Save(pbFileName, System.Drawing.Imaging.ImageFormat.Png);
+                        saved = true;
                     }
                     catch (Exception exc)
                     {
-                        MessageBox.Show(exc.ToString(), "Fail to Save Tiles\n" + exc.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(exc.ToString(), "Fail to Save Tiles - " + exc.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        saved = false;
                     }
                 }
+            }
+
+            if (saved)
+            {
+                MessageBox.Show("Map Saved Successfully !", "Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
 
             // close the root element
