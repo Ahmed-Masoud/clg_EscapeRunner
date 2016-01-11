@@ -355,12 +355,16 @@ namespace LevelBuilder
             designViewToolStripMenuItem.Checked = false;
             codeViewToolStripMenuItem.Checked = true;
 
+            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
+                tile_library, tile_width, tile_height,
+                tbCode);
+
             if (rbCPP.Checked)
-                GenerateCPP();
+                codesGenerator.GenerateCPP();
             else if (rbCS.Checked)
-                GenerateCSharp();
+                codesGenerator.GenerateCSharp();
             else if (rbXML.Checked)
-                GenerateXML();
+                codesGenerator.GenerateXML();
             else
                 MessageBox.Show("Please select the language you want to generate", "No Language Selected", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
@@ -467,34 +471,47 @@ namespace LevelBuilder
 
         #region Menu Code
         private void selectedLanguageToolStripMenuItem_Click(object sender, EventArgs e)
-        {   // generate codes with selected language 
+        {   // generate codes with selected language
+            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
+                tile_library, tile_width, tile_height,
+                tbCode);
+
             if (rbCPP.Checked)
-                GenerateCPP();
+                codesGenerator.GenerateCPP();
             else if (rbCS.Checked)
-                GenerateCSharp();
+                codesGenerator.GenerateCSharp();
             else if (rbXML.Checked)
-                GenerateXML();
+                codesGenerator.GenerateXML();
 
             tctrlDesign.SelectedTab = tpgCode;
         }
 
         private void cArrayToolStripMenuItem_Click(object sender, EventArgs e)
         {   // generate C++ codes
-            GenerateCPP();
+            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
+                tile_library, tile_width, tile_height,
+                tbCode);
+            codesGenerator.GenerateCPP();
             tctrlDesign.SelectedTab = tpgCode;
             rbCPP.Checked = true;
         }
 
         private void cArrayToolStripMenuItem1_Click(object sender, EventArgs e)
         {   // generate C# codes
-            GenerateCSharp();
+            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
+                tile_library, tile_width, tile_height,
+                tbCode);
+            codesGenerator.GenerateCSharp();
             tctrlDesign.SelectedTab = tpgCode;
             rbCS.Checked = true;
         }
 
         private void xMLToolStripMenuItem_Click(object sender, EventArgs e)
         {   // generate xml
-            GenerateXML();
+            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
+                tile_library, tile_width, tile_height,
+                tbCode);
+            codesGenerator.GenerateXML();
             tctrlDesign.SelectedTab = tpgCode;
             rbXML.Checked = true;
         }

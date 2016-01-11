@@ -65,6 +65,8 @@ namespace LevelBuilder
 
         private SelectionTool selection;
 
+        private CodesGenerator codesGenerator;
+
         #endregion
 
         #region member functions
@@ -442,7 +444,12 @@ namespace LevelBuilder
         private void rbCPP_CheckedChanged(object sender, EventArgs e)
         {   // radio button for XML is selected
             selectedLanguageToolStripMenuItem.Text = "Generate C++";
-            GenerateCPP();
+
+            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
+                tile_library, tile_width, tile_height,
+                tbCode);
+
+            codesGenerator.GenerateCPP();
 
             designViewToolStripMenuItem.Checked = false;
             codeViewToolStripMenuItem.Checked = true;
@@ -452,7 +459,12 @@ namespace LevelBuilder
         private void rbCS_CheckedChanged(object sender, EventArgs e)
         {   // radio button for XML is selected
             selectedLanguageToolStripMenuItem.Text = "Generate C#";
-            GenerateCSharp();
+
+            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
+                tile_library, tile_width, tile_height,
+                tbCode);
+
+            codesGenerator.GenerateCSharp();
 
             designViewToolStripMenuItem.Checked = false;
             codeViewToolStripMenuItem.Checked = true;
@@ -462,7 +474,12 @@ namespace LevelBuilder
         private void rbXML_CheckedChanged(object sender, EventArgs e)
         {   // radio button for XML is selected
             selectedLanguageToolStripMenuItem.Text = "Generate XML";
-            GenerateXML();
+
+            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
+                tile_library, tile_width, tile_height,
+                tbCode);
+
+            codesGenerator.GenerateXML();
 
             designViewToolStripMenuItem.Checked = false;
             codeViewToolStripMenuItem.Checked = true;
@@ -481,12 +498,16 @@ namespace LevelBuilder
                 codeViewToolStripMenuItem.Checked = true;
                 designViewToolStripMenuItem.Checked = false;
 
+                codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
+                tile_library, tile_width, tile_height,
+                tbCode);
+
                 if (rbCPP.Checked)
-                    GenerateCPP();
+                    codesGenerator.GenerateCPP();
                 else if (rbCS.Checked)
-                    GenerateCSharp();
+                    codesGenerator.GenerateCSharp();
                 else if (rbXML.Checked)
-                    GenerateXML();
+                    codesGenerator.GenerateXML();
             }
         }
 
@@ -597,6 +618,10 @@ namespace LevelBuilder
             saveMapToolStripMenuItem.Enabled = false;
 
             tile_library = new Tile[0];
+
+            codesGenerator = new CodesGenerator(map, map_name, map_width, map_height, 
+                tile_library, tile_width, tile_height,
+                tbCode);
         }
         
         #endregion

@@ -101,7 +101,6 @@ namespace LevelBuilder
             this.generateCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cArrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cArrayToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.actionScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.xMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialogLoadTiles = new System.Windows.Forms.FolderBrowserDialog();
             this.saveMapDialog = new System.Windows.Forms.SaveFileDialog();
@@ -816,7 +815,6 @@ namespace LevelBuilder
             this.generateCodeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cArrayToolStripMenuItem,
             this.cArrayToolStripMenuItem1,
-            this.actionScriptToolStripMenuItem,
             this.xMLToolStripMenuItem});
             this.generateCodeToolStripMenuItem.Name = "generateCodeToolStripMenuItem";
             this.generateCodeToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
@@ -839,11 +837,6 @@ namespace LevelBuilder
             this.cArrayToolStripMenuItem1.Size = new System.Drawing.Size(210, 22);
             this.cArrayToolStripMenuItem1.Text = "C# A&rray";
             this.cArrayToolStripMenuItem1.Click += new System.EventHandler(this.cArrayToolStripMenuItem1_Click);
-            // 
-            // actionScriptToolStripMenuItem
-            // 
-            this.actionScriptToolStripMenuItem.Name = "actionScriptToolStripMenuItem";
-            this.actionScriptToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             // 
             // xMLToolStripMenuItem
             // 
@@ -1016,7 +1009,7 @@ namespace LevelBuilder
             this.toolStripMenuItemDelete.Text = "Delete";
             this.toolStripMenuItemDelete.Click += new System.EventHandler(this.toolStripMenuItemDelete_Click);
             // 
-            // D2DMapEditor
+            // MapEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1156,8 +1149,7 @@ namespace LevelBuilder
         private System.Windows.Forms.ToolStripMenuItem selectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deselectToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem actionScriptToolStripMenuItem;
-
+        
         #endregion
     }
 }
