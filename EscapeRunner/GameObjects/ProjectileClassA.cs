@@ -15,6 +15,10 @@ namespace EscapeRunner.GameObjects
         private BulletAnimation bulletAni;
         private Point bulletStartPosition = Point.Empty;
         private ExplosionAnimation explosionAni;   // Change ExplosionAnimation class to public to make this work
+
+        /// <summary>
+        /// Keeps the explosion happening until it finishes, even if the bullet itself was removed
+        /// </summary>
         private bool explosionAwake;
 
         //private BulletAnimation bulletAnimation;
@@ -71,6 +75,8 @@ namespace EscapeRunner.GameObjects
 
                     used = value;
                 }
+                // Setting the usage of bullet to false
+                bulletAni.Locked = false;
                 used = value;
             }
         }

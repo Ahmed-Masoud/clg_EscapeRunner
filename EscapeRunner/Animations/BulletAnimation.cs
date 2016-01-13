@@ -14,7 +14,9 @@ namespace EscapeRunner.Animations
 
         private Directions bulletDirection;
         private new int imageIndex;
-        private bool needDirection = true, bulletLocked = false;
+        private bool needDirection = true;
+
+        public bool Locked { get; set; }
 
         // Horizontal displacement is bigger because the screen is always horizontally bigger
         private int verticalDisplacement = 9, horizontalDisplacement = 18;
@@ -103,11 +105,15 @@ namespace EscapeRunner.Animations
             Point position = AnimationPosition;
 
             // Get the direction of the shot only once per shot
+
             if (needDirection)
             {
-                bulletDirection = Player.Direction;
+                if (!Locked)
+                    bulletDirection = Player.Direction;
+                Locked = true;
                 needDirection = false;
             }
+
 
             switch (bulletDirection)
             {

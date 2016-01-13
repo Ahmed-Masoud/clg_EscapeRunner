@@ -20,7 +20,8 @@ namespace EscapeRunner.GameObjects
 
         private static ProjectilePool instance;
         private static List<IWeapon> projectiles;
-        private readonly int verticalOffset = 35, horizontalOffset = 35, chHeight = 10, chWidth = 10;
+        private readonly int verticalOffset = 35, horizontalOffset = 35,
+            chHeight = PlayerAnimation.PlayerSize.Height, chWidth = PlayerAnimation.PlayerSize.Width;
 
         #endregion
 
@@ -107,24 +108,24 @@ namespace EscapeRunner.GameObjects
             switch (direction)
             {
                 case Directions.Up:
-                    position.X += (int)(chWidth * 0.75);
-                    position.Y += verticalOffset + chHeight;
+                    position.X += (int)(chWidth * 0.37);
+                    position.Y += verticalOffset + (int)(chHeight * 0.7);
                     break;
 
                 case Directions.Down:
-                    position.X += (int)(chWidth * 0.75);
+                    position.X += (int)(chWidth * 0.37);
                     position.Y -= verticalOffset;
                     break;
 
                 case Directions.Left:
 
-                    position.Y += verticalOffset / 3;
-                    position.X += horizontalOffset + chHeight / 2;
+                    position.Y += chHeight / 2;
+                    position.X += (int)(chWidth / 1.7);
                     break;
 
                 case Directions.Right:
-                    position.Y += verticalOffset / 3;
-                    position.X -= horizontalOffset - chWidth;
+                    position.Y += chHeight / 2;
+                    position.X += chWidth / 9;
                     break;
             }
 

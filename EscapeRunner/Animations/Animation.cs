@@ -16,31 +16,20 @@ namespace EscapeRunner.Animations
 
     public abstract class Animation
     {
-        #region Protected Fields
 
         protected int animationWidth, animationHeight;
         protected int imageIndex;
         protected IReciever reciever = new AnimationFactory();
+        protected Rectangle objectBounds;
 
-        #endregion
-
-        #region Public Constructors
 
         public Animation(AnimationType animationType)
         {
             reciever.Type = animationType;
         }
 
-        #endregion
-
-        #region Public Properties
-
         // Trigger an event to allert the bullet that it has been relocated, and set its lock state
         public Point AnimationPosition { get; set; } = Point.Empty;
-
-        #endregion
-
-        #region Public Methods
 
         /// <summary>
         /// Draws the target animation
@@ -48,6 +37,7 @@ namespace EscapeRunner.Animations
         public virtual void DrawFrame(Graphics g, Bitmap animationImage)
         {
             g.DrawImage(animationImage, AnimationPosition.X, AnimationPosition.Y, animationWidth, animationHeight);
+            objectBounds.Location = AnimationPosition;
         }
 
         public abstract void LoadNextAnimationImage();
@@ -64,7 +54,8 @@ namespace EscapeRunner.Animations
             // The idea lies in rotating the returnBitmap and "drawing" the "image" on the rotated
             // returnBitmap Then returnBitmap is rotated to the complementing ( 360 - rotation )
             // direction so the image seems normal
-            Bitmap returnBitmap = new Bitmap(image.Width, image.Height);
+
+            Bitmap returnBitmap = new Bitmap(animationWidth, animationHeight);
             //make a graphics object from the empty bitmap
             using (Graphics gx = Graphics.FromImage(returnBitmap))
             {
@@ -79,12 +70,12 @@ namespace EscapeRunner.Animations
 
                 //draw passed in image onto graphics object
                 gx.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                gx.DrawImage(image, new Point(0, 0));
+                gx.DrawImage(image, 0, 0, animationWidth, animationHeight);
                 returnBitmap.RotateFlip(counterRotation);    // ex:Rotate 270 back
             }
+
             return returnBitmap;
         }
 
-        #endregion
     }
 }

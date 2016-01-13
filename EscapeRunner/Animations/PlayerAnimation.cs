@@ -5,12 +5,10 @@ namespace EscapeRunner.Animations
 {
     public sealed class PlayerAnimation : Animation
     {
-        #region Private Fields
 
         private static List<Bitmap> animationImages;
 
-        #endregion
-
+        public static Size PlayerSize { get; private set; }
         #region Public Constructors
 
         public PlayerAnimation() : base(AnimationType.PlayerAnimation)
@@ -21,8 +19,10 @@ namespace EscapeRunner.Animations
             {
                 animationImages = DataSource.LoadCharacterAnimationFromDisk();
             }
-            animationHeight = 50;
-            animationWidth = 50;
+            animationHeight = 100;
+            animationWidth = 100;
+            objectBounds = new Rectangle(AnimationPosition, new Size(animationWidth, animationHeight));
+            PlayerSize = new Size(animationWidth, animationHeight);
         }
 
         #endregion
@@ -49,6 +49,7 @@ namespace EscapeRunner.Animations
                 }
 
                 // Call the base class method to draw the image
+
                 base.DrawFrame(g, animationImage);
 
                 // Remove this to keep the bird constant
