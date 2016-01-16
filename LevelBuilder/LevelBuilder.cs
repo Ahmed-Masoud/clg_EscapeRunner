@@ -616,8 +616,7 @@ namespace LevelBuilder
             pasteToolStripMenuItem.Enabled = false;
 
             saveMapToolStripMenuItem.Enabled = false;
-            //saveMapToolStripMenuItem.Enabled = true;
-
+            
             tile_library = new Tile[0];
 
             codesGenerator = new CodesGenerator(map, map_name, map_width, map_height, 

@@ -620,7 +620,7 @@ namespace LevelBuilder
             this.exitDLMapEditorToolStripMenuItem.Name = "exitDLMapEditorToolStripMenuItem";
             this.exitDLMapEditorToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
             this.exitDLMapEditorToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
-            this.exitDLMapEditorToolStripMenuItem.Text = "E&xit D2D Map Editor";
+            this.exitDLMapEditorToolStripMenuItem.Text = "E&xit LV Map Editor";
             this.exitDLMapEditorToolStripMenuItem.Click += new System.EventHandler(this.exitDLMapEditorToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem1
@@ -826,7 +826,7 @@ namespace LevelBuilder
             this.cArrayToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift)
             | System.Windows.Forms.Keys.D1)));
             this.cArrayToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.cArrayToolStripMenuItem.Text = "&C/C++ Array";
+            this.cArrayToolStripMenuItem.Text = "&C/C++";
             this.cArrayToolStripMenuItem.Click += new System.EventHandler(this.cArrayToolStripMenuItem_Click);
             // 
             // cArrayToolStripMenuItem1
@@ -835,7 +835,7 @@ namespace LevelBuilder
             this.cArrayToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift)
             | System.Windows.Forms.Keys.D2)));
             this.cArrayToolStripMenuItem1.Size = new System.Drawing.Size(210, 22);
-            this.cArrayToolStripMenuItem1.Text = "C# A&rray";
+            this.cArrayToolStripMenuItem1.Text = "C#";
             this.cArrayToolStripMenuItem1.Click += new System.EventHandler(this.cArrayToolStripMenuItem1_Click);
             // 
             // xMLToolStripMenuItem
@@ -850,13 +850,14 @@ namespace LevelBuilder
             // saveMapDialog
             // 
             this.saveMapDialog.DefaultExt = "lv";
-            this.saveMapDialog.Filter = "LV Documents (*.lv) |*.lv";
+            this.saveMapDialog.Filter = "LV Files (*.lv) |*.lv";
             this.saveMapDialog.Title = "Save Map As";
             // 
             // openMapDialog
             // 
             this.openMapDialog.DefaultExt = "lv";
-            this.openMapDialog.Filter = "LV Documents (*.lv) |*.lv";
+            this.openMapDialog.Filter = "LV Files (*.lv) |*.lv";
+            this.openMapDialog.Title = "Open Map";
             // 
             // gbTiles
             // 
