@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Resources;
+using System.IO;
+using System.Reflection;
 
 namespace EscapeRunner
 {
@@ -36,8 +38,30 @@ namespace EscapeRunner
             //characterAnimation.Add(Properties.Resources.wingMan7);
             //characterAnimation.Add(Properties.Resources.wingMan8);
             //characterAnimation.Add(Properties.Resources.wingMan9);
-            characterAnimation.Add(Properties.Resources.bunny1_walk1);
-            characterAnimation.Add(Properties.Resources.bunny1_walk2);
+            //characterAnimation.Add(Properties.Resources.bunny1_walk1);
+            //characterAnimation.Add(Properties.Resources.bunny1_walk2);
+
+            string folderPath = Path.Combine(Environment.CurrentDirectory, "Character Animation");
+            //string projectDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            if (Directory.Exists(folderPath))
+            {
+                FileInfo aniFile = new FileInfo(folderPath);
+
+                //aniFile.
+                string[] animationFileNames = Directory.GetFiles("Character Animation", "*.png");
+                //Image i =
+                //folderPath;
+
+                foreach (string pic in animationFileNames)
+                {
+                    
+                    characterAnimation.Add((Bitmap)Image.FromFile(pic));
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("Animation File cannot be found");
+            }
             return characterAnimation;
         }
 

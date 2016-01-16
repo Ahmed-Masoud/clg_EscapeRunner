@@ -53,8 +53,6 @@ namespace EscapeRunner.GameObjects
 
         #endregion
 
-        // TODO remove fake int d
-
         #region Public Methods
 
         public void Reset()
