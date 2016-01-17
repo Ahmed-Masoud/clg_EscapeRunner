@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-//using System.Linq;
-using System.Text;
+﻿//using System.Linq;
 //using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -9,19 +6,13 @@ namespace LevelBuilder
 {
     public class Tile
     {
-        #region private members
-
+        private int height;
         private int id;
         private string name;
+        private string path;
+        private PictureBox pictureBox;
         private bool walkable;
         private int width;
-        private int height;
-        private string path;
-        PictureBox pictureBox;
-
-        #endregion
-
-        #region member functions
 
         public Tile()
         {
@@ -29,6 +20,12 @@ namespace LevelBuilder
             width = 0;
             height = 0;
             path = "";
+        }
+
+        public int TileHeight
+        {
+            get { return height; }
+            set { height = value; }
         }
 
         public int TileID
@@ -43,24 +40,6 @@ namespace LevelBuilder
             set { name = value; }
         }
 
-        public bool TileWalkable
-        {
-            get { return walkable; }
-            set { walkable = value; }
-        }
-
-        public int TileWidth
-        {
-            get { return width; }
-            set { width = value; }
-        }
-
-        public int TileHeight
-        {
-            get { return height; }
-            set { height = value; }
-        }
-
         public string TilePath
         {
             get { return path; }
@@ -73,6 +52,16 @@ namespace LevelBuilder
             set { pictureBox = value; }
         }
 
-        #endregion
+        public bool TileWalkable
+        {
+            get { return walkable; }
+            set { walkable = value; }
+        }
+
+        public int TileWidth
+        {
+            get { return width; }
+            set { width = value; }
+        }
     }
 }

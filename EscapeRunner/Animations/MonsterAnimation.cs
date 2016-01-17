@@ -1,9 +1,6 @@
-﻿using System;
-
-namespace EscapeRunner.Animations
+﻿namespace EscapeRunner.Animations
 {
     internal class MonsterAnimation
     {
-       
     }
 }

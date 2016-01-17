@@ -1,26 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+
 //using System.Linq;
-using System.Text;
 using System.IO;
+
 //using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LevelBuilder
 {
-
-    public enum ToolType
-    {
-        brush = 1,
-        selectTile = 2,
-        eraser = 3,
-        selection = 4,
-        fill = 5
-    }
-
     public enum CursorType
     {
         arrow = 1,
@@ -32,44 +21,39 @@ namespace LevelBuilder
         fill = 7
     }
 
+    public enum ToolType
+    {
+        brush = 1,
+        selectTile = 2,
+        eraser = 3,
+        selection = 4,
+        fill = 5
+    }
+
     public partial class LevelBuilder : Form
     {
-        #region private members
-
-        private string current_working_filename;
-        private string map_name;
-
-        private int tile_width;
-        private int tile_height;
-
-        private int map_width;
-        private int map_height;
-        private int[,] map;
-        private int[,] resize_map;
 
         private Map backup_map;
-
-        private Stack<HistoryNode> undo;
-        private Stack<HistoryNode> redo;
-
         private Clipboard clipboard;
+        private CodesGenerator codesGenerator;
+        private string current_working_filename;
+        private CursorType cursor;
+        private bool grid_on;
+        private int[,] map;
+        private int map_height;
+        private string map_name;
 
-        private Tile[] tile_library;
-
+        private int map_width;
+        private Stack<HistoryNode> redo;
+        private int[,] resize_map;
         private PictureBox selected_tile;
         private ToolType selected_tool;
-        private CursorType cursor;
-
-        private bool grid_on;
-        private bool show_walkable_on;
-
         private SelectionTool selection;
-
-        private CodesGenerator codesGenerator;
-
-        #endregion
-
-        #region member functions
+        private bool show_walkable_on;
+        private int tile_height;
+        private Tile[] tile_library;
+        private int tile_width;
+        private Stack<HistoryNode> undo;
 
         public LevelBuilder()
         {
@@ -156,21 +140,169 @@ namespace LevelBuilder
             backup_map.IsTileLibraryChanged = true;
         }
 
-        private void tilePicBox_MouseClick(object sender, MouseEventArgs e)
-        {   // select tile
-            selected_tile = (PictureBox)sender;
-            lblTileIDValue.Text = selected_tile.Name;
-            tbTileName.Text = tile_library[Convert.ToInt32(selected_tile.Name)].TileName;
-            cbTileWalkable.Checked = tile_library[Convert.ToInt32(selected_tile.Name)].TileWalkable;
-            pbSelectedTile.Image = selected_tile.Image;
-            pbSelectedTile.Name = selected_tile.Name;
-            gbTileProperties.Enabled = true;
+        private void Init()
+        {
+            // add event handlers
+            pbMap.MouseDown += new MouseEventHandler(mapPicBox_MouseDown);
+            pbMap.MouseMove += new MouseEventHandler(mapPicBox_MouseMove);
+            pbMap.MouseHover += new EventHandler(mapPicBox_MouseHover);
+            pbMap.MouseUp += new MouseEventHandler(mapPicBox_MouseUp);
+            this.KeyDown += new KeyEventHandler(MapEditor_KeyDown);
+            this.KeyPreview = true;
+            FormClosing += new FormClosingEventHandler(MapEditor_FormClosing);
 
-            if (e.Button == MouseButtons.Right)
-            {   // show pop up menu
-                toolStripMenuItemWalkable.Checked = tile_library[Convert.ToInt32(selected_tile.Name)].TileWalkable;
-                contextMenuStripTile.Show(MousePosition.X, MousePosition.Y);
+            // create tooltips for tools
+            ToolTip toolTips = new ToolTip();
+            toolTips.AutoPopDelay = 5000;
+            toolTips.InitialDelay = 1000;
+            toolTips.ReshowDelay = 500;
+            toolTips.ShowAlways = true;
+            toolTips.SetToolTip(btnToolSelection, "Selection(S)");
+            toolTips.SetToolTip(btnToolBrush, "Brush(B)");
+            toolTips.SetToolTip(btnToolEraser, "Eraser(E)");
+            toolTips.SetToolTip(btnToolFill, "Fill(F)");
+            toolTips.SetToolTip(btnToolSelectTile, "Select Tile(T)");
+
+            // initialized some variables
+            grid_on = true;
+            show_walkable_on = false;
+            selected_tile = null;
+            selection = new SelectionTool();
+
+            // select brush as default tool
+            SelectTool(ToolType.selection);
+
+            backup_map = new Map();
+
+            undo = new Stack<HistoryNode>();
+            undoToolStripMenuItem.Enabled = false;
+
+            redo = new Stack<HistoryNode>();
+            redoToolStripMenuItem.Enabled = false;
+
+            clipboard = new Clipboard();
+            pasteToolStripMenuItem.Enabled = false;
+
+            saveMapToolStripMenuItem.Enabled = false;
+            //saveMapToolStripMenuItem.Enabled = true;
+
+            tile_library = new Tile[0];
+
+            codesGenerator = new CodesGenerator(map, map_name, map_width, map_height,
+                tile_library, tile_width, tile_height,
+                tbCode);
+        }
+
+        private void MapEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {   // exit map editor
+            if (backup_map.IsDirty(map_width, map_height, tile_width, tile_height, map))//(_tile_library != null && _tile_library.Length > 0))
+            {
+                DialogResult result = MessageBox.Show("Do you want to save " + Path.GetFileName(current_working_filename) + "?", "Quit Level Builder", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
+                {   // save file before close
+                    try
+                    {
+                        Cursor.Current = Cursors.WaitCursor;
+
+                        if (current_working_filename == "Untitled.lv")
+                        {
+                            string initialPath = Application.ExecutablePath + "\\" + "Projects";
+                            saveMapDialog.InitialDirectory = initialPath;
+                            DialogResult saveMap = this.saveMapDialog.ShowDialog();
+                            if (saveMap == DialogResult.OK)
+                            {   // save Map
+                                try
+                                {
+                                    Cursor.Current = Cursors.WaitCursor;
+
+                                    SaveMap(this.saveMapDialog.FileName);
+                                    SaveTiles(this.saveMapDialog.FileName);
+                                    //_my_map.SaveMap(this.saveMapDialog.FileName);
+
+                                    Cursor.Current = Cursors.Default;
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show("Fail to save: " + current_working_filename + "\n" + ex.Message);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            SaveMap(current_working_filename);
+                            SaveTiles(current_working_filename);
+                            //_my_map.SaveMap(_current_working_filename);
+                        }
+
+                        Cursor.Current = Cursors.Default;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Fail to save: " + current_working_filename + "\n" + ex.Message);
+                    }
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
             }
+        }
+
+        private void MapEditor_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.S)
+            {
+                SelectTool(ToolType.selection);
+            }
+            else if (e.KeyCode == Keys.B)
+            {
+                SelectTool(ToolType.brush);
+            }
+            else if (e.KeyCode == Keys.E)
+            {
+                SelectTool(ToolType.eraser);
+            }
+            else if (e.KeyCode == Keys.F)
+            {
+                SelectTool(ToolType.fill);
+            }
+            else if (e.KeyCode == Keys.T)
+            {
+                SelectTool(ToolType.selectTile);
+            }
+            else if (e.KeyCode == Keys.Delete)
+            {
+                if (selection.StartDrag.X != -1 && selection.StartDrag.Y != -1 && selection.StopDrag.X != -1 && selection.StopDrag.Y != -1)
+                {   // selection was made
+                    redo.Clear();
+
+                    int id = 0;
+                    if (undo.Count > 0)
+                        id = undo.Peek().Id + 1;
+
+                    if (selection.BottomRightX > map_width)
+                        selection.BottomRightX = map_width;
+                    if (selection.BottomRightY > map_height)
+                        selection.BottomRightY = map_height;
+
+                    for (int i = selection.TopLeftX; i < selection.BottomRightX; i++)
+                    {   // delete selected tiles
+                        for (int j = selection.TopLeftY; j < selection.BottomRightY; j++)
+                        {
+                            undo.Push(new HistoryNode(id, i, j, map[i, j]));
+                            map[i, j] = -1;
+                        }
+                    }
+
+                    RenderMap();
+                }
+            }
+        }
+
+        private void MapEditor_Resize(object sender, EventArgs e)
+        {   // when window is resize, update the design panel's size
+            pnlDesign.Width = this.Width - pnlTiles.Width - 10;
+            pnlDesign.Height = this.Height - 175;
         }
 
         private void mapPicBox_MouseDown(object sender, MouseEventArgs e)
@@ -302,6 +434,10 @@ namespace LevelBuilder
                 undoToolStripMenuItem.Enabled = false;
         }
 
+        private void mapPicBox_MouseHover(object sender, EventArgs e)
+        {
+        }
+
         private void mapPicBox_MouseMove(object sender, MouseEventArgs e)
         {   // mouse move over map
             Point myMouse = PointToClient(MousePosition);
@@ -357,11 +493,6 @@ namespace LevelBuilder
             }
         }
 
-        private void mapPicBox_MouseHover(object sender, EventArgs e)
-        {
-
-        }
-
         private void mapPicBox_MouseUp(object sender, MouseEventArgs e)
         {   // mouse release over map
             Point myMouse = PointToClient(MousePosition);
@@ -387,57 +518,6 @@ namespace LevelBuilder
                 selection.StopDrag = new Point(mapX, mapY);
 
                 RenderMap();
-            }
-        }
-
-        private void MapEditor_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.S)
-            {
-                SelectTool(ToolType.selection);
-            }
-            else if (e.KeyCode == Keys.B)
-            {
-                SelectTool(ToolType.brush);
-            }
-            else if (e.KeyCode == Keys.E)
-            {
-                SelectTool(ToolType.eraser);
-            }
-            else if (e.KeyCode == Keys.F)
-            {
-                SelectTool(ToolType.fill);
-            }
-            else if (e.KeyCode == Keys.T)
-            {
-                SelectTool(ToolType.selectTile);
-            }
-            else if (e.KeyCode == Keys.Delete)
-            {
-                if (selection.StartDrag.X != -1 && selection.StartDrag.Y != -1 && selection.StopDrag.X != -1 && selection.StopDrag.Y != -1)
-                {   // selection was made
-                    redo.Clear();
-
-                    int id = 0;
-                    if (undo.Count > 0)
-                        id = undo.Peek().Id + 1;
-
-                    if (selection.BottomRightX > map_width)
-                        selection.BottomRightX = map_width;
-                    if (selection.BottomRightY > map_height)
-                        selection.BottomRightY = map_height;
-
-                    for (int i = selection.TopLeftX; i < selection.BottomRightX; i++)
-                    {   // delete selected tiles
-                        for (int j = selection.TopLeftY; j < selection.BottomRightY; j++)
-                        {
-                            undo.Push(new HistoryNode(id, i, j, map[i, j]));
-                            map[i, j] = -1;
-                        }
-                    }
-
-                    RenderMap();
-                }
             }
         }
 
@@ -511,121 +591,22 @@ namespace LevelBuilder
             }
         }
 
-        private void MapEditor_FormClosing(object sender, FormClosingEventArgs e)
-        {   // exit map editor
-            if (backup_map.IsDirty(map_width, map_height, tile_width, tile_height, map))//(_tile_library != null && _tile_library.Length > 0))
-            {
-                DialogResult result = MessageBox.Show("Do you want to save " + Path.GetFileName(current_working_filename) + "?", "Quit Level Builder", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-                if (result == DialogResult.Yes)
-                {   // save file before close
-                    try
-                    {
-                        Cursor.Current = Cursors.WaitCursor;
+        private void tilePicBox_MouseClick(object sender, MouseEventArgs e)
+        {   // select tile
+            selected_tile = (PictureBox)sender;
+            lblTileIDValue.Text = selected_tile.Name;
+            tbTileName.Text = tile_library[Convert.ToInt32(selected_tile.Name)].TileName;
+            cbTileWalkable.Checked = tile_library[Convert.ToInt32(selected_tile.Name)].TileWalkable;
+            pbSelectedTile.Image = selected_tile.Image;
+            pbSelectedTile.Name = selected_tile.Name;
+            gbTileProperties.Enabled = true;
 
-                        if (current_working_filename == "Untitled.lv")
-                        {
-                            string initialPath = Application.ExecutablePath + "\\" + "Projects";
-                            saveMapDialog.InitialDirectory = initialPath;
-                            DialogResult saveMap = this.saveMapDialog.ShowDialog();
-                            if (saveMap == DialogResult.OK)
-                            {   // save Map
-                                try
-                                {
-                                    Cursor.Current = Cursors.WaitCursor;
-
-                                    SaveMap(this.saveMapDialog.FileName);
-                                    SaveTiles(this.saveMapDialog.FileName);
-                                    //_my_map.SaveMap(this.saveMapDialog.FileName);
-
-                                    Cursor.Current = Cursors.Default;
-                                }
-                                catch (Exception ex)
-                                {
-                                    MessageBox.Show("Fail to save: " + current_working_filename + "\n" + ex.Message);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            SaveMap(current_working_filename);
-                            SaveTiles(current_working_filename);
-                            //_my_map.SaveMap(_current_working_filename);
-                        }
-
-                        Cursor.Current = Cursors.Default;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Fail to save: " + current_working_filename + "\n" + ex.Message);
-                    }
-                }
-                else if (result == DialogResult.Cancel)
-                {
-                    e.Cancel = true;
-                }
+            if (e.Button == MouseButtons.Right)
+            {   // show pop up menu
+                toolStripMenuItemWalkable.Checked = tile_library[Convert.ToInt32(selected_tile.Name)].TileWalkable;
+                contextMenuStripTile.Show(MousePosition.X, MousePosition.Y);
             }
         }
-
-        private void MapEditor_Resize(object sender, EventArgs e)
-        {   // when window is resize, update the design panel's size
-            pnlDesign.Width = this.Width - pnlTiles.Width - 10;
-            pnlDesign.Height = this.Height - 175;
-        }
-
-        private void Init()
-        {
-            // add event handlers
-            pbMap.MouseDown += new MouseEventHandler(mapPicBox_MouseDown);
-            pbMap.MouseMove += new MouseEventHandler(mapPicBox_MouseMove);
-            pbMap.MouseHover += new EventHandler(mapPicBox_MouseHover);
-            pbMap.MouseUp += new MouseEventHandler(mapPicBox_MouseUp);
-            this.KeyDown += new KeyEventHandler(MapEditor_KeyDown);
-            this.KeyPreview = true;
-            FormClosing += new FormClosingEventHandler(MapEditor_FormClosing);
-
-            // create tooltips for tools
-            ToolTip toolTips = new ToolTip();
-            toolTips.AutoPopDelay = 5000;
-            toolTips.InitialDelay = 1000;
-            toolTips.ReshowDelay = 500;
-            toolTips.ShowAlways = true;
-            toolTips.SetToolTip(btnToolSelection, "Selection(S)");
-            toolTips.SetToolTip(btnToolBrush, "Brush(B)");
-            toolTips.SetToolTip(btnToolEraser, "Eraser(E)");
-            toolTips.SetToolTip(btnToolFill, "Fill(F)");
-            toolTips.SetToolTip(btnToolSelectTile, "Select Tile(T)");
-
-            // initialized some variables
-            grid_on = true;
-            show_walkable_on = false;
-            selected_tile = null;
-            selection = new SelectionTool();
-
-            // select brush as default tool
-            SelectTool(ToolType.selection);
-
-            backup_map = new Map();
-
-            undo = new Stack<HistoryNode>();
-            undoToolStripMenuItem.Enabled = false;
-
-            redo = new Stack<HistoryNode>();
-            redoToolStripMenuItem.Enabled = false;
-
-            clipboard = new Clipboard();
-            pasteToolStripMenuItem.Enabled = false;
-
-            saveMapToolStripMenuItem.Enabled = false;
-            //saveMapToolStripMenuItem.Enabled = true;
-
-            tile_library = new Tile[0];
-
-            codesGenerator = new CodesGenerator(map, map_name, map_width, map_height, 
-                tile_library, tile_width, tile_height,
-                tbCode);
-        }
-        
-        #endregion
 
     }
 }

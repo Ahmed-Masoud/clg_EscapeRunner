@@ -6,24 +6,16 @@ namespace EscapeRunner.Animations
 {
     internal sealed class BulletAnimation : Animation, IPrototype<Animation>
     {
-        #region Private Fields
-
         // List is marked static to avoid loading the resources from the hard disk each time an
         // explosion occurs
-        private static readonly List<Bitmap> bulletImages = DataSource.BulletAnimation;
+        private static readonly List<Bitmap> bulletImages = Model.BulletAnimation;
 
         private Directions bulletDirection;
         private new int imageIndex;
         private bool needDirection = true;
 
-        public bool Locked { get; set; }
-
         // Horizontal displacement is bigger because the screen is always horizontally bigger
         private int verticalDisplacement = 9, horizontalDisplacement = 18;
-
-        #endregion
-
-        #region Public Constructors
 
         public BulletAnimation() : base(AnimationType.BulletAnimation)
         {
@@ -36,15 +28,8 @@ namespace EscapeRunner.Animations
             animationWidth = 30;
         }
 
-        #endregion
-
-        #region Public Properties
-
         public int ImageCount { get; private set; }
-
-        #endregion
-
-        #region Public Methods
+        public bool Locked { get; set; }
 
         public bool BulletReachedEnd()
         {
@@ -96,10 +81,6 @@ namespace EscapeRunner.Animations
             }
         }
 
-        #endregion
-
-        #region Private Methods
-
         private void SetBulletPlace()
         {
             Point position = AnimationPosition;
@@ -113,7 +94,6 @@ namespace EscapeRunner.Animations
                 Locked = true;
                 needDirection = false;
             }
-
 
             switch (bulletDirection)
             {
@@ -136,7 +116,5 @@ namespace EscapeRunner.Animations
             // Set the bullet's new position
             AnimationPosition = position;
         }
-
-        #endregion
     }
 }

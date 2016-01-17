@@ -5,11 +5,7 @@ namespace EscapeRunner.Animations
 {
     public sealed class PlayerAnimation : Animation
     {
-
         private static List<Bitmap> animationImages;
-
-        public static Size PlayerSize { get; private set; }
-
 
         public PlayerAnimation() : base(AnimationType.PlayerAnimation)
         {
@@ -17,7 +13,7 @@ namespace EscapeRunner.Animations
 
             if (animationImages == null)
             {
-                animationImages = DataSource.CharacterAnimation;
+                animationImages = Model.CharacterAnimation;
             }
             animationHeight = 100;
             animationWidth = 100;
@@ -25,9 +21,7 @@ namespace EscapeRunner.Animations
             PlayerSize = new Size(animationWidth, animationHeight);
         }
 
-
-
-
+        public static Size PlayerSize { get; private set; }
 
         public void Draw(Graphics g, Directions direction)
         {

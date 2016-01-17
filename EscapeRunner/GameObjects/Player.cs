@@ -5,16 +5,10 @@ namespace EscapeRunner.GameObjects
 {
     public class Player : IDrawable
     {
-        #region Private Fields
-
         private static PlayerAnimation playerAnimation;
         private static Player playerInstance;
         private static int windowButtomMargin = 90;
         private static int windowSideMargin = 70;
-
-        #endregion
-
-        #region Private Constructors
 
         private Player()
         {
@@ -25,10 +19,6 @@ namespace EscapeRunner.GameObjects
             playerAnimation.AnimationPosition = new Point(100, 100);
             Direction = Directions.Right;
         }
-
-        #endregion
-
-        #region Public Properties
 
         public static Directions Direction { get; set; }
 
@@ -50,10 +40,6 @@ namespace EscapeRunner.GameObjects
 
         public static Point Position { get { return playerAnimation.AnimationPosition; } }
 
-        #endregion
-
-        #region Public Methods
-
         /// <summary>
         /// Position of the player
         /// </summary>
@@ -70,10 +56,6 @@ namespace EscapeRunner.GameObjects
         {
             playerAnimation.Draw(g, Direction);
         }
-
-        #endregion
-
-        #region Private Methods
 
         private static bool CanMove(Directions direction)
         {
@@ -126,7 +108,5 @@ namespace EscapeRunner.GameObjects
             Direction = direction;
             playerAnimation.AnimationPosition = newPosition;
         }
-
-        #endregion
     }
 }

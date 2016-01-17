@@ -5,17 +5,11 @@ namespace EscapeRunner.GameObjects
 {
     internal class ProjectileClassB : IWeapon, IDrawable
     {
-        #region Internal Constructors
-
         internal ProjectileClassB(int index)
         {
             //ExplosionPosition = Point.Empty;
             Index = index;
         }
-
-        #endregion
-
-        #region Public Properties
 
         public Point BulletStartPosition
         {
@@ -51,10 +45,6 @@ namespace EscapeRunner.GameObjects
 
         public bool Used { get; set; }
 
-        #endregion
-
-        #region Public Methods
-
         public void Reset()
         {
             //ExplosionPosition = Point.Empty;
@@ -65,7 +55,5 @@ namespace EscapeRunner.GameObjects
         {
             throw new NotImplementedException();
         }
-
-        #endregion
     }
 }

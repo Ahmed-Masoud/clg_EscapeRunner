@@ -16,12 +16,10 @@ namespace EscapeRunner.Animations
 
     public abstract class Animation
     {
-
         protected int animationWidth, animationHeight;
         protected int imageIndex;
-        protected IReciever reciever = new AnimationFactory();
         protected Rectangle objectBounds;
-
+        protected IReciever reciever = new AnimationFactory();
 
         public Animation(AnimationType animationType)
         {
@@ -76,6 +74,5 @@ namespace EscapeRunner.Animations
 
             return returnBitmap;
         }
-
     }
 }

@@ -1,47 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
+
 //using System.Linq;
-using System.Text;
 //using System.Threading.Tasks;
 
 namespace LevelBuilder
 {
-
     public class CodesGenerator
     {
-        #region private members
-
         private int[,] map;
+        private int map_height;
         private string map_name;
         private int map_width;
-        private int map_height;
-
+        private System.Windows.Forms.TextBox tbCode;
+        private int tile_height;
         private Tile[] tile_library;
         private int tile_width;
-        private int tile_height;
-
-        private System.Windows.Forms.TextBox tbCode;
-
-        #endregion
 
         public CodesGenerator(int[,] map, string map_name, int map_width, int map_height,
-            Tile[] tile_library, int tile_width, int tile_height,
-            System.Windows.Forms.TextBox tbCode)
-        {
-            this.map = map;
-            this.map_name = map_name;
-            this.map_height = map_height;
-            this.map_width = map_width;
-
-            this.tile_library = tile_library;
-            this.tile_height = tile_height;
-            this.tile_width = tile_width;
-
-            this.tbCode = tbCode;
-        }
-
-        public void setCodesGenerator(int[,] map, string map_name, int map_width, int map_height,
             Tile[] tile_library, int tile_width, int tile_height,
             System.Windows.Forms.TextBox tbCode)
         {
@@ -237,7 +213,6 @@ namespace LevelBuilder
 
                 for (int i = 0; i < tile_library.Length; i++)
                 {   // create tile structs
-
                     code.Write("\tnew tile(");
                     code.Write(tile_library[i].TileID);
                     code.Write(", \"");
@@ -360,7 +335,6 @@ namespace LevelBuilder
 
                 for (int i = 0; i < tile_library.Length; i++)
                 {   // create tile structs
-
                     code.Write("\t<Tile ID=\"");
                     code.Write(tile_library[i].TileID);
                     code.Write("\">\r\n");
@@ -400,5 +374,20 @@ namespace LevelBuilder
             tbCode.Text = code.ToString();
         }
 
+        public void setCodesGenerator(int[,] map, string map_name, int map_width, int map_height,
+                                    Tile[] tile_library, int tile_width, int tile_height,
+            System.Windows.Forms.TextBox tbCode)
+        {
+            this.map = map;
+            this.map_name = map_name;
+            this.map_height = map_height;
+            this.map_width = map_width;
+
+            this.tile_library = tile_library;
+            this.tile_height = tile_height;
+            this.tile_width = tile_width;
+
+            this.tbCode = tbCode;
+        }
     }
 }

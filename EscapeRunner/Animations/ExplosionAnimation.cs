@@ -8,15 +8,9 @@ namespace EscapeRunner.Animations
     /// </summary>
     public class ExplosionAnimation : Animation, IPrototype<Animation>
     {
-        #region Private Fields
-
         // List is marked static to avoid loading the resources from the hard disk each time an
         // explosion occurs Load the contents of the explosion animation
-        private static readonly List<Bitmap> explosionImages = DataSource.ExplosionAnimation;
-
-        #endregion
-
-        #region Internal Constructors
+        private static readonly List<Bitmap> explosionImages = Model.ExplosionAnimation;
 
         internal ExplosionAnimation() : base(AnimationType.ExplosionAnimation)
         {
@@ -29,15 +23,7 @@ namespace EscapeRunner.Animations
             animationWidth = 35;
         }
 
-        #endregion
-
-        #region Public Properties
-
         public int ImageCount { get; private set; }
-
-        #endregion
-
-        #region Public Methods
 
         public void DrawFrame(Graphics g)
         {
@@ -45,16 +31,6 @@ namespace EscapeRunner.Animations
             DrawFrame(g, explosionImages[imageIndex]);
             LoadNextAnimationImage();
         }
-
-        public override void LoadNextAnimationImage()
-        {
-            imageIndex++;
-            imageIndex %= ImageCount;
-        }
-
-        #endregion
-
-        #region Other member methods
 
         /// <summary>
         /// Returns a copy of the object
@@ -68,6 +44,10 @@ namespace EscapeRunner.Animations
             return clone;
         }
 
-        #endregion Other member methods
+        public override void LoadNextAnimationImage()
+        {
+            imageIndex++;
+            imageIndex %= ImageCount;
+        }
     }
 }
