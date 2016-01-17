@@ -3,60 +3,55 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace EscapeRunner
 {
     /// <summary>
     /// This class loads the sounds and the animations of game objects
     /// </summary>
-    internal class DataSource
+    public static class DataSource
     {
+        private static List<Bitmap> bulletClassA;
+        private static List<Bitmap> characterAnimation;
+        private static List<Bitmap> explosionAnimation;
 
-        #region Public Methods
-
-        public static List<Bitmap> LoadBulletClassA()
+        public static List<Bitmap> ExplosionAnimation { get { return explosionAnimation; } }
+        public static List<Bitmap> BulletAnimation { get { return bulletClassA; } }
+        public static List<Bitmap> CharacterAnimation { get { return characterAnimation; } }
+        /// <summary>
+        /// Loads all the animations and puts them in private fields
+        /// </summary>
+        static DataSource()
         {
-            List<Bitmap> bullets = new List<Bitmap>();
-            bullets.Add(Properties.Resources.Bullet0);
-            bullets.Add(Properties.Resources.Bullet01);
-            bullets.Add(Properties.Resources.Bullet02);
-            bullets.Add(Properties.Resources.Bullet03);
-            bullets.Add(Properties.Resources.Bullet04);
-            return bullets;
+            // Load animations
+            LoadAnimations();
         }
 
-        public static List<Bitmap> LoadCharacterAnimationFromDisk()
+        private static List<Bitmap> LoadAnimations()
         {
-            List<Bitmap> characterAnimation = new List<Bitmap>();
-            // Animation images are included in the base class as a protected List<Bitmap>
-            //characterAnimation.Add(Properties.Resources.wingMan1);
-            //characterAnimation.Add(Properties.Resources.wingMan2);
-            //characterAnimation.Add(Properties.Resources.wingMan3);
-            //characterAnimation.Add(Properties.Resources.wingMan4);
-            //characterAnimation.Add(Properties.Resources.wingMan5);
-            //characterAnimation.Add(Properties.Resources.wingMan6);
-            //characterAnimation.Add(Properties.Resources.wingMan7);
-            //characterAnimation.Add(Properties.Resources.wingMan8);
-            //characterAnimation.Add(Properties.Resources.wingMan9);
-            //characterAnimation.Add(Properties.Resources.bunny1_walk1);
-            //characterAnimation.Add(Properties.Resources.bunny1_walk2);
+            string projectPath = FindProjectPath();
+            string folderPath = Path.Combine(projectPath, "Res");
 
-            string folderPath = Path.Combine(Environment.CurrentDirectory, "Character Animation");
-            //string projectDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            // Check for the main resource folder
             if (Directory.Exists(folderPath))
             {
-                FileInfo aniFile = new FileInfo(folderPath);
+                // Character animation
+                string charAnimationsFolder = Path.Combine(folderPath, "Char");
+                string explosionAnimationsFolder = Path.Combine(folderPath, "Boom");
+                string bulletAnimationsFolder = Path.Combine(folderPath, "BulletA");
 
-                //aniFile.
-                string[] animationFileNames = Directory.GetFiles("Character Animation", "*.png");
-                //Image i =
-                //folderPath;
-
-                foreach (string pic in animationFileNames)
+                if (Directory.Exists(charAnimationsFolder)
+                    && Directory.Exists(explosionAnimationsFolder)
+                    && Directory.Exists(bulletAnimationsFolder))
                 {
-                    
-                    characterAnimation.Add((Bitmap)Image.FromFile(pic));
+                    characterAnimation = LoadAnimationFromDisk(charAnimationsFolder);
+                    explosionAnimation = LoadAnimationFromDisk(explosionAnimationsFolder);
+                    bulletClassA = LoadAnimationFromDisk(bulletAnimationsFolder);
+
                 }
+                else
+                    throw new InvalidOperationException("Animation File cannot be found");
             }
             else
             {
@@ -65,25 +60,41 @@ namespace EscapeRunner
             return characterAnimation;
         }
 
-        public static List<Bitmap> LoadExplosionAnimationFromDisk()
+        private static string FindProjectPath()
         {
-            List<Bitmap> explosionAnimation = new List<Bitmap>();
-            // Animation images are included in the base class as a protected List<Bitmap>
-            explosionAnimation.Add(Properties.Resources.Boom1);
-            explosionAnimation.Add(Properties.Resources.Boom2);
-            explosionAnimation.Add(Properties.Resources.Boom3);
-            explosionAnimation.Add(Properties.Resources.Boom4);
-            explosionAnimation.Add(Properties.Resources.Boom4);
-            explosionAnimation.Add(Properties.Resources.Boom5);
-            explosionAnimation.Add(Properties.Resources.Boom6);
-            explosionAnimation.Add(Properties.Resources.Boom7);
-            explosionAnimation.Add(Properties.Resources.Boom8);
-            explosionAnimation.Add(Properties.Resources.Boom9);
-            explosionAnimation.Add(Properties.Resources.Boom10);
+            // Get the project folder on the harddisk
+            string binFolder = Environment.CurrentDirectory;
+            string[] parentDirectories = binFolder.Split('\\');
 
-            return explosionAnimation;
+            if (parentDirectories.Length >= 2)
+            {
+                // If the project is not directly on the hard-disk C: ProjectFile \bin
+                StringBuilder projectDirectory = new StringBuilder(16);
+
+                // Get the path of the project
+                for (int i = 0; i < parentDirectories.Length - 2; i++)
+                {
+                    projectDirectory.Append($"{parentDirectories[i]}\\");
+                }
+                return projectDirectory.ToString();
+            }
+            else
+            {
+                throw new InvalidOperationException("Project Folder Can't be found");
+            }
         }
 
-        #endregion
+        private static List<Bitmap> LoadAnimationFromDisk(string animationFolder)
+        {
+            List<Bitmap> loadedAnimation = new List<Bitmap>(16);
+            string[] animationFileNames = Directory.GetFiles(animationFolder, "*.png");
+
+            foreach (string pic in animationFileNames)
+            {
+                loadedAnimation.Add((Bitmap)Image.FromFile(pic));
+            }
+
+            return loadedAnimation;
+        }
     }
 }

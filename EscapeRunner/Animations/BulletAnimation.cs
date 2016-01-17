@@ -10,7 +10,7 @@ namespace EscapeRunner.Animations
 
         // List is marked static to avoid loading the resources from the hard disk each time an
         // explosion occurs
-        private static readonly List<Bitmap> bulletImages = DataSource.LoadBulletClassA();
+        private static readonly List<Bitmap> bulletImages = DataSource.BulletAnimation;
 
         private Directions bulletDirection;
         private new int imageIndex;

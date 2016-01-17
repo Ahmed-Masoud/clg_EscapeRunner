@@ -24,9 +24,6 @@
         public AnimationType Type
         { set { animationName = value; } }
 
-        #endregion
-
-        #region Public Methods
 
         public Animation GetAnimationCommandResult()
         {

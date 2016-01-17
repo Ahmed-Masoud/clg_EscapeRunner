@@ -12,7 +12,7 @@ namespace EscapeRunner.Animations
 
         // List is marked static to avoid loading the resources from the hard disk each time an
         // explosion occurs Load the contents of the explosion animation
-        private static readonly List<Bitmap> explosionImages = DataSource.LoadExplosionAnimationFromDisk();
+        private static readonly List<Bitmap> explosionImages = DataSource.ExplosionAnimation;
 
         #endregion
 
