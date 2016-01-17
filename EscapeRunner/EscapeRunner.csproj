@@ -180,6 +180,18 @@
   <ItemGroup>
     <None Include="Res\RightMotionAnimtation\bunny1_walk2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7608ddb0b78e8c02a0b9a10e7375c1ca.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ra,fitted_scoop,x1350,white,front-c,30,60,940,730-bg,f8f8f8.4u2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Childrens-day-background-wallpaper-designs-image-13.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\deep_space-wallpaper-1280x720.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

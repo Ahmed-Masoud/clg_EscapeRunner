@@ -46,6 +46,8 @@ namespace EscapeRunner
             this.Name = "MainWindow";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.MainWindow_Load);
+            this.Click += new System.EventHandler(this.MainWindow_Click);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainWindow_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainWindow_KeyDown);
             this.ResumeLayout(false);

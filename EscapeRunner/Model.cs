@@ -15,7 +15,7 @@ namespace EscapeRunner
         private static List<Bitmap> characterAnimation;
         private static List<Bitmap> explosionAnimation;
         private static List<Bitmap> levelMap;
-
+        private static List<Bitmap> flareAnimation;
         /// <summary>
         /// Loads all the animations and puts them in private fields
         /// </summary>
@@ -30,6 +30,7 @@ namespace EscapeRunner
         // Read properties to return the List<Bitmap> fields
         public static List<Bitmap> ExplosionAnimation { get { return explosionAnimation; } }
         public static List<Bitmap> LevelMap { get { return levelMap; } }
+        public static List<Bitmap> FlareAnimation { get { return flareAnimation; } }
 
         private static string FindProjectPath()
         {
@@ -82,6 +83,7 @@ namespace EscapeRunner
                 string explosionAnimationsFolder = Path.Combine(folderPath, "Boom");
                 string bulletAnimationsFolder = Path.Combine(folderPath, "BulletA");
                 string levelTileFolder = Path.Combine(folderPath, "Level");
+                string flareFolder = Path.Combine(folderPath, "Flare");
 
                 if (Directory.Exists(charAnimationsFolder)
                     && Directory.Exists(explosionAnimationsFolder)
@@ -92,6 +94,7 @@ namespace EscapeRunner
                     explosionAnimation = LoadAnimationFromDisk(explosionAnimationsFolder);
                     bulletClassA = LoadAnimationFromDisk(bulletAnimationsFolder);
                     levelMap = LoadAnimationFromDisk(levelTileFolder);
+                    flareAnimation= LoadAnimationFromDisk(flareFolder);
                 }
                 else
                     throw new InvalidOperationException("Animation Folder cannot be found");

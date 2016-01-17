@@ -21,6 +21,7 @@ namespace EscapeRunner
             //pictureBox1.Show();
 
             this.Shown += MainWindow_Shown;
+            this.BackColor = Color.FromArgb(0, 178, 195);
             this.WindowState = FormWindowState.Maximized;
             //this.UpdateBounds();
             
@@ -78,7 +79,6 @@ namespace EscapeRunner
             RightBound = this.Width;
 
             // Fire the event with unknown args, to enter the (default) case in a switch
-
         }
 
         private void refreshTimer_Tick(object sender, EventArgs e)
@@ -86,5 +86,15 @@ namespace EscapeRunner
             Refresh();
         }
 
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainWindow_Click(object sender, EventArgs e)
+        {
+            
+            MessageBox.Show($"Mouse click coordinates x:{MousePosition.X}, y:{MousePosition.Y}");
+        }
     }
 }
