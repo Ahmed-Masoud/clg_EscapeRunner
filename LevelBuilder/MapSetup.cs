@@ -21,11 +21,11 @@ namespace LevelBuilder
         {   // load some variables from parent form
             try
             {
-                nudNewMapWidth.Value = ((LevelBuilder)this.ParentForm).nudMapWidth.Value;
-                nudNewMapHeight.Value = ((LevelBuilder)this.ParentForm).nudMapHeight.Value;
-                nudNewTileWidth.Value = ((LevelBuilder)this.ParentForm).nudTileWidth.Value;
-                nudNewTileHeight.Value = ((LevelBuilder)this.ParentForm).nudTileHeight.Value;
-                tbNewMapName.Text = ((LevelBuilder)this.ParentForm).tbMapName.Text;
+                nudNewMapWidth.Value = this.ParentForm.nudMapWidth.Value;
+                nudNewMapHeight.Value = this.ParentForm.nudMapHeight.Value;
+                nudNewTileWidth.Value = this.ParentForm.nudTileWidth.Value;
+                nudNewTileHeight.Value = this.ParentForm.nudTileHeight.Value;
+                tbNewMapName.Text = this.ParentForm.tbMapName.Text;
             }
             catch (Exception ex)
             {
@@ -51,16 +51,16 @@ namespace LevelBuilder
             }
             else
             {
-                ((LevelBuilder)this.ParentForm).ResetMap();
+                this.ParentForm.ResetMap();
 
-                ((LevelBuilder)this.ParentForm).nudMapWidth.Value = nudNewMapWidth.Value;
-                ((LevelBuilder)this.ParentForm).nudMapHeight.Value = nudNewMapHeight.Value;
-                ((LevelBuilder)this.ParentForm).nudTileWidth.Value = nudNewTileWidth.Value;
-                ((LevelBuilder)this.ParentForm).nudTileHeight.Value = nudNewTileHeight.Value;
-                ((LevelBuilder)this.ParentForm).tbMapName.Text = tbNewMapName.Text;
+                this.ParentForm.nudMapWidth.Value = nudNewMapWidth.Value;
+                this.ParentForm.nudMapHeight.Value = nudNewMapHeight.Value;
+                this.ParentForm.nudTileWidth.Value = nudNewTileWidth.Value;
+                this.ParentForm.nudTileHeight.Value = nudNewTileHeight.Value;
+                this.ParentForm.tbMapName.Text = tbNewMapName.Text;
 
-                ((LevelBuilder)this.ParentForm).ClearTiles();
-                ((LevelBuilder)this.ParentForm).SetupMap();
+                this.ParentForm.ClearTiles();
+                this.ParentForm.SetupMap();
 
                 this.Close();
             }
