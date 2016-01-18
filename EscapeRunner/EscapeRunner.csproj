@@ -57,13 +57,13 @@
     <Compile Include="Model\Animations\PlayerAnimation.cs" />
     <Compile Include="Model\Animations\ExplosionAnimation.cs" />
     <Compile Include="Controller\IsometricExtensionMethods.cs" />
-    <Compile Include="Model\Animations\AnimationModel.cs" />
+    <Compile Include="Model\AnimationModel.cs" />
     <Compile Include="Controller\GameObjects\IWeapon.cs" />
     <Compile Include="Controller\GameObjects\Player.cs" />
     <Compile Include="Controller\GameObjects\ProjectileClassA.cs" />
     <Compile Include="Controller\GameObjects\ProjectileClassB.cs" />
     <Compile Include="Controller\GameObjects\ProjectilePool.cs" />
-    <Compile Include="Model\Sounds\AudioModel.cs" />
+    <Compile Include="Model\AudioModel.cs" />
     <Compile Include="View\KeyChangedEventArgs.cs" />
     <Compile Include="View\MainWindow.cs">
       <SubType>Form</SubType>

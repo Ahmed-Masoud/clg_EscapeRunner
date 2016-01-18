@@ -17,11 +17,14 @@ namespace EscapeRunner
         private static List<Bitmap> flareAnimation;
         private static List<Bitmap> levelMap;
         private static List<Bitmap> backgrounds;
+        private static string resFolderPath;
         /// <summary>
         /// Loads all the animations and puts them in private fields
         /// </summary>
         static Model()
         {
+            string projectPath = FindProjectPath();
+            resFolderPath = Path.Combine(projectPath, "Res");
             // Load animations
             LoadAnimations();
         }
@@ -75,19 +78,16 @@ namespace EscapeRunner
 
         private static List<Bitmap> LoadAnimations()
         {
-            string projectPath = FindProjectPath();
-            string folderPath = Path.Combine(projectPath, "Res");
-
             // Check for the main resource folder
-            if (Directory.Exists(folderPath))
+            if (Directory.Exists(resFolderPath))
             {
                 // Subfolders in animation class
-                string charAnimationsFolder = Path.Combine(folderPath, "Char");
-                string explosionAnimationsFolder = Path.Combine(folderPath, "Boom");
-                string bulletAnimationsFolder = Path.Combine(folderPath, "BulletA");
-                string levelTileFolder = Path.Combine(folderPath, "Level");
-                string flareFolder = Path.Combine(folderPath, "Flare");
-                string backgroundFolder = Path.Combine(folderPath, "Background");
+                string charAnimationsFolder = Path.Combine(resFolderPath, "Char");
+                string explosionAnimationsFolder = Path.Combine(resFolderPath, "Boom");
+                string bulletAnimationsFolder = Path.Combine(resFolderPath, "BulletA");
+                string levelTileFolder = Path.Combine(resFolderPath, "Level");
+                string flareFolder = Path.Combine(resFolderPath, "Flare");
+                string backgroundFolder = Path.Combine(resFolderPath, "Background");
 
                 if (Directory.Exists(charAnimationsFolder)
                     && Directory.Exists(explosionAnimationsFolder)
