@@ -66,6 +66,7 @@
     <Compile Include="BusinessLogic\GameObjects\ProjectilePool.cs" />
     <Compile Include="Model\AudioModel.cs" />
     <Compile Include="View\KeyChangedEventArgs.cs" />
+    <Compile Include="View\LevelTile.cs" />
     <Compile Include="View\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +100,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="View\KeyChangedEventArgs.cs.vsspell">
+      <DependentUpon>KeyChangedEventArgs.cs</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -180,6 +184,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\RightMotionAnimtation\bunny1_walk2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Res\Monster\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

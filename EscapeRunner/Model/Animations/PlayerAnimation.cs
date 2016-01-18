@@ -18,6 +18,7 @@ namespace EscapeRunner.Animations
             animationHeight = 64;
             animationWidth = 64;
             objectBounds = new Rectangle(AnimationPosition, new Size(animationWidth, animationHeight));
+            
             PlayerSize = new Size(animationWidth, animationHeight);
         }
 

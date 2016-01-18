@@ -19,6 +19,8 @@ namespace LevelBuilder
             ArrayList tilesArrayList = new ArrayList();
 
             Cursor.Current = Cursors.WaitCursor;
+            if (!Directory.Exists(folderName))
+                throw new FileNotFoundException();
 
             foreach (string f in Directory.GetFiles(folderName))
             {   // load tiles

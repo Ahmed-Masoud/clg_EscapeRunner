@@ -13,7 +13,7 @@ namespace LevelBuilder
 
         private void addTilesToolStripMenuItem_Click(object sender, EventArgs e)
         {   // add tiles to tile library
-            AddTiles(@"E:\Exe\C#\Projects\clg_Game_5th_term\ProjectFile\EscapeRunner\EscapeRunner\EscapeRunner\Res\Level");
+            AddTiles(@"E:\Exe\C#\Projects\clg_Game_5th_term\ProjectFile\EscRunner\EscapeRunner\EscapeRunner\Res\Level");
             //DialogResult loadTiles = this.folderBrowserDialogLoadTiles.ShowDialog();
             //if (loadTiles == DialogResult.OK)
             //{   // load tiles

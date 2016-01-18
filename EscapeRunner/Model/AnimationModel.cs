@@ -15,7 +15,7 @@ namespace EscapeRunner
         private static List<Bitmap> characterAnimation;
         private static List<Bitmap> explosionAnimation;
         private static List<Bitmap> flareAnimation;
-        private static List<Bitmap> levelMap;
+        private static List<Bitmap> tileTextures;
         private static List<Bitmap> monsterAnimation;
         private static List<Bitmap> backgrounds;
         private static string resFolderPath;
@@ -36,9 +36,9 @@ namespace EscapeRunner
 
         // Read properties to return the List<Bitmap> fields
         public static List<Bitmap> ExplosionAnimation { get { return explosionAnimation; } }
-
+        public static string ResFolder { get { return resFolderPath; } }
         public static List<Bitmap> FlareAnimation { get { return flareAnimation; } }
-        public static List<Bitmap> LevelMap { get { return levelMap; } }
+        public static List<Bitmap> TileTextures { get { return tileTextures; } }
         public static List<Bitmap> Backgrounds { get { return backgrounds; } }
 
         private static string FindProjectPath()
@@ -102,7 +102,7 @@ namespace EscapeRunner
                     characterAnimation = LoadAnimationFromDisk(charAnimationsFolder);
                     explosionAnimation = LoadAnimationFromDisk(explosionAnimationsFolder);
                     bulletClassA = LoadAnimationFromDisk(bulletAnimationsFolder);
-                    levelMap = LoadAnimationFromDisk(levelTileFolder);
+                    tileTextures = LoadAnimationFromDisk(levelTileFolder);
                     flareAnimation = LoadAnimationFromDisk(flareFolder);
                     backgrounds = LoadAnimationFromDisk(backgroundFolder);
                     monsterAnimation = LoadAnimationFromDisk(monsterFolder);

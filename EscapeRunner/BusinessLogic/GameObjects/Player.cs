@@ -25,12 +25,12 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         /// <summary>
         /// Differential movement element in the X direction
         /// </summary>
-        public static int Dx { get; } = 5;
+        public static int Dx { get; } = 64;
 
         /// <summary>
         /// Differential movement element in the Y direction
         /// </summary>
-        public static int Dy { get; } = 5;
+        public static int Dy { get; } = 64;
 
         public static Player PlayerInstance
         {
@@ -65,16 +65,16 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             Point isoScreenEdge = new Point(MainWindow.RightBound, MainWindow.LowerBound).TwoDimensionsToIso();
             switch (direction)
             {
-                case Directions.Up:
+                case Directions.Right:
                     return isoPosition.Y - Dy >= MainWindow.UpperBound ? true : false;
 
-                case Directions.Down:
+                case Directions.Left:
                     return isoPosition.Y + Dy <= MainWindow.LowerBound - windowButtomMargin ? true : false;
 
-                case Directions.Left:
+                case Directions.Up:
                     return isoPosition.X - Dx >= MainWindow.LeftBound ? true : false;
 
-                case Directions.Right:
+                case Directions.Down:
                     return isoPosition.X + Dx <= MainWindow.RightBound - windowSideMargin ? true : false;
             }
             // Invalid case
@@ -93,19 +93,19 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             Point newPosition = playerAnimation.AnimationPosition;
             switch (direction)
             {
-                case Directions.Up:
+                case Directions.Right:
                     newPosition.Y -= deltaVertical;
                     break;
 
-                case Directions.Down:
+                case Directions.Left:
                     newPosition.Y += deltaVertical;
                     break;
 
-                case Directions.Left:
+                case Directions.Up:
                     newPosition.X -= deltaHorizontal;
                     break;
 
-                case Directions.Right:
+                case Directions.Down:
                     newPosition.X += deltaVertical;
                     break;
             }

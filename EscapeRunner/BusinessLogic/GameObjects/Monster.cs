@@ -11,8 +11,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
     class Monster
     {
         private MonsterAnimation monsterAnimation;
-        private static int windowButtomMargin = 90;
-        private static int windowSideMargin = 70;
         private static Random random = new Random();
         public Monster()
         {
