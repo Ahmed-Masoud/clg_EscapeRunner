@@ -164,10 +164,10 @@ namespace LevelBuilder
             map_name = "Untitled";
             tbMapName.Text = map_name;
 
-            tile_width = 50;
-            tile_height = 50;
-            map_width = 10;
-            map_height = 10;
+            tile_width = 30;
+            tile_height = 25;
+            map_width = 18;
+            map_height = 20;
 
             nudMapWidth.Value = map_width;
             nudMapHeight.Value = map_height;

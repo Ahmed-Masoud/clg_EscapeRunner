@@ -49,7 +49,6 @@ namespace EscapeRunner.Animations
             if (bulletDirection == Directions.Up || bulletDirection == Directions.Down)
             {
                 Bitmap temp = bulletImages[imageIndex];
-
                 DrawFrame(g, RotateAnimation(temp, RotateFlipType.Rotate90FlipNone, RotateFlipType.Rotate270FlipNone));
             }
             else

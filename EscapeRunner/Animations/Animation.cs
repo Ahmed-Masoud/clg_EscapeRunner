@@ -57,13 +57,6 @@ namespace EscapeRunner.Animations
             //make a graphics object from the empty bitmap
             using (Graphics gx = Graphics.FromImage(returnBitmap))
             {
-                ////move rotation point to center of image
-                //gx.TranslateTransform((float)image.Width / 2, (float)image.Height / 2);
-                ////rotate
-                //gx.RotateTransform(angle);
-                ////move image back
-                //gx.TranslateTransform(-(float)image.Width / 2, -(float)image.Height / 2);
-
                 returnBitmap.RotateFlip(rotation);      // ex:Rotate 90
 
                 //draw passed in image onto graphics object

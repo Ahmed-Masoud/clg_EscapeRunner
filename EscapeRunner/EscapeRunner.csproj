@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="Animations\Animation.cs" />
     <Compile Include="Animations\AnimationFactory.cs" />
-    <Compile Include="Animations\BitmapIterator.cs" />
     <Compile Include="Animations\BulletAnimation.cs" />
     <Compile Include="Controller\Controller.cs" />
     <Compile Include="GameObjects\IDrawable.cs" />
@@ -57,6 +56,7 @@
     <Compile Include="Animations\MonsterAnimation.cs" />
     <Compile Include="Animations\PlayerAnimation.cs" />
     <Compile Include="Animations\ExplosionAnimation.cs" />
+    <Compile Include="IsometricExtensionMethods.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="GameObjects\IWeapon.cs" />
     <Compile Include="GameObjects\Player.cs" />
