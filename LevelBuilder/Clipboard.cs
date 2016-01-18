@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-//using System.Linq;
-using System.Text;
+﻿//using System.Linq;
 //using System.Threading.Tasks;
 using System.Collections;
 
@@ -9,9 +6,9 @@ namespace LevelBuilder
 {
     public class Clipboard
     {
-        private int width;
-        private int height;
         private ArrayList data;
+        private int height;
+        private int width;
 
         public Clipboard()
         {
@@ -20,10 +17,10 @@ namespace LevelBuilder
             data = new ArrayList();
         }
 
-        public int Width
+        public ArrayList Data
         {
-            get { return width; }
-            set { width = value; }
+            get { return data; }
+            set { data = value; }
         }
 
         public int Height
@@ -32,10 +29,10 @@ namespace LevelBuilder
             set { height = value; }
         }
 
-        public ArrayList Data
+        public int Width
         {
-            get { return data; }
-            set { data = value; }
+            get { return width; }
+            set { width = value; }
         }
     }
 }

@@ -67,6 +67,8 @@ namespace LevelBuilder
 
         private CodesGenerator codesGenerator;
 
+        bool isIsometric = false;
+
         #endregion
 
         #region member functions
@@ -81,9 +83,9 @@ namespace LevelBuilder
             {   // open file
                 String lvFileName = Convert.ToString(args[1]);
 
-                if (Path.GetExtension(lvFileName) != ".lb")
+                if (Path.GetExtension(lvFileName) != ".lv")
                 {
-                    MessageBox.Show(lvFileName + " is not a lb file", "Cannot Load File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(lvFileName + " is not a lv file", "Cannot Load File", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {

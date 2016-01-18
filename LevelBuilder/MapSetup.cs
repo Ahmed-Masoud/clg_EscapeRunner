@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+
 //using System.Linq;
-using System.Text;
 //using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,7 +8,6 @@ namespace LevelBuilder
 {
     public partial class MapSetup : Form
     {
-
         public LevelBuilder ParentForm;
 
         public MapSetup()
@@ -34,6 +29,11 @@ namespace LevelBuilder
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private void btnCancelNewMap_Click(object sender, EventArgs e)
+        {   // cancel create new map
+            this.Close();
         }
 
         private void btnCreateNewMap_Click(object sender, EventArgs e)
@@ -62,11 +62,6 @@ namespace LevelBuilder
 
                 this.Close();
             }
-        }
-
-        private void btnCancelNewMap_Click(object sender, EventArgs e)
-        {   // cancel create new map
-            this.Close();
         }
     }
 }

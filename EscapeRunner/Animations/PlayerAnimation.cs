@@ -5,11 +5,7 @@ namespace EscapeRunner.Animations
 {
     public sealed class PlayerAnimation : Animation
     {
-
         private static List<Bitmap> animationImages;
-
-        public static Size PlayerSize { get; private set; }
-        #region Public Constructors
 
         public PlayerAnimation() : base(AnimationType.PlayerAnimation)
         {
@@ -17,17 +13,15 @@ namespace EscapeRunner.Animations
 
             if (animationImages == null)
             {
-                animationImages = DataSource.LoadCharacterAnimationFromDisk();
+                animationImages = Model.CharacterAnimation;
             }
-            animationHeight = 100;
-            animationWidth = 100;
+            animationHeight = 64;
+            animationWidth = 64;
             objectBounds = new Rectangle(AnimationPosition, new Size(animationWidth, animationHeight));
             PlayerSize = new Size(animationWidth, animationHeight);
         }
 
-        #endregion
-
-        #region Public Methods
+        public static Size PlayerSize { get; private set; }
 
         public void Draw(Graphics g, Directions direction)
         {
@@ -62,7 +56,5 @@ namespace EscapeRunner.Animations
             imageIndex++;
             imageIndex %= animationImages.Count;
         }
-
-        #endregion
     }
 }

@@ -8,8 +8,6 @@ namespace EscapeRunner.GameObjects
     /// </summary>
     public class ProjectileClassA : IWeapon, IDrawable
     {
-        #region Private Fields
-
         private static BulletAnimation prototypeBullet = new BulletAnimation();
         private static ExplosionAnimation prototypeExplosion = new ExplosionAnimation();
         private BulletAnimation bulletAni;
@@ -27,10 +25,6 @@ namespace EscapeRunner.GameObjects
         private int paintedFrames = 0;
         private bool used;
 
-        #endregion
-
-        #region Internal Constructors
-
         internal ProjectileClassA(int index)
         {
             // Used for lazy initialization in the bullet pool
@@ -40,10 +34,6 @@ namespace EscapeRunner.GameObjects
             bulletAni.AnimationPosition = Point.Empty;
             Index = index;
         }
-
-        #endregion
-
-        #region Public Properties
 
         public Point BulletStartPosition
         {
@@ -81,10 +71,6 @@ namespace EscapeRunner.GameObjects
             }
         }
 
-        #endregion
-
-        #region Public Methods
-
         /// <summary>
         /// Updates the object state when it has finished animating and mark it for re-use
         /// </summary>
@@ -114,7 +100,5 @@ namespace EscapeRunner.GameObjects
             bulletAni.DrawFrame(g);
             Reset();
         }
-
-        #endregion
     }
 }

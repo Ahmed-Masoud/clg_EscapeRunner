@@ -7,10 +7,6 @@ namespace EscapeRunner.GameObjects
     /// </summary>
     internal interface IDrawable
     {
-        #region Public Methods
-
         void UpdateGraphics(Graphics g);
-
-        #endregion
     }
 }

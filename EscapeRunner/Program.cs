@@ -5,8 +5,8 @@ namespace EscapeRunner
 {
     internal static class Program
     {
-        #region Private Methods
 
+        public static MainWindow MainWindow { get; private set; }
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -15,9 +15,12 @@ namespace EscapeRunner
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainWindow());
-        }
+            MainWindow = new MainWindow();
+            
+            // ?
+            Controller d = new Controller();
 
-        #endregion
+            Application.Run(MainWindow);
+        }
     }
 }

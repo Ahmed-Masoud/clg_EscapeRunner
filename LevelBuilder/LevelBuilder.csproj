@@ -93,6 +93,9 @@
     <Compile Include="TilesController.cs">
       <SubType>Form</SubType>
     </Compile>
+    <EmbeddedResource Include="LevelBuilder.resx">
+      <DependentUpon>LevelBuilder.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
