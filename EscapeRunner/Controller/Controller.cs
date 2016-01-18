@@ -20,8 +20,7 @@ namespace EscapeRunner
             window = Program.MainWindow;
             window.ViewNotification += Window_ViewNotification;
             player = Player.PlayerInstance;
-            //IDrawable item = Model.BulletAnimation[0];
-            //drawableObjects.Add(new ProjectileClassA(0));
+
             // Lazy initialization of projectile pool
             projectilePool = ProjectilePool.Instance;
         }
@@ -76,9 +75,8 @@ namespace EscapeRunner
                     }
                 }
             }
-            
         }
-       
+
         private void FireBullet()
         {
             try

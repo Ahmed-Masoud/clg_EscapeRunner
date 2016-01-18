@@ -34,7 +34,7 @@ namespace EscapeRunner.View
 
         private static List<Bitmap> levelTiles = new List<Bitmap>();
         private static Point location = new Point(500, 100);
-        private static Point startLocation = new Point(340, -320);
+        public static Point startLocation { get; } = new Point(390, -280);
         private static List<Bitmap> tiles = Model.LevelMap;
 
         static MapLoader()
@@ -47,9 +47,8 @@ namespace EscapeRunner.View
         public static void drawLevel(Graphics g)
         {
             int counter = 0;
-            g.DrawImage(Properties.Resources.Background, 0, 0, MainWindow.RightBound, MainWindow.LowerBound);
-            g.DrawImage(flares[flareCounter % flares.Count], 60, 370, 46, 134);
-            g.DrawImage(flares[flareCounter++ % flares.Count], 605, 625, 46, 134);
+            g.DrawImage(flares[flareCounter % flares.Count], 67, 376, 46, 134);
+            g.DrawImage(flares[flareCounter++ % flares.Count], 615, 645, 46, 134);
             g.DrawImage(flares[flareCounter++ % flares.Count], 1222, 335, 46, 134);
 
             int rows = level.GetLength(0);

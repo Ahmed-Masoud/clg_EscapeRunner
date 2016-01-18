@@ -16,7 +16,7 @@ namespace EscapeRunner.GameObjects
             playerAnimation = (PlayerAnimation)factory.GetAnimationCommandResult();
 
             // Initialize the player location to the top of the screen
-            playerAnimation.AnimationPosition = new Point(100, 100);
+            playerAnimation.AnimationPosition = new Point(456, 175);
             Direction = Directions.Right;
         }
 
@@ -60,19 +60,22 @@ namespace EscapeRunner.GameObjects
         private static bool CanMove(Directions direction)
         {
             // Check if the player reached the bounds of the screen
+            Point isoPosition = playerAnimation.AnimationPosition.TwoDimensionsToIso();
+            
+            Point isoScreenEdge = new Point(MainWindow.RightBound, MainWindow.LowerBound).TwoDimensionsToIso() ;
             switch (direction)
             {
                 case Directions.Up:
-                    return playerAnimation.AnimationPosition.Y - Dy >= MainWindow.UpperBound ? true : false;
+                    return isoPosition.Y - Dy >= MainWindow.UpperBound ? true : false;
 
                 case Directions.Down:
-                    return playerAnimation.AnimationPosition.Y + Dy <= MainWindow.LowerBound - windowButtomMargin ? true : false;
+                    return isoPosition.Y + Dy <= MainWindow.LowerBound - windowButtomMargin ? true : false;
 
                 case Directions.Left:
-                    return playerAnimation.AnimationPosition.X - Dx >= MainWindow.LeftBound ? true : false;
+                    return isoPosition.X - Dx >= MainWindow.LeftBound ? true : false;
 
                 case Directions.Right:
-                    return playerAnimation.AnimationPosition.X + Dx <= MainWindow.RightBound - windowSideMargin ? true : false;
+                    return isoPosition.X + Dx <= MainWindow.RightBound - windowSideMargin ? true : false;
             }
             // Invalid case
             return false;

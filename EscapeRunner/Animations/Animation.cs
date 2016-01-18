@@ -34,7 +34,7 @@ namespace EscapeRunner.Animations
         /// </summary>
         public virtual void DrawFrame(Graphics g, Bitmap animationImage)
         {
-            g.DrawImage(animationImage, AnimationPosition.X, AnimationPosition.Y, animationWidth, animationHeight);
+            g.DrawImage(animationImage, AnimationPosition.TwoDimensionsToIso().X, AnimationPosition.TwoDimensionsToIso().Y, animationWidth, animationHeight);
             objectBounds.Location = AnimationPosition;
         }
 

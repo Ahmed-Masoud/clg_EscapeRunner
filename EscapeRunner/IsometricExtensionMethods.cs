@@ -21,6 +21,10 @@ namespace EscapeRunner
             return tempPt;
         }
 
+        /// <summary>
+        /// Converts cartesian coordinates to isometric coordinates
+        /// </summary>
+        /// <returns>Isometric coordinates</returns>
         public static Point TwoDimensionsToIso(this Point pt)
         {
             Point tempPt = new Point(0, 0);
