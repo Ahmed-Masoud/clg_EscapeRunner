@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\GameObjects\Monster.cs" />
     <Compile Include="Model\Animations\Animation.cs" />
     <Compile Include="Model\Animations\AnimationFactory.cs" />
     <Compile Include="Model\Animations\BulletAnimation.cs" />
