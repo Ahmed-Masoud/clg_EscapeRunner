@@ -62,12 +62,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodesGenerator.cs" />
-    <Compile Include="CustomCursor.cs" />
-    <Compile Include="HistoryNode.cs" />
+    <Compile Include="Model\CodesGenerator.cs" />
+    <Compile Include="Model\HistoryNode.cs" />
     <Compile Include="Map.cs" />
-    <Compile Include="Clipboard.cs" />
-    <Compile Include="ClipboardNode.cs" />
+    <Compile Include="Model\Clipboard.cs" />
+    <Compile Include="Model\ClipboardNode.cs" />
     <Compile Include="LevelBuilder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,11 +87,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SelectionTool.cs" />
-    <Compile Include="Tile.cs" />
+    <Compile Include="Model\SelectionTool.cs" />
+    <Compile Include="Model\Tile.cs" />
     <Compile Include="TilesController.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="LevelTile.cs" />
     <EmbeddedResource Include="LevelBuilder.resx">
       <DependentUpon>LevelBuilder.cs</DependentUpon>
     </EmbeddedResource>
@@ -138,6 +138,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

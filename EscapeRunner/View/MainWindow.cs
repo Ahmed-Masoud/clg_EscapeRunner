@@ -1,8 +1,6 @@
-﻿using System;
-using System.Data;
+﻿using EscapeRunner.BusinessLogic;
+using System;
 using System.Drawing;
-using System.Net;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace EscapeRunner
@@ -21,10 +19,10 @@ namespace EscapeRunner
             //pictureBox1.Show();
 
             this.Shown += MainWindow_Shown;
-            this.BackColor = Color.FromArgb(0, 178, 195);
+
             this.WindowState = FormWindowState.Maximized;
             //this.UpdateBounds();
-            
+
             refreshTimer.Enabled = true;
             refreshTimer.Interval = 20;
 
@@ -45,7 +43,11 @@ namespace EscapeRunner
 
         public static int UpperBound { get; } = 0;
 
-        protected void OnNotification(ViewKey key)
+        /// <summary>
+        /// This method fires the notify event
+        /// </summary>
+        /// <param name="key"></param>
+        protected void NotifyController(ViewKey key)
         {
             if (ViewNotification != null)
             {
@@ -56,18 +58,19 @@ namespace EscapeRunner
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Left)
-                OnNotification(ViewKey.Left);
+                NotifyController(ViewKey.Left);
             else if (e.KeyData == Keys.Right)
-                OnNotification(ViewKey.Right);
+                NotifyController(ViewKey.Right);
             else if (e.KeyData == Keys.Up)
-                OnNotification(ViewKey.Up);
+                NotifyController(ViewKey.Up);
             else if (e.KeyData == Keys.Down)
-                OnNotification(ViewKey.Down);
+                NotifyController(ViewKey.Down);
             if (e.KeyData == Keys.Space)
-                OnNotification(ViewKey.Space);
+                NotifyController(ViewKey.Space);
         }
 
         // Called on Refresh()
+
         private void MainWindow_Paint(object sender, PaintEventArgs e)
         {
             Controller.WindowRefresh(sender, e);
@@ -79,6 +82,8 @@ namespace EscapeRunner
             RightBound = this.Width;
 
             // Fire the event with unknown args, to enter the (default) case in a switch
+            Bitmap backG = new Bitmap(Model.Backgrounds[0], RightBound, LowerBound);
+            this.BackgroundImage = backG;
         }
 
         private void refreshTimer_Tick(object sender, EventArgs e)
@@ -86,15 +91,11 @@ namespace EscapeRunner
             Refresh();
         }
 
-        private void MainWindow_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void MainWindow_Click(object sender, EventArgs e)
         {
-            
+#if DEBUG
             MessageBox.Show($"Mouse click coordinates x:{MousePosition.X}, y:{MousePosition.Y}");
+#endif
         }
     }
 }

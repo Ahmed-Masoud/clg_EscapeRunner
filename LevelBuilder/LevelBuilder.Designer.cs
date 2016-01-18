@@ -101,6 +101,9 @@ namespace LevelBuilder
             this.cArrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cArrayToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.xMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.twoDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.isometricToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialogLoadTiles = new System.Windows.Forms.FolderBrowserDialog();
             this.saveMapDialog = new System.Windows.Forms.SaveFileDialog();
             this.openMapDialog = new System.Windows.Forms.OpenFileDialog();
@@ -117,9 +120,6 @@ namespace LevelBuilder
             this.contextMenuStripTile = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemWalkable = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.modeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.twoDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.isometricToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlDesign.SuspendLayout();
             this.tctrlDesign.SuspendLayout();
             this.tpgDesign.SuspendLayout();
@@ -185,7 +185,7 @@ namespace LevelBuilder
             this.pbMap.BackColor = System.Drawing.Color.LightGray;
             this.pbMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pbMap.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pbMap.Location = new System.Drawing.Point(156, 4);
+            this.pbMap.Location = new System.Drawing.Point(4, 4);
             this.pbMap.Name = "pbMap";
             this.pbMap.Size = new System.Drawing.Size(50, 50);
             this.pbMap.TabIndex = 0;
@@ -850,6 +850,31 @@ namespace LevelBuilder
             this.xMLToolStripMenuItem.Text = "&XML";
             this.xMLToolStripMenuItem.Click += new System.EventHandler(this.xMLToolStripMenuItem_Click);
             // 
+            // modeToolStripMenuItem
+            // 
+            this.modeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.twoDToolStripMenuItem,
+            this.isometricToolStripMenuItem});
+            this.modeToolStripMenuItem.Name = "modeToolStripMenuItem";
+            this.modeToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.modeToolStripMenuItem.Text = "Preview";
+            // 
+            // twoDToolStripMenuItem
+            // 
+            this.twoDToolStripMenuItem.Checked = true;
+            this.twoDToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.twoDToolStripMenuItem.Name = "twoDToolStripMenuItem";
+            this.twoDToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.twoDToolStripMenuItem.Text = "2D";
+            this.twoDToolStripMenuItem.Click += new System.EventHandler(this.twoDToolStripMenuItem_Click);
+            // 
+            // isometricToolStripMenuItem
+            // 
+            this.isometricToolStripMenuItem.Name = "isometricToolStripMenuItem";
+            this.isometricToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.isometricToolStripMenuItem.Text = "Isometric";
+            this.isometricToolStripMenuItem.Click += new System.EventHandler(this.isometricToolStripMenuItem_Click);
+            // 
             // saveMapDialog
             // 
             this.saveMapDialog.DefaultExt = "lv";
@@ -1007,31 +1032,6 @@ namespace LevelBuilder
             this.toolStripMenuItemDelete.Size = new System.Drawing.Size(122, 22);
             this.toolStripMenuItemDelete.Text = "Delete";
             this.toolStripMenuItemDelete.Click += new System.EventHandler(this.toolStripMenuItemDelete_Click);
-            // 
-            // modeToolStripMenuItem
-            // 
-            this.modeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.twoDToolStripMenuItem,
-            this.isometricToolStripMenuItem});
-            this.modeToolStripMenuItem.Name = "modeToolStripMenuItem";
-            this.modeToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
-            this.modeToolStripMenuItem.Text = "Mode";
-            // 
-            // twodToolStripMenuItem
-            // 
-            this.twoDToolStripMenuItem.Checked = true;
-            this.twoDToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.twoDToolStripMenuItem.Name = "dToolStripMenuItem";
-            this.twoDToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.twoDToolStripMenuItem.Text = "2D";
-            this.twoDToolStripMenuItem.Click += new System.EventHandler(this.twoDToolStripMenuItem_Click);
-            // 
-            // isometricToolStripMenuItem
-            // 
-            this.isometricToolStripMenuItem.Name = "isometricToolStripMenuItem";
-            this.isometricToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.isometricToolStripMenuItem.Text = "Isometric";
-            this.isometricToolStripMenuItem.Click += new System.EventHandler(this.isometricToolStripMenuItem_Click);
             // 
             // LevelBuilder
             // 

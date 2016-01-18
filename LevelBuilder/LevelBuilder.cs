@@ -49,12 +49,12 @@ namespace LevelBuilder
 
         private Map backup_map;
 
-        private Stack<HistoryNode> undo;
-        private Stack<HistoryNode> redo;
+        private Stack<Model.HistoryNode> undo;
+        private Stack<Model.HistoryNode> redo;
 
-        private Clipboard clipboard;
+        private Model.Clipboard clipboard;
 
-        private Tile[] tile_library;
+        private Model.Tile[] tile_library;
 
         private PictureBox selected_tile;
         private ToolType selected_tool;
@@ -63,9 +63,9 @@ namespace LevelBuilder
         private bool grid_on;
         private bool show_walkable_on;
 
-        private SelectionTool selection;
+        private Model.SelectionTool selection;
 
-        private CodesGenerator codesGenerator;
+        private Model.CodesGenerator codesGenerator;
 
         bool isIsometric = false;
 
@@ -194,7 +194,7 @@ namespace LevelBuilder
             {
                 if (selected_tool == ToolType.selection)
                 {   // selection tool
-                    selection = new SelectionTool();
+                    selection = new Model.SelectionTool();
                     selection.IsDragging = true;
                     selection.StartDrag = new Point(mapX, mapY);
                     selection.StopDrag = new Point(mapX, mapY);
@@ -211,7 +211,7 @@ namespace LevelBuilder
                             if (undo.Count > 0)
                                 id = undo.Peek().Id + 1;
 
-                            undo.Push(new HistoryNode(id, mapX, mapY, map[mapX, mapY]));
+                            undo.Push(new Model.HistoryNode(id, mapX, mapY, map[mapX, mapY]));
                             map[mapX, mapY] = Convert.ToInt32(pbSelectedTile.Name);
                         }
                     }
@@ -237,7 +237,7 @@ namespace LevelBuilder
                             {   // fill selected tiles
                                 for (int j = selection.TopLeftY; j < selection.BottomRightY; j++)
                                 {
-                                    undo.Push(new HistoryNode(id, i, j, map[i, j]));
+                                    undo.Push(new Model.HistoryNode(id, i, j, map[i, j]));
                                     map[i, j] = Convert.ToInt32(pbSelectedTile.Name);
                                 }
                             }
@@ -248,7 +248,7 @@ namespace LevelBuilder
                 {   // select color tool
                     if (map[mapX, mapY] > -1)
                     {
-                        Tile selectedTile = tile_library[map[mapX, mapY]];
+                        Model.Tile selectedTile = tile_library[map[mapX, mapY]];
 
                         selected_tile = selectedTile.TilePictureBox;
                         lblTileIDValue.Text = selected_tile.Name;
@@ -285,7 +285,7 @@ namespace LevelBuilder
                         if (undo.Count > 0)
                             id = undo.Peek().Id + 1;
 
-                        undo.Push(new HistoryNode(id, mapX, mapY, map[mapX, mapY]));
+                        undo.Push(new Model.HistoryNode(id, mapX, mapY, map[mapX, mapY]));
                         map[mapX, mapY] = -1;
                     }
                 }
@@ -294,7 +294,7 @@ namespace LevelBuilder
             }
             else if (e.Button == MouseButtons.Right)
             {
-                selection = new SelectionTool();
+                selection = new Model.SelectionTool();
                 RenderMap();
             }
 
@@ -433,7 +433,7 @@ namespace LevelBuilder
                     {   // delete selected tiles
                         for (int j = selection.TopLeftY; j < selection.BottomRightY; j++)
                         {
-                            undo.Push(new HistoryNode(id, i, j, map[i, j]));
+                            undo.Push(new Model.HistoryNode(id, i, j, map[i, j]));
                             map[i, j] = -1;
                         }
                     }
@@ -601,27 +601,27 @@ namespace LevelBuilder
             grid_on = true;
             show_walkable_on = false;
             selected_tile = null;
-            selection = new SelectionTool();
+            selection = new Model.SelectionTool();
 
             // select brush as default tool
             SelectTool(ToolType.selection);
 
             backup_map = new Map();
 
-            undo = new Stack<HistoryNode>();
+            undo = new Stack<Model.HistoryNode>();
             undoToolStripMenuItem.Enabled = false;
 
-            redo = new Stack<HistoryNode>();
+            redo = new Stack<Model.HistoryNode>();
             redoToolStripMenuItem.Enabled = false;
 
-            clipboard = new Clipboard();
+            clipboard = new Model.Clipboard();
             pasteToolStripMenuItem.Enabled = false;
 
             saveMapToolStripMenuItem.Enabled = false;
             
-            tile_library = new Tile[0];
+            tile_library = new Model.Tile[0];
 
-            codesGenerator = new CodesGenerator(map, map_name, map_width, map_height, 
+            codesGenerator = new Model.CodesGenerator(map, map_name, map_width, map_height, 
                 tile_library, tile_width, tile_height,
                 tbCode);
         }

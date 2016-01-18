@@ -8,261 +8,6 @@ namespace LevelBuilder
     public partial class LevelBuilder
     {
 
-        #region Tools
-
-        private void btnToolBrush_Click(object sender, EventArgs e)
-        {
-            SelectTool(ToolType.brush);
-
-        }
-
-        private void btnToolEraser_Click(object sender, EventArgs e)
-        {
-            SelectTool(ToolType.eraser);
-        }
-
-        private void btnToolFill_Click(object sender, EventArgs e)
-        {
-            SelectTool(ToolType.fill);
-        }
-
-        private void btnToolSelectColor_Click(object sender, EventArgs e)
-        {
-            SelectTool(ToolType.selectTile);
-        }
-
-        private void btnToolSelection_Click(object sender, EventArgs e)
-        {
-            SelectTool(ToolType.selection);
-        }
-
-        #endregion
-
-        #region Generate Code
-
-        private void cArrayToolStripMenuItem_Click(object sender, EventArgs e)
-        {   // generate C++ codes
-            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
-                tile_library, tile_width, tile_height,
-                tbCode);
-            codesGenerator.GenerateCPP();
-            tctrlDesign.SelectedTab = tpgCode;
-            rbCPP.Checked = true;
-        }
-
-        private void cArrayToolStripMenuItem1_Click(object sender, EventArgs e)
-        {   // generate C# codes
-            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
-                tile_library, tile_width, tile_height,
-                tbCode);
-            codesGenerator.GenerateCSharp();
-            tctrlDesign.SelectedTab = tpgCode;
-            rbCS.Checked = true;
-        }
-
-        private void xMLToolStripMenuItem_Click(object sender, EventArgs e)
-        {   // generate xml
-            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
-                tile_library, tile_width, tile_height,
-                tbCode);
-            codesGenerator.GenerateXML();
-            tctrlDesign.SelectedTab = tpgCode;
-            rbXML.Checked = true;
-        }
-
-        private void selectedLanguageToolStripMenuItem_Click(object sender, EventArgs e)
-        {   // generate codes with selected language
-            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
-                tile_library, tile_width, tile_height,
-                tbCode);
-
-            if (rbCPP.Checked)
-                codesGenerator.GenerateCPP();
-            else if (rbCS.Checked)
-                codesGenerator.GenerateCSharp();
-            else if (rbXML.Checked)
-                codesGenerator.GenerateXML();
-
-            tctrlDesign.SelectedTab = tpgCode;
-        }
-
-        #endregion
-
-        #region Tiles Menu
-
-        private void addTilesToolStripMenuItem_Click(object sender, EventArgs e)
-        {   // add tiles to tile library
-
-            string path = Path.GetDirectoryName(
-                            Path.GetDirectoryName(
-                                Path.GetDirectoryName(
-                                    Directory.GetCurrentDirectory()))) + "\\";
-
-            path = Path.Combine(path, Path.Combine("EscapeRunner", Path.Combine("Res", "Level"))) + "\\";
-
-            AddTiles(path);
-            //DialogResult loadTiles = this.folderBrowserDialogLoadTiles.ShowDialog();
-            //if (loadTiles == DialogResult.OK)
-            //{   // load tiles
-            //    string folderName = this.folderBrowserDialogLoadTiles.SelectedPath;    
-            //}
-            backup_map.IsTileLibraryChanged = true;
-        }
-
-        private void clearTilesToolStripMenuItem_Click(object sender, EventArgs e)
-        {   // clear tile library
-            Cursor.Current = Cursors.WaitCursor;
-
-            if (MessageBox.Show("Clear the Tile Library?", "Clear Tile Library", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-            {
-                ClearTiles();
-
-                RenderTiles();
-                RenderMap();
-            }
-
-            Cursor.Current = Cursors.Default;
-            backup_map.IsTileLibraryChanged = true;
-        }
-
-        private void deleteSelectedTileToolStripMenuItem_Click(object sender, EventArgs e)
-        {   // delete selected tile
-            if (selected_tile == null)
-            {
-                MessageBox.Show("Select a tile!");
-            }
-            else
-            {
-                if (MessageBox.Show("Delete this tile?", "Delete Tile", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    DeleteSelectedTile(Convert.ToInt32(selected_tile.Name));
-                }
-            }
-            backup_map.IsTileLibraryChanged = true;
-        }
-
-        private void toolStripMenuItemDelete_Click(object sender, EventArgs e)
-        {   // delete selected tile
-            if (MessageBox.Show("Delete this tile?", "Delete Tile", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-            {
-                DeleteSelectedTile(Convert.ToInt32(selected_tile.Name));
-                backup_map.IsTileLibraryChanged = true;
-            }
-        }
-
-        private void toolStripMenuItemWalkable_Click(object sender, EventArgs e)
-        {   // toggle walkable tile
-            bool isWalkable = !tile_library[Convert.ToInt32(selected_tile.Name)].TileWalkable;
-            tile_library[Convert.ToInt32(selected_tile.Name)].TileWalkable = isWalkable;
-            cbTileWalkable.Checked = isWalkable;
-
-            RenderMap();
-            backup_map.IsTileLibraryChanged = true;
-        }
-
-        #endregion
-
-        #region Select Menu
-
-        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            selection = new SelectionTool();
-            selection.StartDrag = new Point(0, 0);
-            selection.StopDrag = new Point(map_width, map_height);
-            RenderMap();
-        }
-
-        private void deselectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            selection = new SelectionTool();
-            RenderMap();
-        }
-
-        #endregion
-
-        #region View Menu
-
-        private void codeViewToolStripMenuItem_Click(object sender, EventArgs e)
-        {   // switch to code view
-            tctrlDesign.SelectedTab = tpgCode;
-            designViewToolStripMenuItem.Checked = false;
-            codeViewToolStripMenuItem.Checked = true;
-
-            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
-                tile_library, tile_width, tile_height,
-                tbCode);
-
-            if (rbCPP.Checked)
-                codesGenerator.GenerateCPP();
-            else if (rbCS.Checked)
-                codesGenerator.GenerateCSharp();
-            else if (rbXML.Checked)
-                codesGenerator.GenerateXML();
-            else
-                MessageBox.Show("Please select the language you want to generate", "No Language Selected", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        }
-        
-        private void designViewToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {   // switch to design view
-            tctrlDesign.SelectedTab = tpgDesign;
-            codeViewToolStripMenuItem.Checked = false;
-            designViewToolStripMenuItem.Checked = true;
-        }
-
-        private void gridToolStripMenuItem_Click(object sender, EventArgs e)
-        {   // toggle view grid
-            bool isChecked = gridToolStripMenuItem.Checked;
-            if (isChecked)
-            {
-                gridToolStripMenuItem.Checked = false;
-                grid_on = false;
-            }
-            else
-            {
-                gridToolStripMenuItem.Checked = true;
-                grid_on = true;
-            }
-
-            RenderMap();
-        }
-
-        private void showWalkableToolStripMenuItem_Click(object sender, EventArgs e)
-        {   // toggle view walkable
-            bool isChecked = showWalkableToolStripMenuItem.Checked;
-            if (isChecked)
-            {
-                showWalkableToolStripMenuItem.Checked = false;
-                show_walkable_on = false;
-            }
-            else
-            {
-                showWalkableToolStripMenuItem.Checked = true;
-                show_walkable_on = true;
-            }
-
-            RenderMap();
-        }
-
-        private void isometricToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            twoDToolStripMenuItem.Checked = false;
-            isometricToolStripMenuItem.Checked = true;
-
-            isIsometric = true;
-            RenderMap();
-        }
-
-        private void twoDToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            isometricToolStripMenuItem.Checked = false;
-            twoDToolStripMenuItem.Checked = true;
-
-            isIsometric = false;
-            RenderMap();
-        }
-
-        #endregion
-
         #region File Menu
 
         private void newMapToolStripMenuItem_Click(object sender, EventArgs e)
@@ -335,6 +80,10 @@ namespace LevelBuilder
 
                 SaveMap(current_working_filename);
                 SaveTiles(current_working_filename);
+                codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
+                    tile_library, tile_width, tile_height,
+                    tbCode);
+                codesGenerator.saveCSharp(current_working_filename);
                 //_my_map.SaveMap(_current_working_filename);
 
                 Cursor.Current = Cursors.Default;
@@ -343,6 +92,8 @@ namespace LevelBuilder
             {
                 MessageBox.Show("Fail to save: " + current_working_filename + "\n" + ex.Message);
             }
+
+            MessageBox.Show("Map Saved Successfully !", "Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         private void saveMapAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -362,6 +113,10 @@ namespace LevelBuilder
 
                     SaveMap(this.saveMapDialog.FileName);
                     SaveTiles(this.saveMapDialog.FileName);
+                    codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
+                        tile_library, tile_width, tile_height,
+                        tbCode);
+                    codesGenerator.saveCSharp(current_working_filename);
 
                     current_working_filename = this.saveMapDialog.FileName;
 
@@ -457,10 +212,10 @@ namespace LevelBuilder
                 {   // copy selected tiles
                     for (int j = selection.TopLeftY; j < pasteEndY; j++)
                     {
-                        if (map[i, j] != ((ClipboardNode)clipboard.Data[pos]).Value)
+                        if (map[i, j] != ((Model.ClipboardNode)clipboard.Data[pos]).Value)
                         {
-                            undo.Push(new HistoryNode(id, i, j, map[i, j]));
-                            map[i, j] = ((ClipboardNode)clipboard.Data[pos]).Value;
+                            undo.Push(new Model.HistoryNode(id, i, j, map[i, j]));
+                            map[i, j] = ((Model.ClipboardNode)clipboard.Data[pos]).Value;
                         }
                         pos++;
                         pos = pos % clipboard.Data.Count;
@@ -488,9 +243,9 @@ namespace LevelBuilder
             int nodeId = redo.Peek().Id;
             while (redo.Count > 0 && nodeId == redo.Peek().Id)
             {   // redo
-                HistoryNode redoo = redo.Pop();
+                Model.HistoryNode redoo = redo.Pop();
                 // save current map for undo
-                undo.Push(new HistoryNode(redoo.Id, redoo.MapX, redoo.MapY, map[redoo.MapX, redoo.MapY]));
+                undo.Push(new Model.HistoryNode(redoo.Id, redoo.MapX, redoo.MapY, map[redoo.MapX, redoo.MapY]));
                 // render redo
                 map[redoo.MapX, redoo.MapY] = redoo.Value;
             }
@@ -508,7 +263,7 @@ namespace LevelBuilder
         {
             if (selection.StartDrag.X != -1 && selection.StartDrag.Y != -1 && selection.StopDrag.X != -1 && selection.StopDrag.Y != -1)
             {
-                clipboard = new Clipboard();
+                clipboard = new Model.Clipboard();
 
                 if (selection.BottomRightX > map_width)
                     selection.BottomRightX = map_width;
@@ -521,7 +276,7 @@ namespace LevelBuilder
                 {   // copy selected tiles
                     for (int j = selection.TopLeftY; j < selection.BottomRightY; j++)
                     {
-                        clipboard.Data.Add(new ClipboardNode(newX, newY, map[i, j]));
+                        clipboard.Data.Add(new Model.ClipboardNode(newX, newY, map[i, j]));
                         newY++;
                     }
                     newX++;
@@ -542,9 +297,9 @@ namespace LevelBuilder
             int nodeId = undo.Peek().Id;
             while (undo.Count > 0 && nodeId == undo.Peek().Id)
             {   // undo
-                HistoryNode undoo = undo.Pop();
+                Model.HistoryNode undoo = undo.Pop();
                 // save for redo
-                redo.Push(new HistoryNode(undoo.Id, undoo.MapX, undoo.MapY, map[undoo.MapX, undoo.MapY]));
+                redo.Push(new Model.HistoryNode(undoo.Id, undoo.MapX, undoo.MapY, map[undoo.MapX, undoo.MapY]));
                 // render undo
                 map[undoo.MapX, undoo.MapY] = undoo.Value;
             }
@@ -559,5 +314,261 @@ namespace LevelBuilder
         }
 
         #endregion
+
+        #region View Menu
+
+        private void codeViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {   // switch to code view
+            tctrlDesign.SelectedTab = tpgCode;
+            designViewToolStripMenuItem.Checked = false;
+            codeViewToolStripMenuItem.Checked = true;
+
+            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
+                tile_library, tile_width, tile_height,
+                tbCode);
+
+            if (rbCPP.Checked)
+                codesGenerator.GenerateCPP();
+            else if (rbCS.Checked)
+                codesGenerator.GenerateCSharp();
+            else if (rbXML.Checked)
+                codesGenerator.GenerateXML();
+            else
+                MessageBox.Show("Please select the language you want to generate", "No Language Selected", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
+        private void designViewToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {   // switch to design view
+            tctrlDesign.SelectedTab = tpgDesign;
+            codeViewToolStripMenuItem.Checked = false;
+            designViewToolStripMenuItem.Checked = true;
+        }
+
+        private void gridToolStripMenuItem_Click(object sender, EventArgs e)
+        {   // toggle view grid
+            bool isChecked = gridToolStripMenuItem.Checked;
+            if (isChecked)
+            {
+                gridToolStripMenuItem.Checked = false;
+                grid_on = false;
+            }
+            else
+            {
+                gridToolStripMenuItem.Checked = true;
+                grid_on = true;
+            }
+
+            RenderMap();
+        }
+
+        private void showWalkableToolStripMenuItem_Click(object sender, EventArgs e)
+        {   // toggle view walkable
+            bool isChecked = showWalkableToolStripMenuItem.Checked;
+            if (isChecked)
+            {
+                showWalkableToolStripMenuItem.Checked = false;
+                show_walkable_on = false;
+            }
+            else
+            {
+                showWalkableToolStripMenuItem.Checked = true;
+                show_walkable_on = true;
+            }
+
+            RenderMap();
+        }
+
+        private void isometricToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            twoDToolStripMenuItem.Checked = false;
+            isometricToolStripMenuItem.Checked = true;
+
+            isIsometric = true;
+            grid_on = false;
+            gridToolStripMenuItem.Checked = false;
+            RenderMap();
+        }
+
+        private void twoDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            isometricToolStripMenuItem.Checked = false;
+            twoDToolStripMenuItem.Checked = true;
+
+            isIsometric = false;
+            grid_on = true;
+            gridToolStripMenuItem.Checked = true;
+            RenderMap();
+        }
+
+        #endregion
+
+        #region Select Menu
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            selection = new Model.SelectionTool();
+            selection.StartDrag = new Point(0, 0);
+            selection.StopDrag = new Point(map_width, map_height);
+            RenderMap();
+        }
+
+        private void deselectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            selection = new Model.SelectionTool();
+            RenderMap();
+        }
+
+        #endregion
+
+        #region Tiles Menu
+
+        private void addTilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {   // add tiles to tile library
+
+            string path = Path.GetDirectoryName(
+                            Path.GetDirectoryName(
+                                Path.GetDirectoryName(
+                                    Directory.GetCurrentDirectory()))) + "\\";
+
+            path = Path.Combine(path, Path.Combine("EscapeRunner", Path.Combine("Res", "Tiles"))) + "\\";
+
+            AddTiles(path);
+
+            backup_map.IsTileLibraryChanged = true;
+        }
+
+        private void clearTilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {   // clear tile library
+            Cursor.Current = Cursors.WaitCursor;
+
+            if (MessageBox.Show("Clear the Tile Library?", "Clear Tile Library", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                ClearTiles();
+
+                RenderTiles();
+                RenderMap();
+            }
+
+            Cursor.Current = Cursors.Default;
+            backup_map.IsTileLibraryChanged = true;
+        }
+
+        private void deleteSelectedTileToolStripMenuItem_Click(object sender, EventArgs e)
+        {   // delete selected tile
+            if (selected_tile == null)
+            {
+                MessageBox.Show("Select a tile!");
+            }
+            else
+            {
+                if (MessageBox.Show("Delete this tile?", "Delete Tile", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    DeleteSelectedTile(Convert.ToInt32(selected_tile.Name));
+                }
+            }
+            backup_map.IsTileLibraryChanged = true;
+        }
+
+        private void toolStripMenuItemDelete_Click(object sender, EventArgs e)
+        {   // delete selected tile
+            if (MessageBox.Show("Delete this tile?", "Delete Tile", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                DeleteSelectedTile(Convert.ToInt32(selected_tile.Name));
+                backup_map.IsTileLibraryChanged = true;
+            }
+        }
+
+        private void toolStripMenuItemWalkable_Click(object sender, EventArgs e)
+        {   // toggle walkable tile
+            bool isWalkable = !tile_library[Convert.ToInt32(selected_tile.Name)].TileWalkable;
+            tile_library[Convert.ToInt32(selected_tile.Name)].TileWalkable = isWalkable;
+            cbTileWalkable.Checked = isWalkable;
+
+            RenderMap();
+            backup_map.IsTileLibraryChanged = true;
+        }
+
+        #endregion
+
+        #region Tools
+
+        private void btnToolBrush_Click(object sender, EventArgs e)
+        {
+            SelectTool(ToolType.brush);
+
+        }
+
+        private void btnToolEraser_Click(object sender, EventArgs e)
+        {
+            SelectTool(ToolType.eraser);
+        }
+
+        private void btnToolFill_Click(object sender, EventArgs e)
+        {
+            SelectTool(ToolType.fill);
+        }
+
+        private void btnToolSelectColor_Click(object sender, EventArgs e)
+        {
+            SelectTool(ToolType.selectTile);
+        }
+
+        private void btnToolSelection_Click(object sender, EventArgs e)
+        {
+            SelectTool(ToolType.selection);
+        }
+
+        #endregion
+
+        #region Generate Code
+
+        private void cArrayToolStripMenuItem_Click(object sender, EventArgs e)
+        {   // generate C++ codes
+            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
+                tile_library, tile_width, tile_height,
+                tbCode);
+            codesGenerator.GenerateCPP();
+            tctrlDesign.SelectedTab = tpgCode;
+            rbCPP.Checked = true;
+        }
+
+        private void cArrayToolStripMenuItem1_Click(object sender, EventArgs e)
+        {   // generate C# codes
+            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
+                tile_library, tile_width, tile_height,
+                tbCode);
+            codesGenerator.GenerateCSharp();
+            tctrlDesign.SelectedTab = tpgCode;
+            rbCS.Checked = true;
+        }
+
+        private void xMLToolStripMenuItem_Click(object sender, EventArgs e)
+        {   // generate xml
+            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
+                tile_library, tile_width, tile_height,
+                tbCode);
+            codesGenerator.GenerateXML();
+            tctrlDesign.SelectedTab = tpgCode;
+            rbXML.Checked = true;
+        }
+
+        private void selectedLanguageToolStripMenuItem_Click(object sender, EventArgs e)
+        {   // generate codes with selected language
+            codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
+                tile_library, tile_width, tile_height,
+                tbCode);
+
+            if (rbCPP.Checked)
+                codesGenerator.GenerateCPP();
+            else if (rbCS.Checked)
+                codesGenerator.GenerateCSharp();
+            else if (rbXML.Checked)
+                codesGenerator.GenerateXML();
+
+            tctrlDesign.SelectedTab = tpgCode;
+        }
+
+        #endregion
+ 
     }
 }

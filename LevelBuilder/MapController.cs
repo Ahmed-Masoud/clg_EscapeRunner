@@ -65,9 +65,18 @@ namespace LevelBuilder
 
         public void RenderMap()
         {   // render map
-            pbMap.Width = tile_width * map_width;
-            pbMap.Height = tile_height * map_height;
 
+            if (isIsometric)
+            {
+                pbMap.Width = (tile_width * map_width) + 270;
+                pbMap.Height = (tile_height * map_height);
+            }
+            else
+            {
+                pbMap.Width = tile_width * map_width;
+                pbMap.Height = tile_height * map_height;
+            }
+            
             Bitmap bmp = new Bitmap(pbMap.Width, pbMap.Height);
             pbMap.Image = bmp;
             pbMapSmall.Image = bmp;
@@ -78,32 +87,24 @@ namespace LevelBuilder
 
             if (isIsometric)
             {
-                int counter = 0;
-                Point location = new Point(500, -10);
-                Point startLocation = new Point(340, -320);
+                Point startLocation = new Point(270, -100);
+                Point location = startLocation;
 
-                for (int i = 0; i < map_width; i++)
+                for (int x = 0; x < map_width; x++)
                 {
-                    for (int j = 0; j < map_height; j++)
+                    for (int y = 0; y < map_height; y++)
                     {
-                        if (map[i, j] != -1)
+                        if (map[x, y] != -1)
                         {
-                            Point p = twoDToIso(location);
+                            TileType tileType = (TileType)map[x, y];
+                            LevelTile levelTile = new LevelTile(location, tileType, (Bitmap)tile_library[map[x, y]].TilePictureBox.Image);
+                            location.X += 20;
 
-                            if (map[i, j] == 5)
-                                gfx.DrawImage(tile_library[map[i, j]].TilePictureBox.Image, p.X, p.Y - 64, 64, 128);
-                            else
-                                gfx.DrawImage(tile_library[map[i, j]].TilePictureBox.Image, p.X, p.Y, 64, 64);
-
-                            location.X += 32;
-                            if (counter++ == map_height)
-                            {
-                                location.Y += 32;
-                                location.X = startLocation.X;
-                                counter = 0;
-                            }
+                            levelTile.Draw(gfx);
                         }
                     }
+                    location.Y += 20;
+                    location.X = startLocation.X;
                 }
             }
             else
@@ -119,31 +120,10 @@ namespace LevelBuilder
                                 PictureBox tile = tile_library[map[x, y]].TilePictureBox;
                                 if (tile != null)
                                 {
-                                    /*if (isIsometric)
-                                    {
-                                        Point p = new Point(x * tile_width, y * tile_height);
-                                        p = twoDToIso(p);
-                                        gfx.DrawImage(tile.Image, p.X, p.Y, tile_width, tile_height);
-                                    }
-                                    else
-                                    {
-                                        gfx.DrawImage(tile.Image, x * tile_width, y * tile_height, tile_width, tile_height);
-                                    }*/
-
                                     gfx.DrawImage(tile.Image, x * tile_width, y * tile_height, tile_width, tile_height);
 
                                     if (show_walkable_on && !tile_library[map[x, y]].TileWalkable)
                                     {   // show walkble tile
-                                        /*if (isIsometric)
-                                        {
-                                            Point p = new Point(x * tile_width + 2, y * tile_height + 2);
-                                            p = twoDToIso(p);
-                                            gfx.FillRectangle(new SolidBrush(Color.FromArgb(128, 50, 50, 255)), p.X, p.Y, tile_width - 4, tile_height - 4);
-                                        }
-                                        else
-                                        {
-                                            gfx.FillRectangle(new SolidBrush(Color.FromArgb(128, 50, 50, 255)), x * tile_width + 2, y * tile_height + 2, tile_width - 4, tile_height - 4);
-                                        }*/
                                         gfx.FillRectangle(new SolidBrush(Color.FromArgb(128, 50, 50, 255)), x * tile_width + 2, y * tile_height + 2, tile_width - 4, tile_height - 4);
                                     }
                                 }
@@ -153,7 +133,7 @@ namespace LevelBuilder
                 }
             }
 
-            
+
 
             if (map_width > map_height)
             {
@@ -179,41 +159,13 @@ namespace LevelBuilder
             {   // draw grids
                 for (int a = 1; a < map_width; a++)
                 {   // draw vertical lines
-                    if (isIsometric)
-                    {
-                        Point p1 = new Point(a * tile_width, 0);
-                        p1 = twoDToIso(p1);
-
-                        Point p2 = new Point(a * tile_width, map_height * tile_height);
-                        p2 = twoDToIso(p2);
-
-                        gfx.DrawLine(Pens.Gray, p1.X, p1.Y, p2.X, p2.Y);
-                    }
-                    else
-                    {
-                        gfx.DrawLine(Pens.Gray, a * tile_width, 0, a * tile_width, map_height * tile_height);
-                    }
-                    //gfx.DrawLine(Pens.Gray, a * tile_width, 0, a * tile_width, map_height * tile_height);
+                    gfx.DrawLine(Pens.Gray, a * tile_width, 0, a * tile_width, map_height * tile_height);
                 }
 
                 for (int b = 1; b < map_height; b++)
                 {   // draw horizontal lines
 
-                    if (isIsometric)
-                    {
-                        Point p1 = new Point(0, b * tile_height);
-                        p1 = twoDToIso(p1);
-
-                        Point p2 = new Point(map_width * tile_width, b * tile_height);
-                        p2 = twoDToIso(p2);
-
-                        gfx.DrawLine(Pens.Gray, p1.X, p1.Y, p2.X, p2.Y);
-                    }
-                    else
-                    {
-                        gfx.DrawLine(Pens.Gray, 0, b * tile_height, map_width * tile_width, b * tile_height);
-                    }
-                    //gfx.DrawLine(Pens.Gray, 0, b * tile_height, map_width * tile_width, b * tile_height);
+                    gfx.DrawLine(Pens.Gray, 0, b * tile_height, map_width * tile_width, b * tile_height);
                 }
             }
 
@@ -222,31 +174,10 @@ namespace LevelBuilder
             if (selection.BottomRightY > map_height)
                 selection.BottomRightY = map_height;
 
-            Rectangle marquee;
-
-            /*if (isIsometric)
-            {
-                Point p = new Point(selection.TopLeftX * tile_width,
-                                              selection.TopLeftY * tile_height);
-                p = twoDToIso(p);
-
-                marquee = new Rectangle(p.X, p.Y,
-                                    (selection.BottomRightX - selection.TopLeftX) * tile_width,
-                                    (selection.BottomRightY - selection.TopLeftY) * tile_height);
-            }
-            else
-            {
-                marquee = new Rectangle(selection.TopLeftX * tile_width,
+            Rectangle marquee = new Rectangle(selection.TopLeftX * tile_width,
                                     selection.TopLeftY * tile_height,
                                     (selection.BottomRightX - selection.TopLeftX) * tile_width,
                                     (selection.BottomRightY - selection.TopLeftY) * tile_height);
-            }*/
-            marquee = new Rectangle(selection.TopLeftX * tile_width,
-                                    selection.TopLeftY * tile_height,
-                                    (selection.BottomRightX - selection.TopLeftX) * tile_width,
-                                    (selection.BottomRightY - selection.TopLeftY) * tile_height);
-
-
 
             Pen mypen = new Pen(new SolidBrush(Color.Blue));
             mypen.Color = Color.Blue;
@@ -260,22 +191,6 @@ namespace LevelBuilder
             gfx.Dispose();
             pbMap.Refresh();
 
-            if (isIsometric)
-            {
-                //pbMap.Image = RotateImage(pbMap.Image, new Point(pbMap.Image.Size.Width / 2, pbMap.Image.Size.Height / 2), 45);
-                //pbMap.Size = new System.Drawing.Size(pbMap.Size.Width * 2, pbMap.Size.Height);
-                //pbMap.SizeMode = PictureBoxSizeMode.AutoSize;
-            }
-            else
-            {
-                //pbMap.Padding = new Padding(0, 0, 0, 0);
-                //pbMap.SizeMode = PictureBoxSizeMode.Normal;
-            }
-
-
-            //pbMap.Location = twoDToIso(pbMap.Location);
-
-            //tpgDesign.Refresh();
         }
 
         public void ResetMap()
@@ -284,10 +199,10 @@ namespace LevelBuilder
             map_name = "Untitled";
             tbMapName.Text = map_name;
 
-            tile_width = 50;
-            tile_height = 50;
-            map_width = 10;
-            map_height = 10;
+            tile_width = 30;
+            tile_height = 25;
+            map_width = 18;
+            map_height = 20;
 
             nudMapWidth.Value = map_width;
             nudMapHeight.Value = map_height;
@@ -451,62 +366,8 @@ namespace LevelBuilder
             }
 
             // change mouse cursor
-            if (cursor == CursorType.selection)
-            {
-                pbMap.Cursor = Cursors.Cross;
-            }
-            else if (cursor == CursorType.brush)
-            {
-                String filename = Path.GetDirectoryName(Application.ExecutablePath) + "\\System\\Graphics\\Cursors\\brush.png";
-                if (File.Exists(filename))
-                {
-                    CustomCursor selectionCursor = new CustomCursor(filename, 3, 18);
-                    pbMap.Cursor = selectionCursor.CursorGraphic;
-                }
-                else
-                {
-                    pbMap.Cursor = Cursors.Cross;
-                }
-            }
-            else if (cursor == CursorType.fill)
-            {
-                String filename = Path.GetDirectoryName(Application.ExecutablePath) + "\\System\\Graphics\\Cursors\\fill.png";
-                if (File.Exists(filename))
-                {
-                    CustomCursor selectionCursor = new CustomCursor(filename, 10, 10);
-                    pbMap.Cursor = selectionCursor.CursorGraphic;
-                }
-                else
-                {
-                    pbMap.Cursor = Cursors.Cross;
-                }
-            }
-            else if (cursor == CursorType.selectColor)
-            {
-                String filename = Path.GetDirectoryName(Application.ExecutablePath) + "\\System\\Graphics\\Cursors\\selecttile.png";
-                if (File.Exists(filename))
-                {
-                    CustomCursor selectionCursor = new CustomCursor(filename, 3, 18);
-                    pbMap.Cursor = selectionCursor.CursorGraphic;
-                }
-                else
-                {
-                    pbMap.Cursor = Cursors.Cross;
-                }
-            }
-            else if (cursor == CursorType.eraser)
-            {
-                String filename = Path.GetDirectoryName(Application.ExecutablePath) + "\\System\\Graphics\\Cursors\\eraser.png";
-                if (File.Exists(filename))
-                {
-                    CustomCursor selectionCursor = new CustomCursor(filename, 3, 15);
-                    pbMap.Cursor = selectionCursor.CursorGraphic;
-                }
-                else
-                {
-                    pbMap.Cursor = Cursors.Cross;
-                }
-            }
+            pbMap.Cursor = Cursors.Cross;
+
         }
 
         public void SetupMap()
@@ -550,43 +411,5 @@ namespace LevelBuilder
             return (tempPt);
         }
 
-        public static Bitmap RotateImage(Image image, PointF offset, float angle)
-        {
-            if (image == null)
-                throw new ArgumentNullException("image");
-
-            //create a new empty bitmap to hold rotated image
-            Bitmap rotatedBmp = new Bitmap(image.Width, image.Height);
-            rotatedBmp.SetResolution(image.HorizontalResolution, image.VerticalResolution);
-
-            //make a graphics object from the empty bitmap
-            Graphics g = Graphics.FromImage(rotatedBmp);
-
-            //Put the rotation point in the center of the image
-            g.TranslateTransform(offset.X, offset.Y);
-
-            //rotate the image
-            g.RotateTransform(angle);
-
-            //move the image back
-            g.TranslateTransform(-offset.X, -offset.Y);
-
-            PointF[] destinationPoints = {
-                new PointF(image.Height/2, 0),   // destination for upper-left point of 
-                                      // original
-                new PointF(500, 500),  // destination for upper-right point of 
-                                      // original
-                new PointF(500, 500)  // destination for lower-left point of 
-                                    // original
-            };
-
-            //draw passed in image onto graphics object
-            //g.DrawImage(image, new PointF(0, 0));
-            g.DrawImage(image, destinationPoints);
-
-            return rotatedBmp;
-        }
-
-        
     }
 }
