@@ -8,12 +8,14 @@
         Down,
         Up,
     }
+
     public class ViewEventArgs
     {
-        public ViewKey PressedKey { get; }
         public ViewEventArgs(ViewKey key)
         {
             this.PressedKey = key;
-        }            
+        }
+
+        public ViewKey PressedKey { get; }
     }
 }

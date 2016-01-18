@@ -61,8 +61,8 @@ namespace EscapeRunner.GameObjects
         {
             // Check if the player reached the bounds of the screen
             Point isoPosition = playerAnimation.AnimationPosition.TwoDimensionsToIso();
-            
-            Point isoScreenEdge = new Point(MainWindow.RightBound, MainWindow.LowerBound).TwoDimensionsToIso() ;
+
+            Point isoScreenEdge = new Point(MainWindow.RightBound, MainWindow.LowerBound).TwoDimensionsToIso();
             switch (direction)
             {
                 case Directions.Up:

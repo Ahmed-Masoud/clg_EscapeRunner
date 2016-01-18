@@ -42,7 +42,11 @@ namespace EscapeRunner
 
         public static int UpperBound { get; } = 0;
 
-        protected void OnNotification(ViewKey key)
+        /// <summary>
+        /// This method fires the notify event
+        /// </summary>
+        /// <param name="key"></param>
+        protected void NotifyController(ViewKey key)
         {
             if (ViewNotification != null)
             {
@@ -53,15 +57,15 @@ namespace EscapeRunner
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Left)
-                OnNotification(ViewKey.Left);
+                NotifyController(ViewKey.Left);
             else if (e.KeyData == Keys.Right)
-                OnNotification(ViewKey.Right);
+                NotifyController(ViewKey.Right);
             else if (e.KeyData == Keys.Up)
-                OnNotification(ViewKey.Up);
+                NotifyController(ViewKey.Up);
             else if (e.KeyData == Keys.Down)
-                OnNotification(ViewKey.Down);
+                NotifyController(ViewKey.Down);
             if (e.KeyData == Keys.Space)
-                OnNotification(ViewKey.Space);
+                NotifyController(ViewKey.Space);
         }
 
         // Called on Refresh()
@@ -77,7 +81,7 @@ namespace EscapeRunner
             RightBound = this.Width;
 
             // Fire the event with unknown args, to enter the (default) case in a switch
-            Bitmap backG = new Bitmap(Properties.Resources.Background, RightBound, LowerBound);
+            Bitmap backG = new Bitmap(Model.Backgrounds[0], RightBound, LowerBound);
             this.BackgroundImage = backG;
         }
 

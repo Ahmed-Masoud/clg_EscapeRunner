@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 
 namespace EscapeRunner.View
@@ -34,7 +33,6 @@ namespace EscapeRunner.View
 
         private static List<Bitmap> levelTiles = new List<Bitmap>();
         private static Point location = new Point(500, 100);
-        public static Point startLocation { get; } = new Point(390, -280);
         private static List<Bitmap> tiles = Model.LevelMap;
 
         static MapLoader()
@@ -43,6 +41,8 @@ namespace EscapeRunner.View
             foreach (int x in level)
                 levelTiles.Add(tiles[x]);
         }
+
+        public static Point startLocation { get; } = new Point(390, -280);
 
         public static void drawLevel(Graphics g)
         {

@@ -267,6 +267,8 @@ namespace LevelBuilder
             code.Write(map_name);
             code.Write(" = {\r\n");
 
+            // Serialize map[x,y] to binary format and save it
+
             for (int h = 0; h < map_height; h++)
             {
                 code.Write("\t{ ");

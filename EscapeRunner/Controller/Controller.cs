@@ -1,51 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using EscapeRunner.Animations;
 using EscapeRunner.GameObjects;
-using EscapeRunner.Animations;
-using System;
 using EscapeRunner.View;
+using System;
+using System.Collections.Generic;
 
 namespace EscapeRunner
 {
-    class Controller
+    internal class Controller
     {
-        private static MainWindow window;
-
         public static Player player;
-        private static ProjectilePool projectilePool;
-
         private static List<IDrawable> drawableObjects = new List<IDrawable>();
+        private static ProjectilePool projectilePool;
+        private static MainWindow window;
 
         public Controller()
         {
             window = Program.MainWindow;
+            // Subscribe to the notify event
             window.ViewNotification += Window_ViewNotification;
             player = Player.PlayerInstance;
 
             // Lazy initialization of projectile pool
             projectilePool = ProjectilePool.Instance;
-        }
-        private void Window_ViewNotification(ViewEventArgs e)
-        {
-            switch (e.PressedKey)
-            {
-                case ViewKey.Space:
-                    FireBullet();
-                    break;
-                case ViewKey.Right:
-                    player.Move(Directions.Right);
-                    break;
-                case ViewKey.Left:
-                    player.Move(Directions.Left);
-                    break;
-                case ViewKey.Down:
-                    player.Move(Directions.Down);
-                    break;
-                case ViewKey.Up:
-                    player.Move(Directions.Up);
-                    break;
-                default:
-                    break;
-            }
         }
 
         public static void WindowRefresh(object sender, System.Windows.Forms.PaintEventArgs e)
@@ -54,7 +30,6 @@ namespace EscapeRunner
             player.UpdateGraphics(e.Graphics);
             if (drawableObjects.Count > 0)
             {
-
                 //temp.UpdateGraphics(e.Graphics);
                 for (int i = 0; i < drawableObjects.Count; i++)
                 {
@@ -81,7 +56,6 @@ namespace EscapeRunner
         {
             try
             {
-
                 // Create a new explosion and add it to the drawable list
                 IWeapon projectile = projectilePool.Acquire(Player.Position, false);
                 drawableObjects.Add((ProjectileClassA)projectile);
@@ -91,6 +65,35 @@ namespace EscapeRunner
             catch (InvalidOperationException)
             {
                 // Out of shots, don't fire
+            }
+        }
+
+        private void Window_ViewNotification(ViewEventArgs e)
+        {
+            switch (e.PressedKey)
+            {
+                case ViewKey.Space:
+                    FireBullet();
+                    break;
+
+                case ViewKey.Right:
+                    player.Move(Directions.Right);
+                    break;
+
+                case ViewKey.Left:
+                    player.Move(Directions.Left);
+                    break;
+
+                case ViewKey.Down:
+                    player.Move(Directions.Down);
+                    break;
+
+                case ViewKey.Up:
+                    player.Move(Directions.Up);
+                    break;
+
+                default:
+                    break;
             }
         }
     }
