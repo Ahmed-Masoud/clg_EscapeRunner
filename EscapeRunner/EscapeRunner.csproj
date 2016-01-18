@@ -46,24 +46,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\GameObjects\Monster.cs" />
+    <Compile Include="BusinessLogic\GameObjects\Monster.cs" />
     <Compile Include="Model\Animations\Animation.cs" />
     <Compile Include="Model\Animations\AnimationFactory.cs" />
     <Compile Include="Model\Animations\BulletAnimation.cs" />
-    <Compile Include="Controller\Controller.cs" />
-    <Compile Include="Controller\GameObjects\IDrawable.cs" />
+    <Compile Include="BusinessLogic\Controller.cs" />
+    <Compile Include="BusinessLogic\GameObjects\IDrawable.cs" />
     <Compile Include="Model\Animations\IPrototype.cs" />
     <Compile Include="Model\Animations\IReciever.cs" />
     <Compile Include="Model\Animations\MonsterAnimation.cs" />
     <Compile Include="Model\Animations\PlayerAnimation.cs" />
     <Compile Include="Model\Animations\ExplosionAnimation.cs" />
-    <Compile Include="Controller\IsometricExtensionMethods.cs" />
+    <Compile Include="BusinessLogic\IsometricExtensionMethods.cs" />
     <Compile Include="Model\AnimationModel.cs" />
-    <Compile Include="Controller\GameObjects\IWeapon.cs" />
-    <Compile Include="Controller\GameObjects\Player.cs" />
-    <Compile Include="Controller\GameObjects\ProjectileClassAlpha.cs" />
-    <Compile Include="Controller\GameObjects\ProjectileClassBeta.cs" />
-    <Compile Include="Controller\GameObjects\ProjectilePool.cs" />
+    <Compile Include="BusinessLogic\GameObjects\IWeapon.cs" />
+    <Compile Include="BusinessLogic\GameObjects\Player.cs" />
+    <Compile Include="BusinessLogic\GameObjects\ProjectileClassAlpha.cs" />
+    <Compile Include="BusinessLogic\GameObjects\ProjectileClassBeta.cs" />
+    <Compile Include="BusinessLogic\GameObjects\ProjectilePool.cs" />
     <Compile Include="Model\AudioModel.cs" />
     <Compile Include="View\KeyChangedEventArgs.cs" />
     <Compile Include="View\MainWindow.cs">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EscapeRunner.BusinessLogic;
+using System;
 using System.Windows.Forms;
 
 namespace EscapeRunner

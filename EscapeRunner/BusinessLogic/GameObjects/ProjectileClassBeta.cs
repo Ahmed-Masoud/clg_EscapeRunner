@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace EscapeRunner.GameObjects
+namespace EscapeRunner.BusinessLogic.GameObjects
 {
     internal class ProjectileClassBeta : IWeapon, IDrawable
     {

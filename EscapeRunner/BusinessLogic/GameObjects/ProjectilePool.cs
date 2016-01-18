@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace EscapeRunner.GameObjects
+namespace EscapeRunner.BusinessLogic.GameObjects
 {
     /// <summary>
     /// Object Pool

@@ -1,12 +1,12 @@
 ﻿using EscapeRunner.Animations;
-using EscapeRunner.GameObjects;
+using EscapeRunner.BusinessLogic.GameObjects;
 using EscapeRunner.View;
 using System;
 using System.Collections.Generic;
 
-namespace EscapeRunner
+namespace EscapeRunner.BusinessLogic
 {
-    internal class Controller
+    internal partial class Controller
     {
         public static Player player;
         private static List<IDrawable> drawableObjects = new List<IDrawable>();

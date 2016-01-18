@@ -1,7 +1,7 @@
 ﻿using EscapeRunner.Animations;
 using System.Drawing;
 
-namespace EscapeRunner.GameObjects
+namespace EscapeRunner.BusinessLogic.GameObjects
 {
     public class Player : IDrawable
     {

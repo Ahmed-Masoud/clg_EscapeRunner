@@ -1,4 +1,4 @@
-﻿using EscapeRunner.GameObjects;
+﻿using EscapeRunner.BusinessLogic.GameObjects;
 using System.Collections.Generic;
 using System.Drawing;
 

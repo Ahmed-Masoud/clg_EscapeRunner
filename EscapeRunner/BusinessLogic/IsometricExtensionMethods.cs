@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace EscapeRunner
+namespace EscapeRunner.BusinessLogic
 {
     public static class IsometricExtensionMethods
     {

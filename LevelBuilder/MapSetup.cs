@@ -8,7 +8,9 @@ namespace LevelBuilder
 {
     public partial class MapSetup : Form
     {
+#pragma warning disable  
         public LevelBuilder ParentForm;
+#pragma warning restore
 
         public MapSetup()
         {

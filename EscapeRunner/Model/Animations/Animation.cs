@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using EscapeRunner.BusinessLogic;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 
 namespace EscapeRunner.Animations
