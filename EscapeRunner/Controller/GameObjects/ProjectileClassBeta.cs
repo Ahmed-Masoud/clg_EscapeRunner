@@ -3,9 +3,9 @@ using System.Drawing;
 
 namespace EscapeRunner.GameObjects
 {
-    internal class ProjectileClassB : IWeapon, IDrawable
+    internal class ProjectileClassBeta : IWeapon, IDrawable
     {
-        internal ProjectileClassB(int index)
+        internal ProjectileClassBeta(int index)
         {
             //ExplosionPosition = Point.Empty;
             Index = index;
