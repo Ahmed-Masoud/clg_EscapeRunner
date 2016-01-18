@@ -6,7 +6,7 @@ namespace EscapeRunner.GameObjects
     /// <summary>
     /// Projectiles are implemented using object pool design pattern
     /// </summary>
-    public class ProjectileClassA : IWeapon, IDrawable
+    public class ProjectileClassAlpha : IWeapon, IDrawable
     {
         private static BulletAnimation prototypeBullet = new BulletAnimation();
         private static ExplosionAnimation prototypeExplosion = new ExplosionAnimation();
@@ -25,7 +25,7 @@ namespace EscapeRunner.GameObjects
         private int paintedFrames = 0;
         private bool used;
 
-        internal ProjectileClassA(int index)
+        internal ProjectileClassAlpha(int index)
         {
             // Used for lazy initialization in the bullet pool
             explosionAni = (ExplosionAnimation)((IPrototype<Animation>)prototypeExplosion).Clone();

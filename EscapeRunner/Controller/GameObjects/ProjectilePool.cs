@@ -25,14 +25,14 @@ namespace EscapeRunner.GameObjects
             // Create normal weapon spawns
             for (int i = 0; i < NumberOfProjectiles - 3; i++)
             {
-                projectiles.Add(new ProjectileClassA(i));
+                projectiles.Add(new ProjectileClassAlpha(i));
                 projectiles[i].Used = false;
             }
 
             // Create super weapon spawns
             for (int i = NumberOfProjectiles - 3; i < NumberOfProjectiles - 1; i++)
             {
-                projectiles.Add(new ProjectileClassB(i));
+                projectiles.Add(new ProjectileClassBeta(i));
                 projectiles[i].Used = false;
             }
         }

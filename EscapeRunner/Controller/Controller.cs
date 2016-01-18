@@ -58,7 +58,7 @@ namespace EscapeRunner
             {
                 // Create a new explosion and add it to the drawable list
                 IWeapon projectile = projectilePool.Acquire(Player.Position, false);
-                drawableObjects.Add((ProjectileClassA)projectile);
+                drawableObjects.Add((ProjectileClassAlpha)projectile);
 
                 // TODO play sound
             }
