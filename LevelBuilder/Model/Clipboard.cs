@@ -2,7 +2,7 @@
 //using System.Threading.Tasks;
 using System.Collections;
 
-namespace LevelBuilder
+namespace LevelBuilder.Model
 {
     public class Clipboard
     {

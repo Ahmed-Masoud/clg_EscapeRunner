@@ -44,25 +44,14 @@ namespace EscapeRunner
         private static string FindProjectPath()
         {
             // Get the project folder on the hard disk
-            string binFolder = Environment.CurrentDirectory;
-            string[] parentDirectories = binFolder.Split('\\');
+            string path = Path.GetDirectoryName(
+                            Path.GetDirectoryName(
+                                Directory.GetCurrentDirectory())) + "\\";
 
-            if (parentDirectories.Length >= 2)
-            {
-                // If the project is not directly on the hard-disk C: ProjectFile \bin
-                StringBuilder projectDirectory = new StringBuilder(16);
+            if (path != null)
+                return path;
 
-                // Get the path of the project
-                for (int i = 0; i < parentDirectories.Length - 2; i++)
-                {
-                    projectDirectory.Append($"{parentDirectories[i]}\\");
-                }
-                return projectDirectory.ToString();
-            }
-            else
-            {
-                throw new InvalidOperationException("Project Folder Can't be found");
-            }
+            throw new DirectoryNotFoundException();
         }
 
         private static List<Bitmap> LoadAnimationFromDisk(string animationFolder)
@@ -87,7 +76,7 @@ namespace EscapeRunner
                 string charAnimationsFolder = Path.Combine(resFolderPath, "Char");
                 string explosionAnimationsFolder = Path.Combine(resFolderPath, "Boom");
                 string bulletAnimationsFolder = Path.Combine(resFolderPath, "BulletA");
-                string levelTileFolder = Path.Combine(resFolderPath, "Level");
+                string levelTileFolder = Path.Combine(resFolderPath, "Tiles");
                 string flareFolder = Path.Combine(resFolderPath, "Flare");
                 string backgroundFolder = Path.Combine(resFolderPath, "Background");
                 String monsterFolder = Path.Combine(resFolderPath, "Monster");

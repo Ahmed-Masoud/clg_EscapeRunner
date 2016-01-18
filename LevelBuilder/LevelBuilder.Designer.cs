@@ -31,7 +31,6 @@ namespace LevelBuilder
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LevelBuilder));
             this.pnlDesign = new System.Windows.Forms.Panel();
             this.tctrlDesign = new System.Windows.Forms.TabControl();
             this.tpgDesign = new System.Windows.Forms.TabPage();
@@ -102,6 +101,9 @@ namespace LevelBuilder
             this.cArrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cArrayToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.xMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.twoDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.isometricToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialogLoadTiles = new System.Windows.Forms.FolderBrowserDialog();
             this.saveMapDialog = new System.Windows.Forms.SaveFileDialog();
             this.openMapDialog = new System.Windows.Forms.OpenFileDialog();
@@ -152,8 +154,8 @@ namespace LevelBuilder
             // 
             // tctrlDesign
             // 
-            this.tctrlDesign.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.tctrlDesign.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tctrlDesign.Controls.Add(this.tpgDesign);
             this.tctrlDesign.Controls.Add(this.tpgCode);
@@ -274,8 +276,8 @@ namespace LevelBuilder
             // 
             // gbTileProperties
             // 
-            this.gbTileProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.gbTileProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbTileProperties.AutoSize = true;
             this.gbTileProperties.Controls.Add(this.btnUpdateTile);
@@ -545,7 +547,8 @@ namespace LevelBuilder
             this.viewToolStripMenuItem,
             this.selectToolStripMenuItem,
             this.tilesToolStripMenuItem,
-            this.codeToolStripMenuItem});
+            this.codeToolStripMenuItem,
+            this.modeToolStripMenuItem});
             this.menuStripDLMapEditor.Location = new System.Drawing.Point(0, 0);
             this.menuStripDLMapEditor.Name = "menuStripDLMapEditor";
             this.menuStripDLMapEditor.Size = new System.Drawing.Size(1016, 24);
@@ -604,7 +607,7 @@ namespace LevelBuilder
             // saveMapAsToolStripMenuItem
             // 
             this.saveMapAsToolStripMenuItem.Name = "saveMapAsToolStripMenuItem";
-            this.saveMapAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.saveMapAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
             this.saveMapAsToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.saveMapAsToolStripMenuItem.Text = "Save Map &As ...";
@@ -620,7 +623,7 @@ namespace LevelBuilder
             this.exitDLMapEditorToolStripMenuItem.Name = "exitDLMapEditorToolStripMenuItem";
             this.exitDLMapEditorToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
             this.exitDLMapEditorToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
-            this.exitDLMapEditorToolStripMenuItem.Text = "E&xit D2D Map Editor";
+            this.exitDLMapEditorToolStripMenuItem.Text = "E&xit LV Map Editor";
             this.exitDLMapEditorToolStripMenuItem.Click += new System.EventHandler(this.exitDLMapEditorToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem1
@@ -689,7 +692,7 @@ namespace LevelBuilder
             this.designViewToolStripMenuItem.Checked = true;
             this.designViewToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.designViewToolStripMenuItem.Name = "designViewToolStripMenuItem";
-            this.designViewToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.designViewToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.D)));
             this.designViewToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.designViewToolStripMenuItem.Text = "&Design View";
@@ -698,7 +701,7 @@ namespace LevelBuilder
             // codeViewToolStripMenuItem
             // 
             this.codeViewToolStripMenuItem.Name = "codeViewToolStripMenuItem";
-            this.codeViewToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.codeViewToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.C)));
             this.codeViewToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.codeViewToolStripMenuItem.Text = "&Code View";
@@ -714,7 +717,7 @@ namespace LevelBuilder
             this.gridToolStripMenuItem.Checked = true;
             this.gridToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-            this.gridToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.gridToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.G)));
             this.gridToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.gridToolStripMenuItem.Text = "Show &Grid";
@@ -723,7 +726,7 @@ namespace LevelBuilder
             // showWalkableToolStripMenuItem
             // 
             this.showWalkableToolStripMenuItem.Name = "showWalkableToolStripMenuItem";
-            this.showWalkableToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.showWalkableToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.W)));
             this.showWalkableToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.showWalkableToolStripMenuItem.Text = "Show &Walkable";
@@ -823,45 +826,71 @@ namespace LevelBuilder
             // cArrayToolStripMenuItem
             // 
             this.cArrayToolStripMenuItem.Name = "cArrayToolStripMenuItem";
-            this.cArrayToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift)
+            this.cArrayToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.D1)));
-            this.cArrayToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.cArrayToolStripMenuItem.Text = "&C/C++ Array";
+            this.cArrayToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.cArrayToolStripMenuItem.Text = "&C/C++";
             this.cArrayToolStripMenuItem.Click += new System.EventHandler(this.cArrayToolStripMenuItem_Click);
             // 
             // cArrayToolStripMenuItem1
             // 
             this.cArrayToolStripMenuItem1.Name = "cArrayToolStripMenuItem1";
-            this.cArrayToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift)
+            this.cArrayToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.D2)));
-            this.cArrayToolStripMenuItem1.Size = new System.Drawing.Size(210, 22);
-            this.cArrayToolStripMenuItem1.Text = "C# A&rray";
+            this.cArrayToolStripMenuItem1.Size = new System.Drawing.Size(179, 22);
+            this.cArrayToolStripMenuItem1.Text = "C#";
             this.cArrayToolStripMenuItem1.Click += new System.EventHandler(this.cArrayToolStripMenuItem1_Click);
             // 
             // xMLToolStripMenuItem
             // 
             this.xMLToolStripMenuItem.Name = "xMLToolStripMenuItem";
-            this.xMLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift)
+            this.xMLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.D4)));
-            this.xMLToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.xMLToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.xMLToolStripMenuItem.Text = "&XML";
             this.xMLToolStripMenuItem.Click += new System.EventHandler(this.xMLToolStripMenuItem_Click);
+            // 
+            // modeToolStripMenuItem
+            // 
+            this.modeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.twoDToolStripMenuItem,
+            this.isometricToolStripMenuItem});
+            this.modeToolStripMenuItem.Name = "modeToolStripMenuItem";
+            this.modeToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.modeToolStripMenuItem.Text = "Preview";
+            // 
+            // twoDToolStripMenuItem
+            // 
+            this.twoDToolStripMenuItem.Checked = true;
+            this.twoDToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.twoDToolStripMenuItem.Name = "twoDToolStripMenuItem";
+            this.twoDToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.twoDToolStripMenuItem.Text = "2D";
+            this.twoDToolStripMenuItem.Click += new System.EventHandler(this.twoDToolStripMenuItem_Click);
+            // 
+            // isometricToolStripMenuItem
+            // 
+            this.isometricToolStripMenuItem.Name = "isometricToolStripMenuItem";
+            this.isometricToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.isometricToolStripMenuItem.Text = "Isometric";
+            this.isometricToolStripMenuItem.Click += new System.EventHandler(this.isometricToolStripMenuItem_Click);
             // 
             // saveMapDialog
             // 
             this.saveMapDialog.DefaultExt = "lv";
-            this.saveMapDialog.Filter = "LV Documents (*.lv) |*.lv";
+            this.saveMapDialog.Filter = "LV Files (*.lv) |*.lv";
             this.saveMapDialog.Title = "Save Map As";
             // 
             // openMapDialog
             // 
             this.openMapDialog.DefaultExt = "lv";
-            this.openMapDialog.Filter = "LV Documents (*.lv) |*.lv";
+            this.openMapDialog.Filter = "LV Files (*.lv) |*.lv";
+            this.openMapDialog.Title = "Open Map";
             // 
             // gbTiles
             // 
-            this.gbTiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.gbTiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbTiles.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.gbTiles.Controls.Add(this.pnlTileLibrary);
@@ -874,8 +903,8 @@ namespace LevelBuilder
             // 
             // pnlTileLibrary
             // 
-            this.pnlTileLibrary.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.pnlTileLibrary.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlTileLibrary.AutoScroll = true;
             this.pnlTileLibrary.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -915,8 +944,7 @@ namespace LevelBuilder
             // 
             // btnToolFill
             // 
-            //this.btnToolFill.Image = ((System.Drawing.Image)(resources.GetObject("btnToolFill")));
-            this.btnToolFill.Image = Properties.Resources.fill_icon;
+            this.btnToolFill.Image = global::LevelBuilder.Properties.Resources.fill_icon;
             this.btnToolFill.Location = new System.Drawing.Point(76, 19);
             this.btnToolFill.Name = "btnToolFill";
             this.btnToolFill.Size = new System.Drawing.Size(28, 28);
@@ -926,8 +954,7 @@ namespace LevelBuilder
             // 
             // btnToolSelection
             // 
-            //this.btnToolSelection.Image = ((System.Drawing.Image)(resources.GetObject("btnToolSelection")));
-            this.btnToolSelection.Image = Properties.Resources.selection_icon;
+            this.btnToolSelection.Image = global::LevelBuilder.Properties.Resources.selection_icon;
             this.btnToolSelection.Location = new System.Drawing.Point(8, 19);
             this.btnToolSelection.Name = "btnToolSelection";
             this.btnToolSelection.Size = new System.Drawing.Size(28, 28);
@@ -937,8 +964,7 @@ namespace LevelBuilder
             // 
             // btnToolEraser
             // 
-            //this.btnToolEraser.Image = ((System.Drawing.Image)(resources.GetObject("btnToolEraser")));
-            this.btnToolEraser.Image = Properties.Resources.eraser_icon;
+            this.btnToolEraser.Image = global::LevelBuilder.Properties.Resources.eraser_icon;
             this.btnToolEraser.Location = new System.Drawing.Point(144, 19);
             this.btnToolEraser.Name = "btnToolEraser";
             this.btnToolEraser.Size = new System.Drawing.Size(28, 28);
@@ -948,8 +974,7 @@ namespace LevelBuilder
             // 
             // btnToolSelectTile
             // 
-            //this.btnToolSelectTile.Image = ((System.Drawing.Image)(resources.GetObject("btnToolSelectTile")));
-            this.btnToolSelectTile.Image = Properties.Resources.selecttile_icon;
+            this.btnToolSelectTile.Image = global::LevelBuilder.Properties.Resources.selecttile_icon;
             this.btnToolSelectTile.Location = new System.Drawing.Point(110, 19);
             this.btnToolSelectTile.Name = "btnToolSelectTile";
             this.btnToolSelectTile.Size = new System.Drawing.Size(28, 28);
@@ -961,8 +986,7 @@ namespace LevelBuilder
             // 
             this.btnToolBrush.AccessibleDescription = "";
             this.btnToolBrush.BackColor = System.Drawing.SystemColors.Control;
-            //this.btnToolBrush.Image = ((System.Drawing.Image)(resources.GetObject("btnToolBrush")));
-            this.btnToolBrush.Image = Properties.Resources.brush_icon;
+            this.btnToolBrush.Image = global::LevelBuilder.Properties.Resources.brush_icon;
             this.btnToolBrush.Location = new System.Drawing.Point(42, 19);
             this.btnToolBrush.Name = "btnToolBrush";
             this.btnToolBrush.Size = new System.Drawing.Size(28, 28);
@@ -1009,7 +1033,7 @@ namespace LevelBuilder
             this.toolStripMenuItemDelete.Text = "Delete";
             this.toolStripMenuItemDelete.Click += new System.EventHandler(this.toolStripMenuItemDelete_Click);
             // 
-            // MapEditor
+            // LevelBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1019,10 +1043,9 @@ namespace LevelBuilder
             this.Controls.Add(this.pnlDesign);
             this.Controls.Add(this.menuStripDLMapEditor);
             this.DoubleBuffered = true;
-            //this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripDLMapEditor;
             this.MinimumSize = new System.Drawing.Size(1024, 768);
-            this.Name = "MapEditor";
+            this.Name = "LevelBuilder";
             this.Text = "Level Builder";
             this.Resize += new System.EventHandler(this.MapEditor_Resize);
             this.pnlDesign.ResumeLayout(false);
@@ -1149,8 +1172,12 @@ namespace LevelBuilder
         private System.Windows.Forms.ToolStripMenuItem selectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deselectToolStripMenuItem;
-        
+
         #endregion
+
+        private System.Windows.Forms.ToolStripMenuItem twoDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem isometricToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem modeToolStripMenuItem;
     }
 }
 

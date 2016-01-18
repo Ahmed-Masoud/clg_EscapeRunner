@@ -19,8 +19,9 @@ namespace LevelBuilder
             ArrayList tilesArrayList = new ArrayList();
 
             Cursor.Current = Cursors.WaitCursor;
+
             if (!Directory.Exists(folderName))
-                throw new FileNotFoundException();
+                throw new DirectoryNotFoundException();
 
             foreach (string f in Directory.GetFiles(folderName))
             {   // load tiles
@@ -50,7 +51,7 @@ namespace LevelBuilder
 
             foreach (string i in tilesArrayList)
             {   // update tiles library
-                Tile newTile = new Tile();
+                Model.Tile newTile = new Model.Tile();
                 PictureBox pB = new PictureBox();
                 pB.Left = 20;
                 pB.Top = (t * (tile_height + 5)) + 20;
@@ -173,7 +174,7 @@ namespace LevelBuilder
 
                 foreach (string i in tilesArrayList)
                 {   // update tiles library
-                    Tile newTile = new Tile();
+                    Model.Tile newTile = new Model.Tile();
                     PictureBox pB = new PictureBox();
                     pB.Left = 20;
                     pB.Top = (t * (tile_height + 5)) + 20;
@@ -248,8 +249,7 @@ namespace LevelBuilder
             string tileFileName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName) + "-tile.xml";
             FileStream tfs = new FileStream(tileFileName, FileMode.Create);
             XmlTextWriter textWriter = new XmlTextWriter(tfs, null);
-            bool saved = false;
-
+            
             string pbDirName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName);
             Directory.CreateDirectory(pbDirName);
 
@@ -297,19 +297,12 @@ namespace LevelBuilder
                     try
                     {
                         bmp.Save(pbFileName, System.Drawing.Imaging.ImageFormat.Png);
-                        saved = true;
                     }
                     catch (Exception exc)
                     {
                         MessageBox.Show(exc.ToString(), "Fail to Save Tiles - " + exc.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        saved = false;
                     }
                 }
-            }
-
-            if (saved)
-            {
-                MessageBox.Show("Map Saved Successfully !", "Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
 
             // close the root element

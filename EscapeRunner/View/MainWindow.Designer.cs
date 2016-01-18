@@ -44,13 +44,13 @@ namespace EscapeRunner
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "MainWindow";
-            this.Text = "Form1";
+            this.Text = "Space Run";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Click += new System.EventHandler(this.MainWindow_Click);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainWindow_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainWindow_KeyDown);
             this.ResumeLayout(false);
-
+            
         }
 
 

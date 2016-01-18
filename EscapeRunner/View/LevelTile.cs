@@ -50,7 +50,9 @@ namespace EscapeRunner.View
         {
             Point tempPoint = twoDimPoint.TwoDimensionsToIso();
             g.DrawImage(texture, tempPoint.X, tempPoint.Y, dimensions.Width, dimensions.Height);
-#if DEBUG
+
+            #if DEBUG
+
             g.FillRectangle(Brushes.MistyRose, twoDimPoint.X, twoDimPoint.Y, dimensions.Width, dimensions.Height);
             FontConverter.FontNameConverter d = new FontConverter.FontNameConverter();
             FontFamily fontFamily = new FontFamily("Arial");
@@ -62,7 +64,9 @@ namespace EscapeRunner.View
 
             g.DrawString(index.ToString(), font, Brushes.Black, twoDimPoint);
             g.DrawRectangle(Pens.Peru, twoDimPoint.X, twoDimPoint.Y, dimensions.Width, dimensions.Height);
-#endif
+            
+            #endif
+
         }
     }
 }

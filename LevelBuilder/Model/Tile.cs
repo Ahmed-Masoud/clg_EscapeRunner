@@ -2,7 +2,7 @@
 //using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LevelBuilder
+namespace LevelBuilder.Model
 {
     public class Tile
     {

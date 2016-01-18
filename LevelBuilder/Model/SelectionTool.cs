@@ -4,7 +4,7 @@
 //using System.Threading.Tasks;
 using System.Drawing;
 
-namespace LevelBuilder
+namespace LevelBuilder.Model
 {
     internal class SelectionTool
     {

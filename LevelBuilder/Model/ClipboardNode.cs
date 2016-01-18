@@ -1,27 +1,19 @@
 ﻿//using System.Linq;
 //using System.Threading.Tasks;
 
-namespace LevelBuilder
+namespace LevelBuilder.Model
 {
-    public class HistoryNode
+    public class ClipboardNode
     {
-        private int id;
         private int map_x;
         private int map_y;
         private int value;
 
-        public HistoryNode(int id, int x, int y, int v)
+        public ClipboardNode(int x, int y, int v)
         {
-            this.id = id;
             map_x = x;
             map_y = y;
             value = v;
-        }
-
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
         }
 
         public int MapX
