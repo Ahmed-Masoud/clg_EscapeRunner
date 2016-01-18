@@ -56,7 +56,7 @@ namespace EscapeRunner.GameObjects
                         return projectiles[i];
                     }
                 }
-                throw new InvalidOperationException("All superweapon objects are currently in use");
+                throw new InvalidOperationException("All super weapon objects are currently in use");
             }
             else
             {

@@ -41,7 +41,7 @@ namespace EscapeRunner
 
         private static string FindProjectPath()
         {
-            // Get the project folder on the harddisk
+            // Get the project folder on the hard disk
             string binFolder = Environment.CurrentDirectory;
             string[] parentDirectories = binFolder.Split('\\');
 
@@ -81,7 +81,7 @@ namespace EscapeRunner
             // Check for the main resource folder
             if (Directory.Exists(resFolderPath))
             {
-                // Subfolders in animation class
+                // Sub folders in animation class
                 string charAnimationsFolder = Path.Combine(resFolderPath, "Char");
                 string explosionAnimationsFolder = Path.Combine(resFolderPath, "Boom");
                 string bulletAnimationsFolder = Path.Combine(resFolderPath, "BulletA");

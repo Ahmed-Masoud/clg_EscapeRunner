@@ -81,6 +81,12 @@ namespace EscapeRunner.GameObjects
             return false;
         }
 
+        /// <summary>
+        /// Moves on the 2D Cartesian coordinates, conversion is on checking and drawing only
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <param name="deltaHorizontal"></param>
+        /// <param name="deltaVertical"></param>
         private void Move(Directions direction, int deltaHorizontal, int deltaVertical)
         {
             // Get a handle to the player position because we can't change the contents of the points

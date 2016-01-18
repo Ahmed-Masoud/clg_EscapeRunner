@@ -22,7 +22,7 @@ namespace EscapeRunner
         }
 
         /// <summary>
-        /// Converts cartesian coordinates to isometric coordinates
+        /// Converts Cartesian coordinates to isometric coordinates
         /// </summary>
         /// <returns>Isometric coordinates</returns>
         public static Point TwoDimensionsToIso(this Point pt)

@@ -26,7 +26,7 @@ namespace EscapeRunner.Animations
         public void Draw(Graphics g, Directions direction)
         {
             Bitmap animationImage = animationImages[imageIndex];
-            // Cll the method in a suitable way
+            // Call the method in a suitable way
             if (animationImages != null)
             {
                 switch (direction)

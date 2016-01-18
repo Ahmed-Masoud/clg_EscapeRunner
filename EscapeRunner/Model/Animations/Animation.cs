@@ -26,7 +26,7 @@ namespace EscapeRunner.Animations
             reciever.Type = animationType;
         }
 
-        // Trigger an event to allert the bullet that it has been relocated, and set its lock state
+        // Trigger an event to alert the bullet that it has been relocated, and set its lock state
         public Point AnimationPosition { get; set; } = Point.Empty;
 
         /// <summary>
