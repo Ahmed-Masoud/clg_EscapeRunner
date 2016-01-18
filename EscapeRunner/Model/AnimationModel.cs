@@ -16,6 +16,7 @@ namespace EscapeRunner
         private static List<Bitmap> explosionAnimation;
         private static List<Bitmap> flareAnimation;
         private static List<Bitmap> levelMap;
+        private static List<Bitmap> monsterAnimation;
         private static List<Bitmap> backgrounds;
         private static string resFolderPath;
         /// <summary>
@@ -31,6 +32,7 @@ namespace EscapeRunner
 
         public static List<Bitmap> BulletAnimation { get { return bulletClassA; } }
         public static List<Bitmap> CharacterAnimation { get { return characterAnimation; } }
+        public static List<Bitmap> MonsterAnimation { get { return monsterAnimation; } }
 
         // Read properties to return the List<Bitmap> fields
         public static List<Bitmap> ExplosionAnimation { get { return explosionAnimation; } }
@@ -41,7 +43,7 @@ namespace EscapeRunner
 
         private static string FindProjectPath()
         {
-            // Get the project folder on the harddisk
+            // Get the project folder on the hard disk
             string binFolder = Environment.CurrentDirectory;
             string[] parentDirectories = binFolder.Split('\\');
 
@@ -81,19 +83,21 @@ namespace EscapeRunner
             // Check for the main resource folder
             if (Directory.Exists(resFolderPath))
             {
-                // Subfolders in animation class
+                // Sub folders in animation class
                 string charAnimationsFolder = Path.Combine(resFolderPath, "Char");
                 string explosionAnimationsFolder = Path.Combine(resFolderPath, "Boom");
                 string bulletAnimationsFolder = Path.Combine(resFolderPath, "BulletA");
                 string levelTileFolder = Path.Combine(resFolderPath, "Level");
                 string flareFolder = Path.Combine(resFolderPath, "Flare");
                 string backgroundFolder = Path.Combine(resFolderPath, "Background");
+                String monsterFolder = Path.Combine(resFolderPath, "Monster");
 
                 if (Directory.Exists(charAnimationsFolder)
                     && Directory.Exists(explosionAnimationsFolder)
                     && Directory.Exists(bulletAnimationsFolder)
                     && Directory.Exists(levelTileFolder)
-                    && Directory.Exists(backgroundFolder))
+                    && Directory.Exists(backgroundFolder)
+                    && Directory.Exists(monsterFolder))
                 {
                     characterAnimation = LoadAnimationFromDisk(charAnimationsFolder);
                     explosionAnimation = LoadAnimationFromDisk(explosionAnimationsFolder);
@@ -101,6 +105,7 @@ namespace EscapeRunner
                     levelMap = LoadAnimationFromDisk(levelTileFolder);
                     flareAnimation = LoadAnimationFromDisk(flareFolder);
                     backgrounds = LoadAnimationFromDisk(backgroundFolder);
+                    monsterAnimation = LoadAnimationFromDisk(monsterFolder);
                 }
                 else
                     throw new InvalidOperationException("Animation Folder cannot be found");
