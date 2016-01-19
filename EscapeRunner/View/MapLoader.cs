@@ -94,8 +94,7 @@ namespace EscapeRunner.View
 
         public static void DrawLevelFloor(Graphics g)
         {
-            //foreach (var tile in obstacleTiles)
-            //    tile.Draw(g);
+            // Draw the walkable ground
             foreach (var tile in walkableTiles)
                 tile.Draw(g);
         }
@@ -116,11 +115,11 @@ namespace EscapeRunner.View
                     TileType tempType = (TileType)level[i, j];
 
                     if (tempType == TileType.Floor)
-                        walkableTiles.Add(new LevelTile(location, level[i, j], tempType));
+                        walkableTiles.Add(new LevelTile(location, level[i, j], tempType, new Point(i, j)));
                     else
                     {
                         // All obstacle tiles need to be drawn on their own to implement depth sorting
-                        obstacleTiles.Add(new LevelTile(location, level[i, j], tempType));
+                        obstacleTiles.Add(new LevelTile(location, level[i, j], tempType, new Point(i, j)));
                     }
 
 

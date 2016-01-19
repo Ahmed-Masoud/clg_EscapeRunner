@@ -10,6 +10,14 @@ namespace EscapeRunner
         private static void LoadSounds()
         {
             string soundFolder = Path.Combine(resFolderPath, "Sounds");
+
+            if (Directory.Exists(soundFolder))
+            {
+                //foreach (var item in )
+                //{
+
+                //}
+            }
         }
     }
 }

@@ -26,33 +26,7 @@ namespace EscapeRunner.BusinessLogic
 
         public static void WindowRefresh(object sender, System.Windows.Forms.PaintEventArgs e)
         {
-            MapLoader.DrawGameFlares(e.Graphics);
-            //MapLoader.DrawLevelFloor(e.Graphics);
-
-            player.UpdateGraphics(e.Graphics);
-
-            if (drawableObjects.Count > 0)
-            {
-                // Draw the bullets
-                for (int i = 0; i < drawableObjects.Count; i++)
-                {
-                    var temp = drawableObjects[i];
-                    if (((IWeapon)temp).Used == true)
-                    {
-                        temp.UpdateGraphics(e.Graphics);
-                    }
-
-                    // Delete the shot directly if it finished animation
-                    if (((IWeapon)temp).Used == false)
-                    {
-                        // Release bullet resources
-                        drawableObjects.RemoveAt(i);
-                        i--;
-                        if (drawableObjects.Count == 0)
-                            break;
-                    }
-                }
-            }
+            DrawGraphics(e.Graphics);
         }
 
         private void FireBullet()

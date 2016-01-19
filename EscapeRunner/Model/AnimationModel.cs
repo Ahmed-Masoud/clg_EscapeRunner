@@ -33,8 +33,9 @@ namespace EscapeRunner
         {
             string projectPath = FindProjectPath();
             resFolderPath = Path.Combine(projectPath, "Res");
-            // Load animations
+
             LoadAnimations();
+            LoadSounds();
         }
 
         public static List<Bitmap> Backgrounds { get { return backgrounds; } }
@@ -60,19 +61,6 @@ namespace EscapeRunner
                 return path;
 
             throw new DirectoryNotFoundException();
-        }
-
-        private static List<Bitmap> LoadAnimationFromDisk(string animationFolder)
-        {
-            List<Bitmap> loadedAnimation = new List<Bitmap>(16);
-            string[] animationFileNames = Directory.GetFiles(animationFolder, "*.png");
-
-            foreach (string pic in animationFileNames)
-            {
-                loadedAnimation.Add((Bitmap)Image.FromFile(pic));
-            }
-
-            return loadedAnimation;
         }
 
         private static List<Bitmap> LoadAnimations()
@@ -103,6 +91,8 @@ namespace EscapeRunner
                     flareAnimation = LoadAnimationFromDisk(flareFolder);
                     backgrounds = LoadAnimationFromDisk(backgroundFolder);
                     monsterAnimation = LoadAnimationFromDisk(monsterFolder);
+
+                    //backgrounds = LoadAnimationFromDisk((() => (Bitmap)Image.FromFile(backgroundFolder)), backgroundFolder, "*.png");
                 }
                 else
                     throw new InvalidOperationException("Animation Folder cannot be found");
@@ -112,6 +102,31 @@ namespace EscapeRunner
                 throw new InvalidOperationException("Animation Folder cannot be found");
             }
             return characterAnimation;
+        }
+
+        private static List<Bitmap> LoadAnimationFromDisk(string animationFolder)
+        {
+            List<Bitmap> loadedAnimation = new List<Bitmap>(16);
+            string[] animationFileNames = Directory.GetFiles(animationFolder, "*.png");
+
+            foreach (string pic in animationFileNames)
+            {
+                loadedAnimation.Add((Bitmap)Image.FromFile(pic));
+            }
+
+            return loadedAnimation;
+        }
+        private static List<T> LoadAnimationFromDisk<T>(Func<T> reader, string animationFolder, string extension)
+        {
+            List<T> loadedAnimation = new List<T>(16);
+            string[] animationFileNames = Directory.GetFiles(animationFolder, extension);
+
+            foreach (string pic in animationFileNames)
+            {
+                loadedAnimation.Add(reader.Invoke());
+            }
+
+            return loadedAnimation;
         }
     }
 }

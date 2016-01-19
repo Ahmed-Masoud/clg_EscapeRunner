@@ -1,6 +1,8 @@
 ﻿using EscapeRunner.Animations;
 using EscapeRunner.View;
 using System.Drawing;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
@@ -10,7 +12,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private static Player playerInstance;
         private static int windowButtomMargin = 90;
         private static int windowSideMargin = 70;
-
+        bool isFired = false;
         private Player()
         {
             AnimationFactory factory = new AnimationFactory();
@@ -18,6 +20,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
             // Initialize the player location to the top of the screen
             playerAnimation.AnimationPosition = MapLoader.PlayerStartLocation;
+
             Direction = Directions.Right;
         }
 
@@ -88,14 +91,34 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         /// <param name="direction"></param>
         /// <param name="deltaHorizontal"></param>
         /// <param name="deltaVertical"></param>
-        private void Move(Directions direction, int deltaHorizontal, int deltaVertical)
+        private async void Move(Directions direction, int deltaHorizontal, int deltaVertical)
         {
             // Get a handle to the player position because we can't change the contents of the points
             Point newPosition = playerAnimation.AnimationPosition;
+
             switch (direction)
             {
                 case Directions.Up:
-                    newPosition.Y -= deltaVertical;
+                    {
+                        if (!isFired)
+                        {
+                            isFired = true;
+                            await Task.Run(() =>
+                            {
+                                int counter = 0;
+                                while (counter < 8)
+                                {
+                                    newPosition.Y -= deltaVertical;
+
+                                    playerAnimation.AnimationPosition = newPosition;
+                                    Thread.Sleep(100);
+                                    counter++;
+                                }
+                                isFired = false;
+                            });
+                        }
+                    }
+                    // newPosition.Y -= deltaVertical;
                     break;
 
                 case Directions.Down:

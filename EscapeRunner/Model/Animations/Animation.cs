@@ -21,6 +21,7 @@ namespace EscapeRunner.Animations
         protected int imageIndex;
         protected Rectangle objectBounds;
         protected IReciever reciever = new AnimationFactory();
+        public Rectangle ObjectBounds { get { return objectBounds; } }
 
         public Animation(AnimationType animationType)
         {
