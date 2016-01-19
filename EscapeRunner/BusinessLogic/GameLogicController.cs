@@ -26,11 +26,14 @@ namespace EscapeRunner.BusinessLogic
 
         public static void WindowRefresh(object sender, System.Windows.Forms.PaintEventArgs e)
         {
-            MapLoader.drawLevel(e.Graphics);
+            MapLoader.DrawGameFlares(e.Graphics);
+            //MapLoader.DrawLevelFloor(e.Graphics);
+
             player.UpdateGraphics(e.Graphics);
+
             if (drawableObjects.Count > 0)
             {
-                //temp.UpdateGraphics(e.Graphics);
+                // Draw the bullets
                 for (int i = 0; i < drawableObjects.Count; i++)
                 {
                     var temp = drawableObjects[i];

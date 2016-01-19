@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -47,10 +48,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic\GameObjects\Monster.cs" />
+    <Compile Include="BusinessLogic\PaintController.cs" />
     <Compile Include="Model\Animations\Animation.cs" />
     <Compile Include="Model\Animations\AnimationFactory.cs" />
     <Compile Include="Model\Animations\BulletAnimation.cs" />
-    <Compile Include="BusinessLogic\Controller.cs" />
+    <Compile Include="BusinessLogic\GameLogicController.cs" />
     <Compile Include="BusinessLogic\GameObjects\IDrawable.cs" />
     <Compile Include="Model\Animations\IPrototype.cs" />
     <Compile Include="Model\Animations\IReciever.cs" />

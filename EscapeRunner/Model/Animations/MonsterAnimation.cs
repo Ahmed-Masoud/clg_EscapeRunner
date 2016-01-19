@@ -1,12 +1,12 @@
-﻿using System.Drawing;
-using System.Collections.Generic;
-using System;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace EscapeRunner.Animations
 {
     public sealed class MonsterAnimation : Animation
     {
         private static List<Bitmap> animationImages;
+
         public MonsterAnimation() : base(AnimationType.MonsterAnimation)
         {
             imageIndex = 0;
@@ -17,7 +17,6 @@ namespace EscapeRunner.Animations
             animationHeight = 64;
             animationWidth = 64;
             objectBounds = new Rectangle(AnimationPosition, new Size(animationWidth, animationHeight));
-
         }
 
         public static Size MonsterSize { get; private set; }
@@ -31,6 +30,7 @@ namespace EscapeRunner.Animations
                 {
                     case Directions.Up:
                         break;
+
                     case Directions.Down:
                         break;
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace EscapeRunner
 {
@@ -12,10 +7,9 @@ namespace EscapeRunner
     /// </summary>
     public static partial class Model
     {
-        
         private static void LoadSounds()
         {
-            string soundFolder = Path.Combine(resFolderPath, "Sounds");   
+            string soundFolder = Path.Combine(resFolderPath, "Sounds");
         }
     }
 }

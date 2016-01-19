@@ -16,7 +16,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private static List<IWeapon> projectiles;
 
         private readonly int verticalOffset = 35;
-        int chHeight = PlayerAnimation.PlayerSize.Height, chWidth = PlayerAnimation.PlayerSize.Width;
+        private int chHeight = PlayerAnimation.PlayerSize.Height, chWidth = PlayerAnimation.PlayerSize.Width;
 
         static ProjectilePool()
         {

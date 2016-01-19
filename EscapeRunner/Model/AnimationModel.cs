@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Text;
 
 namespace EscapeRunner
 {
@@ -11,14 +10,22 @@ namespace EscapeRunner
     /// </summary>
     public static partial class Model
     {
-        private static List<Bitmap> bulletClassA;
-        private static List<Bitmap> characterAnimation;
-        private static List<Bitmap> explosionAnimation;
-        private static List<Bitmap> flareAnimation;
-        private static List<Bitmap> tileTextures;
-        private static List<Bitmap> monsterAnimation;
         private static List<Bitmap> backgrounds;
+
+        private static List<Bitmap> bulletClassA;
+
+        private static List<Bitmap> characterAnimation;
+
+        private static List<Bitmap> explosionAnimation;
+
+        private static List<Bitmap> flareAnimation;
+
+        private static List<Bitmap> monsterAnimation;
+
         private static string resFolderPath;
+
+        private static List<Bitmap> tileTextures;
+
         /// <summary>
         /// Loads all the animations and puts them in private fields
         /// </summary>
@@ -30,16 +37,17 @@ namespace EscapeRunner
             LoadAnimations();
         }
 
+        public static List<Bitmap> Backgrounds { get { return backgrounds; } }
         public static List<Bitmap> BulletAnimation { get { return bulletClassA; } }
         public static List<Bitmap> CharacterAnimation { get { return characterAnimation; } }
-        public static List<Bitmap> MonsterAnimation { get { return monsterAnimation; } }
 
         // Read properties to return the List<Bitmap> fields
         public static List<Bitmap> ExplosionAnimation { get { return explosionAnimation; } }
-        public static string ResFolder { get { return resFolderPath; } }
+
         public static List<Bitmap> FlareAnimation { get { return flareAnimation; } }
+        public static List<Bitmap> MonsterAnimation { get { return monsterAnimation; } }
+        public static string ResFolder { get { return resFolderPath; } }
         public static List<Bitmap> TileTextures { get { return tileTextures; } }
-        public static List<Bitmap> Backgrounds { get { return backgrounds; } }
 
         private static string FindProjectPath()
         {

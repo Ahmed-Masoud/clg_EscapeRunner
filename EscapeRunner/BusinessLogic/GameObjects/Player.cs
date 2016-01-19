@@ -1,4 +1,5 @@
 ﻿using EscapeRunner.Animations;
+using EscapeRunner.View;
 using System.Drawing;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
@@ -16,7 +17,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             playerAnimation = (PlayerAnimation)factory.GetAnimationCommandResult();
 
             // Initialize the player location to the top of the screen
-            playerAnimation.AnimationPosition = new Point(456, 175);
+            playerAnimation.AnimationPosition = MapLoader.PlayerStartLocation;
             Direction = Directions.Right;
         }
 
@@ -25,12 +26,12 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         /// <summary>
         /// Differential movement element in the X direction
         /// </summary>
-        public static int Dx { get; } = 64;
+        public static int Dx { get; } = 4;
 
         /// <summary>
         /// Differential movement element in the Y direction
         /// </summary>
-        public static int Dy { get; } = 64;
+        public static int Dy { get; } = 4;
 
         public static Player PlayerInstance
         {
@@ -65,16 +66,16 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             Point isoScreenEdge = new Point(MainWindow.RightBound, MainWindow.LowerBound).TwoDimensionsToIso();
             switch (direction)
             {
-                case Directions.Right:
+                case Directions.Up:
                     return isoPosition.Y - Dy >= MainWindow.UpperBound ? true : false;
 
-                case Directions.Left:
+                case Directions.Down:
                     return isoPosition.Y + Dy <= MainWindow.LowerBound - windowButtomMargin ? true : false;
 
-                case Directions.Up:
+                case Directions.Left:
                     return isoPosition.X - Dx >= MainWindow.LeftBound ? true : false;
 
-                case Directions.Down:
+                case Directions.Right:
                     return isoPosition.X + Dx <= MainWindow.RightBound - windowSideMargin ? true : false;
             }
             // Invalid case
@@ -93,19 +94,19 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             Point newPosition = playerAnimation.AnimationPosition;
             switch (direction)
             {
-                case Directions.Right:
+                case Directions.Up:
                     newPosition.Y -= deltaVertical;
                     break;
 
-                case Directions.Left:
+                case Directions.Down:
                     newPosition.Y += deltaVertical;
                     break;
 
-                case Directions.Up:
+                case Directions.Left:
                     newPosition.X -= deltaHorizontal;
                     break;
 
-                case Directions.Down:
+                case Directions.Right:
                     newPosition.X += deltaVertical;
                     break;
             }

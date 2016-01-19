@@ -1,6 +1,5 @@
 ﻿using EscapeRunner.BusinessLogic;
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace EscapeRunner
@@ -31,7 +30,7 @@ namespace EscapeRunner
         }
 
         // Event for the MVC Pattern
-        public delegate void KeyDownDelegate(ViewEventArgs e);
+        public delegate void KeyDownDelegate(ViewEventArgs x);
 
         public event KeyDownDelegate ViewNotification;
 
@@ -82,8 +81,10 @@ namespace EscapeRunner
             RightBound = this.Width;
 
             // Fire the event with unknown args, to enter the (default) case in a switch
-            Bitmap backG = new Bitmap(Model.Backgrounds[0], RightBound, LowerBound);
-            this.BackgroundImage = backG;
+            //Bitmap backG = new Bitmap(Model.Backgrounds[0], RightBound, LowerBound);
+            //this.BackgroundImage = backG;
+
+            this.BackgroundImage = Controller.DrawFloor();
         }
 
         private void refreshTimer_Tick(object sender, EventArgs e)

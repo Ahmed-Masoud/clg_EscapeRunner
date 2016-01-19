@@ -13,19 +13,36 @@ namespace EscapeRunner.View
         SouthWall,
     }
 
-    internal class LevelTile
+    public class LevelTile
     {
         private Size dimensions;
 
         private Bitmap texture;
-        static int tileIndex = 0;
+        private static int tileIndex = 0;
         private int index;
         private Point twoDimPoint;
 
         private TileType type;
 
+        public int TileIndex { get { return tileIndex; } }
+        public Point Position { get { return twoDimPoint; } }
+        #region Debug Stuff
+
+#if DEBUG
+        private static FontFamily fontFamily = new FontFamily("Arial");
+
+        private static Font font = new Font(
+           fontFamily,
+           8,
+           FontStyle.Regular,
+           GraphicsUnit.Pixel);
+#endif
+
+        #endregion Debug Stuff
+
         public LevelTile(Point twoDimPoint, int textureIndex, TileType type)
         {
+
             if (type == TileType.Corner)
             {
                 dimensions = new Size(64, 128);
@@ -46,27 +63,25 @@ namespace EscapeRunner.View
         private Point TwoDimPoint
         { get { return twoDimPoint; } }
 
+        /// <summary>
+        /// Draw the tile on the screen
+        /// </summary>
+        /// <param name="g"></param>
         public void Draw(Graphics g)
         {
             Point tempPoint = twoDimPoint.TwoDimensionsToIso();
             g.DrawImage(texture, tempPoint.X, tempPoint.Y, dimensions.Width, dimensions.Height);
 
-            #if DEBUG
+            #region Debug Stuff
 
+#if DEBUG
+            // Draws the walkable area of the map
             g.FillRectangle(Brushes.MistyRose, twoDimPoint.X, twoDimPoint.Y, dimensions.Width, dimensions.Height);
-            FontConverter.FontNameConverter d = new FontConverter.FontNameConverter();
-            FontFamily fontFamily = new FontFamily("Arial");
-            Font font = new Font(
-               fontFamily,
-               16,
-               FontStyle.Regular,
-               GraphicsUnit.Pixel);
-
             g.DrawString(index.ToString(), font, Brushes.Black, twoDimPoint);
             g.DrawRectangle(Pens.Peru, twoDimPoint.X, twoDimPoint.Y, dimensions.Width, dimensions.Height);
-            
-            #endif
+#endif
 
+            #endregion Debug Stuff
         }
     }
 }
