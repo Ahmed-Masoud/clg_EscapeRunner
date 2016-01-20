@@ -22,7 +22,7 @@ namespace EscapeRunner.BusinessLogic
             Bitmap returnBitmap = new Bitmap(window.Width, window.Height);
             await Task.Run(() =>
             { // Used window ( Forms.ActiveForm ) didn't work as the main window wasn't yet set as the ActiveForm
-                
+
                 using (Graphics gfx = Graphics.FromImage(returnBitmap))
                 {
                     gfx.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
@@ -40,9 +40,12 @@ namespace EscapeRunner.BusinessLogic
         {
             MapLoader.DrawGameFlares(g);
             MapLoader.DrawLevelObstacle(g);
+            player.UpdateGraphics(g);
+            //MapLoader.DrawLevelObstacle(g);
+            UpdateTiles(g);
             //MapLoader.DrawLevelFloor(g);
 
-            player.UpdateGraphics(g);
+            
 
             if (drawableObjects.Count > 0)
             {
@@ -71,34 +74,29 @@ namespace EscapeRunner.BusinessLogic
             }
         }
 
-        //public static async Task MoveSlowlyAsync(ref Point newPosition, Directions direction, int deltaHorizontal, int deltaVertical)
-        //{
-        //    //await Task.Run(() => { });
-        //    int counter = 0;
-        //    while (counter < 8)
-        //    {
-        //        switch (direction)
-        //        {
-        //            case Directions.Up:
-        //                newPosition.Y -= deltaVertical;
-        //                break;
+        public static void UpdateTiles(Graphics g)
+        {
+            foreach(LevelTile x in MapLoader.ObstacleTiles)
+            {
+                if (x.TileIndecies.I>Player.PlayerCoordiantes.I || x.TileIndecies.J > Player.PlayerCoordiantes.J) 
+                {
+                    x.Draw(g);
+                }
+            }
+            /*IndexPair p = Player.PlayerCoordiantes;
+            p.I++;
+            if (!MapLoader.IsWalkable(p))
+            {
+                MapLoader.ObstacleTiles.Find(e => e.TileIndecies == p).Draw(g);
 
-        //            case Directions.Down:
-        //                newPosition.Y += deltaVertical;
-        //                break;
+            }
+            p.I--;
+            p.J++;
+            if (!MapLoader.IsWalkable(p))
+            {
+                MapLoader.ObstacleTiles.Find(e => e.TileIndecies == p).Draw(g);
+            }*/
 
-        //            case Directions.Left:
-        //                newPosition.X -= deltaHorizontal;
-        //                break;
-
-        //            case Directions.Right:
-        //                newPosition.X += deltaVertical;
-        //                break;
-        //        }
-        //        Thread.Sleep(100);
-        //        counter++;
-        //    }
-
-        //}
+        }
     }
 }

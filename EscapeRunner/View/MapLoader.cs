@@ -12,25 +12,25 @@ namespace EscapeRunner.View
 
         private static int[,] level = {
             { 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3}
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 2, 2, 2, 2, 3, 0, 0, 0, 3, 2, 2, 2, 2, 2, 2, 2, 4},
+    { 1, 0, 0, 0, 0, 1, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 1, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 1, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 1, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 5, 5, 5, 5, 3, 0, 0, 0, 3, 5, 5, 5, 5, 5, 5, 5, 4},
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3}
         };
 
         private static int levelColomns;
@@ -52,6 +52,7 @@ namespace EscapeRunner.View
         /// </summary>
         private static List<LevelTile> walkableTiles;
         public static List<LevelTile> WalkableTiles { get { return walkableTiles; } }
+        public static List<LevelTile> ObstacleTiles { get { return obstacleTiles; } }
         public static Point LevelStartLocation { get { return startLocation; } }
         public static Point PlayerStartLocation { get { return playerStartLocation; } }
         public static IndexPair LevelDimensions { get { return levelDimensions; } }
@@ -68,30 +69,21 @@ namespace EscapeRunner.View
         }
         static MapLoader()
         {
-            try
-            {
-                flares = Model.FlareAnimation;
+            flares = Model.FlareAnimation;
 
-                walkableTiles = new List<LevelTile>(256);
-                obstacleTiles = new List<LevelTile>(32);
+            walkableTiles = new List<LevelTile>(256);
+            obstacleTiles = new List<LevelTile>(32);
 
-                //TODO LoadLevel
-                //  = level.GetLength(1);
-                //TODO read binary array From File
-                levelRows = level.GetLength(0);
-                levelColomns = level.GetLength(1);
-                levelDimensions = new IndexPair(levelRows, levelColomns);
-                LoadLevel();
+            //TODO LoadLevel
+            //  = level.GetLength(1);
+            //TODO read binary array From File
+            levelRows = level.GetLength(0);
+            levelColomns = level.GetLength(1);
+            levelDimensions = new IndexPair(levelRows, levelColomns);
+            LoadLevel();
 
-                // Determine the player start location
-                playerStartLocation = walkableTiles[0].Position;
-            }
-            catch (Exception exc)
-            {
-                string s = exc.Message;
-
-            }
-
+            // Determine the player start location
+            playerStartLocation = walkableTiles[0].Position;
         }
 
         public static bool IsWalkable(IndexPair pair)

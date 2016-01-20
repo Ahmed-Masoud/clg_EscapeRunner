@@ -25,6 +25,8 @@ namespace EscapeRunner.View
 
         public IndexPair TileIndecies { get { return tileIndecies; } }
         public Point Position { get { return twoDimPoint; } }
+
+        public TileType Type { get { return type; } }
         #region Debug Stuff
 
 #if DEBUG
