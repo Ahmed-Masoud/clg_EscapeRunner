@@ -1,10 +1,16 @@
-﻿using System;
+﻿using EscapeRunner.View;
+using System;
 using System.Drawing;
 
 namespace EscapeRunner.BusinessLogic
 {
     public static class IsometricExtensionMethods
     {
+        static Point startPoint;
+        static IsometricExtensionMethods()
+        {
+            Lazy<Point> startPoint = new Lazy<Point>(() => MapLoader.WalkableTiles[0].Position);
+        }
         public static Point getTileCoordinates(this Point pt, int tileHeight)
         {
             Point tempPt = new Point(0, 0);
@@ -30,6 +36,32 @@ namespace EscapeRunner.BusinessLogic
             Point tempPt = new Point(0, 0);
             tempPt.X = (pt.X - pt.Y);
             tempPt.Y = (pt.X + pt.Y) / 2;
+            return tempPt;
+        }
+        /// <summary>
+        /// Returns the corresponding Coordinates for an i and j indexes
+        /// </summary>
+        /// <param name="pair"></param>
+        /// <returns></returns>
+        public static Point IndexesToCorrdinates(this IndexPair pair)
+        {
+            // Adapter Design pattern
+
+            if (pair.I > MapLoader.LevelDimensions.I || pair.J > MapLoader.LevelDimensions.J || pair.I < 0 || pair.J < 0)
+                throw new InvalidOperationException("Out of level bounds");
+
+            // TODO complete the method
+            Point tempPt = MapLoader.LevelStartLocation;
+            for (int j = 0; j < pair.J; j++)
+            {
+                tempPt.Y += 32;
+                tempPt.X = MapLoader.LevelStartLocation.X;
+
+                for (int i = 0; i < pair.I; i++)
+                {
+                    tempPt.X += 32;
+                }
+            }
             return tempPt;
         }
     }

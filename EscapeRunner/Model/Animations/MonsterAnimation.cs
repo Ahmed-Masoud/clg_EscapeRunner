@@ -7,7 +7,7 @@ namespace EscapeRunner.Animations
     {
         private static List<Bitmap> animationImages;
 
-        public MonsterAnimation() : base(AnimationType.MonsterAnimation)
+        public MonsterAnimation()
         {
             imageIndex = 0;
             if (animationImages == null)

@@ -58,8 +58,9 @@ namespace LevelBuilder
 
         private PictureBox selected_tile;
         private ToolType selected_tool;
+#pragma warning disable
         private CursorType cursor;
-
+#pragma warning restore
         private bool grid_on;
         private bool show_walkable_on;
 
@@ -618,14 +619,14 @@ namespace LevelBuilder
             pasteToolStripMenuItem.Enabled = false;
 
             saveMapToolStripMenuItem.Enabled = false;
-            
+
             tile_library = new Model.Tile[0];
 
-            codesGenerator = new Model.CodesGenerator(map, map_name, map_width, map_height, 
+            codesGenerator = new Model.CodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
                 tbCode);
         }
-        
+
         #endregion
 
     }

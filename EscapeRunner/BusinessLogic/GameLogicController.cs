@@ -3,25 +3,32 @@ using EscapeRunner.BusinessLogic.GameObjects;
 using EscapeRunner.View;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EscapeRunner.BusinessLogic
 {
     internal partial class Controller
     {
+        // TODO change this to private
         public static Player player;
         private static List<IDrawable> drawableObjects = new List<IDrawable>();
         private static ProjectilePool projectilePool;
         private static MainWindow window;
 
-        public Controller()
+        private Controller() { }
+
+        public static void InitializeController()
         {
             window = Program.MainWindow;
             // Subscribe to the notify event
             window.ViewNotification += Window_ViewNotification;
             player = Player.PlayerInstance;
-
             // Lazy initialization of projectile pool
             projectilePool = ProjectilePool.Instance;
+            Monster mon = new Monster();
+
+            drawableObjects.Add(mon);
         }
 
         public static void WindowRefresh(object sender, System.Windows.Forms.PaintEventArgs e)
@@ -29,7 +36,7 @@ namespace EscapeRunner.BusinessLogic
             DrawGraphics(e.Graphics);
         }
 
-        private void FireBullet()
+        private static void FireBullet()
         {
             try
             {
@@ -45,28 +52,28 @@ namespace EscapeRunner.BusinessLogic
             }
         }
 
-        private void Window_ViewNotification(ViewEventArgs e)
+        private static void Window_ViewNotification(ViewNotificationEventArgs e)
         {
-            switch (e.PressedKey)
+            switch (e.Notification)
             {
-                case ViewKey.Space:
+                case Notifing.Space:
                     FireBullet();
                     break;
 
-                case ViewKey.Right:
-                    player.Move(Directions.Right);
+                case Notifing.Right:
+                    player.StartMoving(Directions.Right);
                     break;
 
-                case ViewKey.Left:
-                    player.Move(Directions.Left);
+                case Notifing.Left:
+                    player.StartMoving(Directions.Left);
                     break;
 
-                case ViewKey.Down:
-                    player.Move(Directions.Down);
+                case Notifing.Down:
+                    player.StartMoving(Directions.Down);
                     break;
 
-                case ViewKey.Up:
-                    player.Move(Directions.Up);
+                case Notifing.Up:
+                    player.StartMoving(Directions.Up);
                     break;
 
                 default:

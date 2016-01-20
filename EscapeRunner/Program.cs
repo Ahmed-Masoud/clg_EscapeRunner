@@ -1,12 +1,12 @@
-﻿using EscapeRunner.BusinessLogic;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
-namespace EscapeRunner
+namespace EscapeRunner.View
 {
     internal static class Program
     {
-        public static MainWindow MainWindow { get; private set; }
+        private static MainWindow mainWindow;
+        public static MainWindow MainWindow { get { return mainWindow; } set { mainWindow = value; } }
 
         /// <summary>
         /// The main entry point for the application.
@@ -16,12 +16,7 @@ namespace EscapeRunner
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            MainWindow = new MainWindow();
-
-            // ?
-            Controller d = new Controller();
-
-            Application.Run(MainWindow);
+            new SplashScreen();
         }
     }
 }

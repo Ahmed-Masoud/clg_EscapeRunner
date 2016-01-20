@@ -12,7 +12,7 @@ namespace EscapeRunner.Animations
         // explosion occurs Load the contents of the explosion animation
         private static readonly List<Bitmap> explosionImages = Model.ExplosionAnimation;
 
-        internal ExplosionAnimation() : base(AnimationType.ExplosionAnimation)
+        internal ExplosionAnimation()
         {
             imageIndex = 0;
             if (explosionImages != null)

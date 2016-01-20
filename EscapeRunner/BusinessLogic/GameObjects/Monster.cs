@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
-    internal class Monster
+    internal class Monster : IDrawable
     {
         private static Random random = new Random();
         private MonsterAnimation monsterAnimation;
@@ -12,7 +12,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         public Monster()
         {
             AnimationFactory factory = new AnimationFactory();
-            monsterAnimation = (MonsterAnimation)factory.GetAnimationCommandResult();
+            monsterAnimation = (MonsterAnimation)factory.GetAnimationCommandResult(AnimationType.MonsterAnimation);
             // TODO set Monster start position at game start. TODO set Monster Direction at game start.
         }
 
@@ -42,8 +42,14 @@ namespace EscapeRunner.BusinessLogic.GameObjects
                     newPosition.X += DX;
                     break;
             }
-            monsterAnimation.LoadNextAnimationImage();
+            
             monsterAnimation.AnimationPosition = newPosition;
+            monsterAnimation.LoadNextAnimationImage();
+        }
+
+        public void UpdateGraphics(Graphics g)
+        {
+            monsterAnimation.Draw(g, Direction);
         }
     }
 }

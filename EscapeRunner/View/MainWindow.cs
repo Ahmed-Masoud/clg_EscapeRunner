@@ -1,29 +1,23 @@
 ﻿using EscapeRunner.BusinessLogic;
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace EscapeRunner
 {
     public partial class MainWindow : Form
     {
-        private System.Windows.Forms.Timer refreshTimer = new System.Windows.Forms.Timer();
+        private Timer refreshTimer = new Timer();
+        private bool loaded = false;
 
         public MainWindow()
         {
             InitializeComponent();
-
-            //pictureBox1.Image = Model.BulletAnimation[0];
-            //pictureBox1.Width = 100;
-            //pictureBox1.Height = 100;
-            //pictureBox1.Show();
-
             this.Shown += MainWindow_Shown;
-
+            this.FormClosing += MainWindow_FormClosing;
             this.WindowState = FormWindowState.Maximized;
-            //this.UpdateBounds();
 
-            refreshTimer.Enabled = true;
+            // Don't start the timer until the objects are initialized
+            refreshTimer.Enabled = false;
             refreshTimer.Interval = 20;
 
             //Controller.LazyInitialize();
@@ -31,7 +25,7 @@ namespace EscapeRunner
         }
 
         // Event for the MVC Pattern
-        public delegate void KeyDownDelegate(ViewEventArgs x);
+        public delegate void KeyDownDelegate(ViewNotificationEventArgs x);
 
         public event KeyDownDelegate ViewNotification;
 
@@ -46,34 +40,37 @@ namespace EscapeRunner
         /// <summary>
         /// This method fires the notify event
         /// </summary>
-        /// <param name="key"></param>
-        protected void NotifyController(ViewKey key)
+        /// <param name="notification"></param>
+        protected void NotifyController(Notifing notification)
         {
             if (ViewNotification != null)
             {
-                ViewNotification(new ViewEventArgs(key));
+                ViewNotification(new ViewNotificationEventArgs(notification));
             }
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyData == Keys.Left)
-                NotifyController(ViewKey.Left);
-            else if (e.KeyData == Keys.Right)
-                NotifyController(ViewKey.Right);
-            else if (e.KeyData == Keys.Up)
-                NotifyController(ViewKey.Up);
-            else if (e.KeyData == Keys.Down)
-                NotifyController(ViewKey.Down);
-            if (e.KeyData == Keys.Space)
-                NotifyController(ViewKey.Space);
+            if (e.KeyCode == Keys.Left)
+                NotifyController(Notifing.Left);
+            else if (e.KeyCode == Keys.Right)
+                NotifyController(Notifing.Right);
+            else if (e.KeyCode == Keys.Up)
+                NotifyController(Notifing.Up);
+            else if (e.KeyCode == Keys.Down)
+                NotifyController(Notifing.Down);
+            else if (e.KeyCode == Keys.Space)
+                NotifyController(Notifing.Space);
         }
 
         // Called on Refresh()
 
         private void MainWindow_Paint(object sender, PaintEventArgs e)
         {
-            Controller.WindowRefresh(sender, e);
+            if (loaded)
+            {
+                Controller.WindowRefresh(sender, e);
+            }
         }
 
         private void MainWindow_Shown(object sender, EventArgs e)
@@ -81,11 +78,12 @@ namespace EscapeRunner
             LowerBound = this.Height;
             RightBound = this.Width;
 
+            // Resources are initialized, start ticking
+            refreshTimer.Enabled = true;
+
             // Fire the event with unknown args, to enter the (default) case in a switch
             //Bitmap backG = new Bitmap(Model.Backgrounds[0], RightBound, LowerBound);
             //this.BackgroundImage = backG;
-
-            this.BackgroundImage = Controller.DrawFloor();
         }
 
         private void refreshTimer_Tick(object sender, EventArgs e)
@@ -99,5 +97,21 @@ namespace EscapeRunner
             MessageBox.Show($"Mouse click coordinates x:{MousePosition.X}, y:{MousePosition.Y}");
 #endif
         }
+
+        private async void MainWindow_Load(object sender, EventArgs e)
+        {
+            await Model.InitializeModelAsync();
+            this.BackgroundImage = await Controller.DrawBackgroundImage();
+            Controller.InitializeController();
+            if (!this.Focused)
+                this.Focus();
+            loaded = true;
+        }
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+
     }
 }

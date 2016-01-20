@@ -11,14 +11,10 @@
     /// <summary>
     /// Command design pattern
     /// </summary>
-    public class AnimationFactory : IReciever
+    public class AnimationFactory
     {
-        private AnimationType animationName;
 
-        public AnimationType Type
-        { set { animationName = value; } }
-
-        public Animation GetAnimationCommandResult()
+        public Animation GetAnimationCommandResult(AnimationType animationName)
         {
             switch (animationName)
             {
@@ -26,7 +22,7 @@
                     return new PlayerAnimation();
 
                 case AnimationType.MonsterAnimation:
-                    return null; // new MonsterAnimation();
+                    return new MonsterAnimation(); // new MonsterAnimation();
 
                 // The animation point will be set when its requested from the pool
                 case AnimationType.BulletAnimation:

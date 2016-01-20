@@ -18,12 +18,12 @@ namespace EscapeRunner.View
         private Size dimensions;
 
         private Bitmap texture;
-        private Point tileIndecies;
+        private IndexPair tileIndecies;
         private Point twoDimPoint;
 
         private TileType type;
 
-        public Point TileIndecies { get { return tileIndecies; } }
+        public IndexPair TileIndecies { get { return tileIndecies; } }
         public Point Position { get { return twoDimPoint; } }
         #region Debug Stuff
 
@@ -39,7 +39,7 @@ namespace EscapeRunner.View
 
         #endregion Debug Stuff
 
-        public LevelTile(Point twoDimPoint, int textureIndex, TileType type, Point tileIndecies)
+        public LevelTile(Point twoDimPoint, int textureIndex, TileType type, IndexPair tileIndecies)
         {
 
             if (type == TileType.Corner)
@@ -76,7 +76,7 @@ namespace EscapeRunner.View
 #if DEBUG
             // Draws the walkable area of the map
             g.FillRectangle(Brushes.MistyRose, twoDimPoint.X, twoDimPoint.Y, dimensions.Width, dimensions.Height);
-            g.DrawString($"{TileIndecies.X.ToString()},{TileIndecies.Y.ToString()}", font, Brushes.Black, twoDimPoint);
+            g.DrawString($"{TileIndecies.I.ToString()},{TileIndecies.J.ToString()}", font, Brushes.Black, twoDimPoint);
             g.DrawRectangle(Pens.Peru, twoDimPoint.X, twoDimPoint.Y, dimensions.Width, dimensions.Height);
 #endif
 

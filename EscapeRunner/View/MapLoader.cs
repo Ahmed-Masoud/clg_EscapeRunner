@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EscapeRunner.BusinessLogic;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -8,7 +9,7 @@ namespace EscapeRunner.View
     {
         private static int flareCounter = 0;
         private static List<Bitmap> flares;
-
+        
         private static int[,] level = {
             { 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3},
             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
@@ -24,11 +25,11 @@ namespace EscapeRunner.View
             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 4},
+            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 4},
+            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 4},
+            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 4},
+            { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 4},
             { 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3}
         };
 
@@ -36,6 +37,7 @@ namespace EscapeRunner.View
         private static int levelRows;
         private static Point startLocation = new Point(390, -280);
         private static Point playerStartLocation;
+        private static IndexPair levelDimensions;
         private static Point location = startLocation;
         private static List<LevelTile> obstacleTiles;
         private static Random randomNumberGenerator = new Random();
@@ -52,6 +54,8 @@ namespace EscapeRunner.View
         public static List<LevelTile> WalkableTiles { get { return walkableTiles; } }
         public static Point LevelStartLocation { get { return startLocation; } }
         public static Point PlayerStartLocation { get { return playerStartLocation; } }
+        public static IndexPair LevelDimensions { get { return levelDimensions; } }
+
         public static Point MonsterStartLocation
         {
             get
@@ -64,21 +68,35 @@ namespace EscapeRunner.View
         }
         static MapLoader()
         {
-            flares = Model.FlareAnimation;
+            try
+            {
+                flares = Model.FlareAnimation;
 
-            walkableTiles = new List<LevelTile>(256);
-            obstacleTiles = new List<LevelTile>(32);
+                walkableTiles = new List<LevelTile>(256);
+                obstacleTiles = new List<LevelTile>(32);
 
-            //TODO LoadLevel
-            //  = level.GetLength(1);
-            //TODO read binary array From File
-            levelRows = level.GetLength(0);
-            levelColomns = level.GetLength(1);
-            LoadLevel();
+                //TODO LoadLevel
+                //  = level.GetLength(1);
+                //TODO read binary array From File
+                levelRows = level.GetLength(0);
+                levelColomns = level.GetLength(1);
+                levelDimensions = new IndexPair(levelRows, levelColomns);
+                LoadLevel();
 
-            // Determine the player start location
-            playerStartLocation = walkableTiles[0].Position;
+                // Determine the player start location
+                playerStartLocation = walkableTiles[0].Position;
+            }
+            catch (Exception exc)
+            {
+                string s = exc.Message;
 
+            }
+
+        }
+
+        public static bool IsWalkable(IndexPair pair)
+        {
+            return level[pair.J, pair.I] == 0 ? true : false;
         }
 
         /// <summary>
@@ -115,13 +133,12 @@ namespace EscapeRunner.View
                     TileType tempType = (TileType)level[i, j];
 
                     if (tempType == TileType.Floor)
-                        walkableTiles.Add(new LevelTile(location, level[i, j], tempType, new Point(i, j)));
+                        walkableTiles.Add(new LevelTile(location, level[i, j], tempType, new IndexPair(i, j)));
                     else
                     {
                         // All obstacle tiles need to be drawn on their own to implement depth sorting
-                        obstacleTiles.Add(new LevelTile(location, level[i, j], tempType, new Point(i, j)));
+                        obstacleTiles.Add(new LevelTile(location, level[i, j], tempType, new IndexPair(i, j)));
                     }
-
 
                     location.X += 32;
                 }

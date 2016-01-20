@@ -1,21 +1,21 @@
 ﻿namespace EscapeRunner
 {
-    public enum ViewKey
+    public enum Notifing
     {
         Space,
         Right,
         Left,
         Down,
-        Up,
+        Up
     }
 
-    public class ViewEventArgs
+    public class ViewNotificationEventArgs
     {
-        public ViewEventArgs(ViewKey key)
+        public ViewNotificationEventArgs(Notifing notification)
         {
-            this.PressedKey = key;
+            this.Notification = notification;
         }
 
-        public ViewKey PressedKey { get; }
+        public Notifing Notification { get; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace EscapeRunner
 {
@@ -34,10 +35,12 @@ namespace EscapeRunner
             string projectPath = FindProjectPath();
             resFolderPath = Path.Combine(projectPath, "Res");
 
-            LoadAnimations();
+        }
+        public static async Task InitializeModelAsync()
+        {
+            await LoadAnimations();
             LoadSounds();
         }
-
         public static List<Bitmap> Backgrounds { get { return backgrounds; } }
         public static List<Bitmap> BulletAnimation { get { return bulletClassA; } }
         public static List<Bitmap> CharacterAnimation { get { return characterAnimation; } }
@@ -50,6 +53,72 @@ namespace EscapeRunner
         public static string ResFolder { get { return resFolderPath; } }
         public static List<Bitmap> TileTextures { get { return tileTextures; } }
 
+        private static Func<string, Bitmap> bitmapRead = ((string file) => ((Bitmap)Image.FromFile(file)));
+
+
+        private static async Task LoadAnimations()
+        {
+            // Check for the main resource folder
+            if (Directory.Exists(resFolderPath))
+            {
+                // Sub folders in animation class
+                string charAnimationsFolder = Path.Combine(resFolderPath, "Char");
+                string explosionAnimationsFolder = Path.Combine(resFolderPath, "Boom");
+                string bulletAnimationsFolder = Path.Combine(resFolderPath, "BulletA");
+                string levelTileFolder = Path.Combine(resFolderPath, "Tiles");
+                string flareFolder = Path.Combine(resFolderPath, "Flare");
+                string backgroundFolder = Path.Combine(resFolderPath, "Background");
+                string monsterFolder = Path.Combine(resFolderPath, "Monster");
+
+                if (Directory.Exists(charAnimationsFolder)
+                    && Directory.Exists(explosionAnimationsFolder)
+                    && Directory.Exists(bulletAnimationsFolder)
+                    && Directory.Exists(levelTileFolder)
+                    && Directory.Exists(backgroundFolder)
+                    && Directory.Exists(monsterFolder))
+                {
+                    flareAnimation = await LoadResourceFromDisk(bitmapRead, flareFolder, "*.png");
+                    characterAnimation = await LoadResourceFromDisk(bitmapRead, charAnimationsFolder, "*.png");
+                    explosionAnimation = await LoadResourceFromDisk(bitmapRead, explosionAnimationsFolder, "*.png");
+                    bulletClassA = await LoadResourceFromDisk(bitmapRead, bulletAnimationsFolder, "*.png");
+                    tileTextures = await LoadResourceFromDisk(bitmapRead, levelTileFolder, "*.png");
+
+                    monsterAnimation = await LoadResourceFromDisk(bitmapRead, monsterFolder, "*.png");
+                    backgrounds = await LoadResourceFromDisk(bitmapRead, backgroundFolder, "*.png");
+
+                }
+                else
+                    throw new InvalidOperationException("Animation Folder cannot be found");
+            }
+            else
+            {
+                throw new InvalidOperationException("Animation Folder cannot be found");
+            }
+
+        }
+
+        /// <summary>
+        /// General resource reader
+        /// </summary>
+        /// <typeparam name="T">List element type</typeparam>
+        /// <param name="reader">Function that reads the file</param>
+        /// <param name="resourceFolder"></param>
+        /// <param name="extension">Extension for target file</param>
+        /// <returns></returns>
+        private static async Task<List<T>> LoadResourceFromDisk<T>(Func<string, T> reader, string resourceFolder, string extension)
+        {
+            List<T> loadedAnimation = new List<T>(16);
+            string[] resourceFileNames = Directory.GetFiles(resourceFolder, extension);
+            await Task.Run(() =>
+            {
+                foreach (string file in resourceFileNames)
+                {
+                    loadedAnimation.Add(reader(file));
+                }
+            });
+
+            return loadedAnimation;
+        }
         private static string FindProjectPath()
         {
             // Get the project folder on the hard disk
@@ -63,70 +132,5 @@ namespace EscapeRunner
             throw new DirectoryNotFoundException();
         }
 
-        private static List<Bitmap> LoadAnimations()
-        {
-            // Check for the main resource folder
-            if (Directory.Exists(resFolderPath))
-            {
-                // Sub folders in animation class
-                string charAnimationsFolder = Path.Combine(resFolderPath, "Char");
-                string explosionAnimationsFolder = Path.Combine(resFolderPath, "Boom");
-                string bulletAnimationsFolder = Path.Combine(resFolderPath, "BulletA");
-                string levelTileFolder = Path.Combine(resFolderPath, "Tiles");
-                string flareFolder = Path.Combine(resFolderPath, "Flare");
-                string backgroundFolder = Path.Combine(resFolderPath, "Background");
-                String monsterFolder = Path.Combine(resFolderPath, "Monster");
-
-                if (Directory.Exists(charAnimationsFolder)
-                    && Directory.Exists(explosionAnimationsFolder)
-                    && Directory.Exists(bulletAnimationsFolder)
-                    && Directory.Exists(levelTileFolder)
-                    && Directory.Exists(backgroundFolder)
-                    && Directory.Exists(monsterFolder))
-                {
-                    characterAnimation = LoadAnimationFromDisk(charAnimationsFolder);
-                    explosionAnimation = LoadAnimationFromDisk(explosionAnimationsFolder);
-                    bulletClassA = LoadAnimationFromDisk(bulletAnimationsFolder);
-                    tileTextures = LoadAnimationFromDisk(levelTileFolder);
-                    flareAnimation = LoadAnimationFromDisk(flareFolder);
-                    backgrounds = LoadAnimationFromDisk(backgroundFolder);
-                    monsterAnimation = LoadAnimationFromDisk(monsterFolder);
-
-                    //backgrounds = LoadAnimationFromDisk((() => (Bitmap)Image.FromFile(backgroundFolder)), backgroundFolder, "*.png");
-                }
-                else
-                    throw new InvalidOperationException("Animation Folder cannot be found");
-            }
-            else
-            {
-                throw new InvalidOperationException("Animation Folder cannot be found");
-            }
-            return characterAnimation;
-        }
-
-        private static List<Bitmap> LoadAnimationFromDisk(string animationFolder)
-        {
-            List<Bitmap> loadedAnimation = new List<Bitmap>(16);
-            string[] animationFileNames = Directory.GetFiles(animationFolder, "*.png");
-
-            foreach (string pic in animationFileNames)
-            {
-                loadedAnimation.Add((Bitmap)Image.FromFile(pic));
-            }
-
-            return loadedAnimation;
-        }
-        private static List<T> LoadAnimationFromDisk<T>(Func<T> reader, string animationFolder, string extension)
-        {
-            List<T> loadedAnimation = new List<T>(16);
-            string[] animationFileNames = Directory.GetFiles(animationFolder, extension);
-
-            foreach (string pic in animationFileNames)
-            {
-                loadedAnimation.Add(reader.Invoke());
-            }
-
-            return loadedAnimation;
-        }
     }
 }

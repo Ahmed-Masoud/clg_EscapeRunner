@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\IndexPair.cs" />
     <Compile Include="BusinessLogic\GameObjects\Monster.cs" />
     <Compile Include="BusinessLogic\PaintController.cs" />
     <Compile Include="Model\Animations\Animation.cs" />
@@ -84,6 +85,12 @@
     </Compile>
     <Compile Include="Model\Sounds\AudioController.cs" />
     <Compile Include="View\MapLoader.cs" />
+    <Compile Include="View\SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\SplashScreen.Designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="View\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -91,6 +98,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
@@ -189,6 +199,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Res\Monster\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\SplashScreen.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

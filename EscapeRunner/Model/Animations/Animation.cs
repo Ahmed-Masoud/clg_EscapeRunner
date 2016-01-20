@@ -20,13 +20,7 @@ namespace EscapeRunner.Animations
         protected int animationWidth, animationHeight;
         protected int imageIndex;
         protected Rectangle objectBounds;
-        protected IReciever reciever = new AnimationFactory();
         public Rectangle ObjectBounds { get { return objectBounds; } }
-
-        public Animation(AnimationType animationType)
-        {
-            reciever.Type = animationType;
-        }
 
         // Trigger an event to alert the bullet that it has been relocated, and set its lock state
         public Point AnimationPosition { get; set; } = Point.Empty;

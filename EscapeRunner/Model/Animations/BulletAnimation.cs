@@ -17,7 +17,7 @@ namespace EscapeRunner.Animations
         // Horizontal displacement is bigger because the screen is always horizontally bigger
         private int verticalDisplacement = 9, horizontalDisplacement = 18;
 
-        public BulletAnimation() : base(AnimationType.BulletAnimation)
+        public BulletAnimation()
         {
             imageIndex = 0;
 
