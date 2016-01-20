@@ -569,6 +569,89 @@ namespace LevelBuilder
         }
 
         #endregion
- 
+
+        #region Add Menu
+
+        private void addPlayerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (playerCount == 0)
+            {
+                playerCount++;
+                MessageBox.Show("Please Select Player Start & End Positions:", "Player Positions", MessageBoxButtons.OK);
+                choosingPlayer = true;
+                player.Start = true;
+                return;
+            }
+            else
+            {
+                MessageBox.Show("There is already a player placed !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        
+        private void addMonsterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            monstersCount++;
+            Model.Monster monster = new Model.Monster();
+            monsters.Add(monster);
+            MessageBox.Show("Please Select Monster " + monstersCount + " Start & End Positions:", "Monster" + monstersCount + "Positions", MessageBoxButtons.OK);
+            choosingMonster = true;
+            monsters[monstersCount - 1].Start = true;
+        }
+
+        private void deletePlayerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (playerCount != 0)
+            {
+                player = new Model.Player();
+                playerCount = 0;
+                MessageBox.Show("Player Deleted !", "Player Deletion", MessageBoxButtons.OK);
+            } 
+            else
+            {
+                MessageBox.Show("There is no player to delete !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void deleteMonsterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (monstersCount > 0)
+            {
+                makeDeleteForm();
+                monstersCount--;
+            }
+            else
+            {
+                MessageBox.Show("There are no monsters to delete !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void makeDeleteForm()
+        {
+            Form f = new Form();
+            ListBox lb = new ListBox();
+            
+            lb.MouseDoubleClick += (s, e) => 
+            {
+                int index = lb.IndexFromPoint(e.Location);
+                monsters.RemoveAt(index);
+                MessageBox.Show("Monster" + (index + 1) + "deleted !", "Monster Deletion", MessageBoxButtons.OK);
+                f.Close();
+            };
+            
+            for (int i = 0; i < monstersCount; i++)
+            {
+                lb.Items.Add("Monster " + (i + 1));
+            }
+
+            f.Controls.Add(lb);
+            f.Size = new Size(300, 200);
+            lb.Width = f.Width;
+            f.Show();
+        }
+
+        #endregion
+
     }
 }

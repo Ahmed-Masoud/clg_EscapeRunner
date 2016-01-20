@@ -65,7 +65,7 @@
   <ItemGroup>
     <Compile Include="Model\CodesGenerator.cs" />
     <Compile Include="Model\HistoryNode.cs" />
-    <Compile Include="Map.cs" />
+    <Compile Include="Model\Map.cs" />
     <Compile Include="Model\Clipboard.cs" />
     <Compile Include="Model\ClipboardNode.cs" />
     <Compile Include="LevelBuilder.cs">
@@ -86,27 +86,29 @@
     <Compile Include="Menus.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Model\Monster.cs" />
+    <Compile Include="Model\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\SelectionTool.cs" />
     <Compile Include="Model\Tile.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="TilesController.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LevelTile.cs" />
+    <Compile Include="Model\LevelTile.cs" />
     <EmbeddedResource Include="LevelBuilder.resx">
       <DependentUpon>LevelBuilder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -121,10 +123,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Cursors\brush.png" />
-    <Content Include="Resources\Cursors\eraser.png" />
-    <Content Include="Resources\Cursors\fill.png" />
-    <Content Include="Resources\Cursors\selecttile.png" />
     <Content Include="Resources\Icons\brush-icon.gif" />
     <Content Include="Resources\Icons\btnToolBrush.Image.gif" />
     <Content Include="Resources\Icons\eraser-icon.gif" />

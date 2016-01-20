@@ -104,6 +104,10 @@ namespace LevelBuilder
             this.modeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.twoDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.isometricToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deletePlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addMonsterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialogLoadTiles = new System.Windows.Forms.FolderBrowserDialog();
             this.saveMapDialog = new System.Windows.Forms.SaveFileDialog();
             this.openMapDialog = new System.Windows.Forms.OpenFileDialog();
@@ -120,6 +124,7 @@ namespace LevelBuilder
             this.contextMenuStripTile = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemWalkable = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteMonsterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlDesign.SuspendLayout();
             this.tctrlDesign.SuspendLayout();
             this.tpgDesign.SuspendLayout();
@@ -548,7 +553,8 @@ namespace LevelBuilder
             this.selectToolStripMenuItem,
             this.tilesToolStripMenuItem,
             this.codeToolStripMenuItem,
-            this.modeToolStripMenuItem});
+            this.modeToolStripMenuItem,
+            this.addToolStripMenuItem});
             this.menuStripDLMapEditor.Location = new System.Drawing.Point(0, 0);
             this.menuStripDLMapEditor.Name = "menuStripDLMapEditor";
             this.menuStripDLMapEditor.Size = new System.Drawing.Size(1016, 24);
@@ -864,16 +870,48 @@ namespace LevelBuilder
             this.twoDToolStripMenuItem.Checked = true;
             this.twoDToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.twoDToolStripMenuItem.Name = "twoDToolStripMenuItem";
-            this.twoDToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.twoDToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.twoDToolStripMenuItem.Text = "2D";
             this.twoDToolStripMenuItem.Click += new System.EventHandler(this.twoDToolStripMenuItem_Click);
             // 
             // isometricToolStripMenuItem
             // 
             this.isometricToolStripMenuItem.Name = "isometricToolStripMenuItem";
-            this.isometricToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.isometricToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.isometricToolStripMenuItem.Text = "Isometric";
             this.isometricToolStripMenuItem.Click += new System.EventHandler(this.isometricToolStripMenuItem_Click);
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addPlayerToolStripMenuItem,
+            this.deletePlayerToolStripMenuItem,
+            this.addMonsterToolStripMenuItem,
+            this.deleteMonsterToolStripMenuItem});
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.addToolStripMenuItem.Text = "Add";
+            // 
+            // addPlayerToolStripMenuItem
+            // 
+            this.addPlayerToolStripMenuItem.Name = "addPlayerToolStripMenuItem";
+            this.addPlayerToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.addPlayerToolStripMenuItem.Text = "Add Player";
+            this.addPlayerToolStripMenuItem.Click += new System.EventHandler(this.addPlayerToolStripMenuItem_Click);
+            // 
+            // deletePlayerToolStripMenuItem
+            // 
+            this.deletePlayerToolStripMenuItem.Name = "deletePlayerToolStripMenuItem";
+            this.deletePlayerToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.deletePlayerToolStripMenuItem.Text = "Delete Player";
+            this.deletePlayerToolStripMenuItem.Click += new System.EventHandler(this.deletePlayerToolStripMenuItem_Click);
+            // 
+            // addMonsterToolStripMenuItem
+            // 
+            this.addMonsterToolStripMenuItem.Name = "addMonsterToolStripMenuItem";
+            this.addMonsterToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.addMonsterToolStripMenuItem.Text = "Add Monster";
+            this.addMonsterToolStripMenuItem.Click += new System.EventHandler(this.addMonsterToolStripMenuItem_Click);
             // 
             // saveMapDialog
             // 
@@ -1033,6 +1071,13 @@ namespace LevelBuilder
             this.toolStripMenuItemDelete.Text = "Delete";
             this.toolStripMenuItemDelete.Click += new System.EventHandler(this.toolStripMenuItemDelete_Click);
             // 
+            // deleteMonsterToolStripMenuItem
+            // 
+            this.deleteMonsterToolStripMenuItem.Name = "deleteMonsterToolStripMenuItem";
+            this.deleteMonsterToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.deleteMonsterToolStripMenuItem.Text = "Delete Monster";
+            this.deleteMonsterToolStripMenuItem.Click += new System.EventHandler(this.deleteMonsterToolStripMenuItem_Click);
+            // 
             // LevelBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1172,12 +1217,17 @@ namespace LevelBuilder
         private System.Windows.Forms.ToolStripMenuItem selectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deselectToolStripMenuItem;
-
-        #endregion
-
         private System.Windows.Forms.ToolStripMenuItem twoDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem isometricToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addPlayerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addMonsterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deletePlayerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteMonsterToolStripMenuItem;
+
+        #endregion
+
     }
 }
 

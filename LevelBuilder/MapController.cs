@@ -96,8 +96,8 @@ namespace LevelBuilder
                     {
                         if (map[x, y] != -1)
                         {
-                            TileType tileType = (TileType)map[x, y];
-                            LevelTile levelTile = new LevelTile(location, tileType, (Bitmap)tile_library[map[x, y]].TilePictureBox.Image);
+                            Model.TileType tileType = (Model.TileType)map[x, y];
+                            Model.LevelTile levelTile = new Model.LevelTile(location, tileType, (Bitmap)tile_library[map[x, y]].TilePictureBox.Image);
                             location.X += 20;
 
                             levelTile.Draw(gfx);
@@ -317,7 +317,6 @@ namespace LevelBuilder
             if (tool == ToolType.selection)
             {
                 selected_tool = ToolType.selection;
-                cursor = CursorType.selection;
                 btnToolSelection.FlatStyle = FlatStyle.Flat;
                 btnToolBrush.FlatStyle = FlatStyle.Popup;
                 btnToolFill.FlatStyle = FlatStyle.Popup;
@@ -327,7 +326,6 @@ namespace LevelBuilder
             else if (tool == ToolType.brush)
             {
                 selected_tool = ToolType.brush;
-                cursor = CursorType.brush;
                 btnToolSelection.FlatStyle = FlatStyle.Popup;
                 btnToolBrush.FlatStyle = FlatStyle.Flat;
                 btnToolFill.FlatStyle = FlatStyle.Popup;
@@ -337,7 +335,6 @@ namespace LevelBuilder
             else if (tool == ToolType.fill)
             {
                 selected_tool = ToolType.fill;
-                cursor = CursorType.fill;
                 btnToolSelection.FlatStyle = FlatStyle.Popup;
                 btnToolBrush.FlatStyle = FlatStyle.Popup;
                 btnToolFill.FlatStyle = FlatStyle.Flat;
@@ -347,7 +344,6 @@ namespace LevelBuilder
             else if (tool == ToolType.selectTile)
             {
                 selected_tool = ToolType.selectTile;
-                cursor = CursorType.selectColor;
                 btnToolSelection.FlatStyle = FlatStyle.Popup;
                 btnToolBrush.FlatStyle = FlatStyle.Popup;
                 btnToolFill.FlatStyle = FlatStyle.Popup;
@@ -357,7 +353,6 @@ namespace LevelBuilder
             else if (tool == ToolType.eraser)
             {
                 selected_tool = ToolType.eraser;
-                cursor = CursorType.eraser;
                 btnToolSelection.FlatStyle = FlatStyle.Popup;
                 btnToolBrush.FlatStyle = FlatStyle.Popup;
                 btnToolFill.FlatStyle = FlatStyle.Popup;

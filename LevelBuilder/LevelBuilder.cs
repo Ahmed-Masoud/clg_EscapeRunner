@@ -47,7 +47,7 @@ namespace LevelBuilder
         private int[,] map;
         private int[,] resize_map;
 
-        private Map backup_map;
+        private Model.Map backup_map;
 
         private Stack<Model.HistoryNode> undo;
         private Stack<Model.HistoryNode> redo;
@@ -58,17 +58,22 @@ namespace LevelBuilder
 
         private PictureBox selected_tile;
         private ToolType selected_tool;
-#pragma warning disable
-        private CursorType cursor;
-#pragma warning restore
+
         private bool grid_on;
         private bool show_walkable_on;
+        private bool isIsometric;
+        private bool choosingPlayer;
+        private bool choosingMonster;
 
         private Model.SelectionTool selection;
 
         private Model.CodesGenerator codesGenerator;
 
-        bool isIsometric = false;
+        private int playerCount;
+        private int monstersCount;
+
+        private Model.Player player;
+        private List<Model.Monster> monsters;
 
         #endregion
 
@@ -292,6 +297,48 @@ namespace LevelBuilder
                 }
 
                 RenderMap();
+
+                if (choosingPlayer)
+                {
+                    if (player.Start)
+                    {
+                        player.StartPoint = new Point(mapX, mapY);
+                        player.Start = false;
+                        player.End = true;
+                        return;
+                    }
+                    if (player.End)
+                    {
+                        player.EndPoint = new Point(mapX, mapY);
+                        player.End = false;
+                        choosingPlayer = false;
+                        MessageBox.Show("Player Start Point x: " + player.StartPoint.X + ", y: " + player.StartPoint.Y + "\n" +
+                                        "Player End Point x: " + player.EndPoint.X + ", y: " + player.EndPoint.Y);
+                        return;
+                    }
+                }
+
+                if (choosingMonster)
+                {
+                    int index = monstersCount - 1;
+                    if (monsters[index].Start)
+                    {
+                        monsters[index].StartPoint = new Point(mapX, mapY);
+                        monsters[index].Start = false;
+                        monsters[index].End = true;
+                        return;
+                    }
+                    if (monsters[index].End)
+                    {
+                        monsters[index].EndPoint = new Point(mapX, mapY);
+                        monsters[index].End = false;
+                        choosingMonster = false;
+                        MessageBox.Show("Monster " + (index + 1) + " Start Point x: " + monsters[index].StartPoint.X + ", y: " + monsters[index].StartPoint.Y + "\n" +
+                                        "Monster " + (index + 1) + " End Point x: " + monsters[index].EndPoint.X + ", y: " + monsters[index].EndPoint.Y);
+                        return;
+                    }
+                }
+
             }
             else if (e.Button == MouseButtons.Right)
             {
@@ -601,13 +648,17 @@ namespace LevelBuilder
             // initialized some variables
             grid_on = true;
             show_walkable_on = false;
+            isIsometric = false;
+            choosingPlayer = false;
+            choosingPlayer = false;
+
             selected_tile = null;
             selection = new Model.SelectionTool();
 
             // select brush as default tool
             SelectTool(ToolType.selection);
 
-            backup_map = new Map();
+            backup_map = new Model.Map();
 
             undo = new Stack<Model.HistoryNode>();
             undoToolStripMenuItem.Enabled = false;
@@ -625,6 +676,12 @@ namespace LevelBuilder
             codesGenerator = new Model.CodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
                 tbCode);
+
+            playerCount = 0;
+            monstersCount = 0;
+
+            player = new Model.Player();
+            monsters = new List<Model.Monster>();
         }
 
         #endregion

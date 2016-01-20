@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace LevelBuilder
+namespace LevelBuilder.Model
 {
     public enum TileType
     {

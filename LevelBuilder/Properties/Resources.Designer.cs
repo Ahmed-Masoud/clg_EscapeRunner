@@ -63,16 +63,6 @@ namespace LevelBuilder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap brush {
-            get {
-                object obj = ResourceManager.GetObject("brush", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         public static System.Drawing.Bitmap brush_icon {
             get {
                 object obj = ResourceManager.GetObject("brush_icon", resourceCulture);
@@ -93,29 +83,9 @@ namespace LevelBuilder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap eraser {
-            get {
-                object obj = ResourceManager.GetObject("eraser", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         public static System.Drawing.Bitmap eraser_icon {
             get {
                 object obj = ResourceManager.GetObject("eraser_icon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap fill {
-            get {
-                object obj = ResourceManager.GetObject("fill", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -136,16 +106,6 @@ namespace LevelBuilder.Properties {
         public static System.Drawing.Bitmap selection_icon {
             get {
                 object obj = ResourceManager.GetObject("selection_icon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap selecttile {
-            get {
-                object obj = ResourceManager.GetObject("selecttile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
