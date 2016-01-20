@@ -9,13 +9,13 @@ namespace EscapeRunner.BusinessLogic
 {
     public struct IndexPair
     {
-        int i, j;
-        public IndexPair(int i, int j)
+        int j, i;
+        public IndexPair( int i, int j)
         {
-            this.i = i;
             this.j = j;
+            this.i = i;
         }
-        public int I { get { return i; } set { i = value; } }
         public int J { get { return j; } set { j = value; } }
+        public int I { get { return i; } set { i = value; } }
     }
 }

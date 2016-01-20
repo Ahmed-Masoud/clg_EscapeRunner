@@ -76,7 +76,7 @@ namespace EscapeRunner.View
 #if DEBUG
             // Draws the walkable area of the map
             g.FillRectangle(Brushes.MistyRose, twoDimPoint.X, twoDimPoint.Y, dimensions.Width, dimensions.Height);
-            g.DrawString($"{TileIndecies.I.ToString()},{TileIndecies.J.ToString()}", font, Brushes.Black, twoDimPoint);
+            g.DrawString($"{TileIndecies.J.ToString()},{TileIndecies.I.ToString()}", font, Brushes.Black, twoDimPoint);
             g.DrawRectangle(Pens.Peru, twoDimPoint.X, twoDimPoint.Y, dimensions.Width, dimensions.Height);
 #endif
 

@@ -66,16 +66,16 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             switch (direction)
             {
                 case Directions.Up:
-                    temp.J--;
-                    break;
-                case Directions.Down:
-                    temp.J++;
-                    break;
-                case Directions.Left:
                     temp.I--;
                     break;
-                case Directions.Right:
+                case Directions.Down:
                     temp.I++;
+                    break;
+                case Directions.Left:
+                    temp.J--;
+                    break;
+                case Directions.Right:
+                    temp.J++;
                     break;
                 default:
                     break;

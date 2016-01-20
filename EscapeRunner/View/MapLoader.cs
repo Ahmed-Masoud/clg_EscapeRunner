@@ -9,7 +9,7 @@ namespace EscapeRunner.View
     {
         private static int flareCounter = 0;
         private static List<Bitmap> flares;
-        
+
         private static int[,] level = {
             { 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3},
             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
@@ -96,7 +96,7 @@ namespace EscapeRunner.View
 
         public static bool IsWalkable(IndexPair pair)
         {
-            return level[pair.J, pair.I] == 0 ? true : false;
+            return level[pair.I, pair.J] == 0 ? true : false;
         }
 
         /// <summary>

@@ -47,17 +47,17 @@ namespace EscapeRunner.BusinessLogic
         {
             // Adapter Design pattern
 
-            if (pair.I > MapLoader.LevelDimensions.I || pair.J > MapLoader.LevelDimensions.J || pair.I < 0 || pair.J < 0)
+            if (pair.J > MapLoader.LevelDimensions.J || pair.I > MapLoader.LevelDimensions.I || pair.J < 0 || pair.I < 0)
                 throw new InvalidOperationException("Out of level bounds");
 
             // TODO complete the method
             Point tempPt = MapLoader.LevelStartLocation;
-            for (int j = 0; j < pair.J; j++)
+            for (int j = 0; j < pair.I; j++)
             {
                 tempPt.Y += 32;
                 tempPt.X = MapLoader.LevelStartLocation.X;
 
-                for (int i = 0; i < pair.I; i++)
+                for (int i = 0; i < pair.J; i++)
                 {
                     tempPt.X += 32;
                 }
