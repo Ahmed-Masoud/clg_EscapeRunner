@@ -21,7 +21,7 @@ namespace EscapeRunner.BusinessLogic
             DrawMovingBackground(g);
             drawGraphics(e.Graphics);
 #else
-            MapLoader.DrawLevelObstacles(g);
+            MapLoader.DrawLevelObstacle(g);
             player.UpdateGraphics(g);
 #endif
 
