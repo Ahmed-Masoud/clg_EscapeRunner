@@ -30,10 +30,9 @@ namespace EscapeRunner.View
         #region Debug Stuff
 
 #if DEBUG
-        private static FontFamily fontFamily = new FontFamily("Arial");
-
+        private static Pen markingPen = new Pen(Color.Turquoise, 2);
         private static Font font = new Font(
-           fontFamily,
+           new FontFamily("Arial"),
            8,
            FontStyle.Regular,
            GraphicsUnit.Pixel);
@@ -43,7 +42,6 @@ namespace EscapeRunner.View
 
         public LevelTile(Point twoDimPoint, int textureIndex, TileType type, IndexPair tileIndecies)
         {
-
             if (type == TileType.Corner)
             {
                 dimensions = new Size(64, 128);
@@ -77,9 +75,11 @@ namespace EscapeRunner.View
 
 #if DEBUG
             // Draws the walkable area of the map
-            g.FillRectangle(Brushes.MistyRose, twoDimPoint.X, twoDimPoint.Y, dimensions.Width, dimensions.Height);
-            g.DrawString($"{TileIndecies.J.ToString()},{TileIndecies.I.ToString()}", font, Brushes.Black, twoDimPoint);
-            g.DrawRectangle(Pens.Peru, twoDimPoint.X, twoDimPoint.Y, dimensions.Width, dimensions.Height);
+            //g.FillRectangle(Brushes.MistyRose, tempPoint.X, tempPoint.Y, dimensions.Width, dimensions.Height);
+
+            g.DrawString($"{TileIndecies.J.ToString()},{TileIndecies.I.ToString()}", font, Brushes.White, twoDimPoint);
+            //g.DrawRectangle(markingPen, twoDimPoint.X, twoDimPoint.Y, dimensions.Width, dimensions.Height); // Print 2D
+            //g.DrawRectangle(markingPen, tempPoint.X, tempPoint.Y, dimensions.Width, dimensions.Height); // Print ISO
 #endif
 
             #endregion Debug Stuff

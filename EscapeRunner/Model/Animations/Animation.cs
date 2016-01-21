@@ -17,6 +17,16 @@ namespace EscapeRunner.Animations
 
     public abstract class Animation
     {
+        #region DebugStuff
+#if DEBUG
+        private static Pen markingPen = new Pen(Color.Turquoise, 2);
+        private static Font font = new Font(
+           new FontFamily("Arial"),
+           8,
+           FontStyle.Regular,
+           GraphicsUnit.Pixel);
+#endif
+        #endregion
         protected int animationWidth, animationHeight;
         protected int imageIndex;
         protected Rectangle objectBounds;
@@ -33,7 +43,9 @@ namespace EscapeRunner.Animations
             g.DrawImage(animationImage, AnimationPosition.TwoDimensionsToIso().X, AnimationPosition.TwoDimensionsToIso().Y, animationWidth, animationHeight);
 #if DEBUG
             //g.FillRectangle(Brushes.Yellow, objectBounds);
-            g.DrawRectangle(Pens.Green, objectBounds);
+            //Point isoLocation = AnimationPosition.TwoDimensionsToIso();
+            //g.DrawString($"{AnimationPosition.X.ToString()},{AnimationPosition.Y.ToString()}", font, Brushes.Azure, AnimationPosition);
+            g.DrawRectangle(Pens.White, AnimationPosition.X, AnimationPosition.Y, objectBounds.Width, objectBounds.Height);
 #endif
             objectBounds.Location = AnimationPosition;
         }

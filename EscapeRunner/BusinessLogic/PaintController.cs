@@ -1,18 +1,32 @@
-﻿using EscapeRunner.Animations;
-using EscapeRunner.BusinessLogic.GameObjects;
+﻿using EscapeRunner.BusinessLogic.GameObjects;
 using EscapeRunner.View;
 using System.Drawing;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace EscapeRunner.BusinessLogic
 {
+
     /// <summary>
     /// Controller partial class to implement the drawing and sort algorithms
     /// </summary>
-    internal partial class Controller
+    public partial class Controller
     {
+        static PointF point = new PointF();
+        static bool increasing = true;
+
+        public static void WindowRefresh(object sender, System.Windows.Forms.PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+#if !DEBUG
+            DrawMovingBackground(g);
+            drawGraphics(e.Graphics);
+#else
+            MapLoader.DrawLevelObstacles(g);
+            player.UpdateGraphics(g);
+#endif
+
+        }
+
         /// <summary>
         /// This method draws the floor only which causes no problems
         /// </summary>
@@ -36,17 +50,22 @@ namespace EscapeRunner.BusinessLogic
             return returnBitmap;
         }
 
-        private static void DrawGraphics(Graphics g)
+        public static void UpdateTiles(Graphics g)
         {
-            MapLoader.DrawGameFlares(g);
-            MapLoader.DrawLevelObstacle(g);
-            player.UpdateGraphics(g);
-            //MapLoader.DrawLevelObstacle(g);
-            UpdateTiles(g);
-            //MapLoader.DrawLevelFloor(g);
 
-            
+            foreach (LevelTile x in MapLoader.ObstacleTiles)
+                if (x.TileIndecies.I > Player.PlayerCoordiantes.I || x.TileIndecies.J > Player.PlayerCoordiantes.J)
+                    x.Draw(g);
+        }
 
+        public static void DrawMovingBackground(Graphics g)
+        {
+            g.DrawImage(Model.Backgrounds[0], point.X, point.Y -30, MainWindow.RightBound, MainWindow.LowerBound + 100);
+
+        }
+
+        public static void DrawShots(Graphics g)
+        {
             if (drawableObjects.Count > 0)
             {
                 // Draw the bullets
@@ -59,7 +78,6 @@ namespace EscapeRunner.BusinessLogic
                     {
                         if (((IWeapon)temp).Used == true)
                             temp.UpdateGraphics(g);
-
                         // Delete the shot directly if it finished animation
                         else
                         {
@@ -74,29 +92,26 @@ namespace EscapeRunner.BusinessLogic
             }
         }
 
-        public static void UpdateTiles(Graphics g)
+
+        public static void Next()
         {
-            foreach(LevelTile x in MapLoader.ObstacleTiles)
+            if (increasing)
             {
-                if (x.TileIndecies.I>Player.PlayerCoordiantes.I || x.TileIndecies.J > Player.PlayerCoordiantes.J) 
+                point.Y = (float)(point.Y + 0.2);
+                if (point.Y >= 5)
                 {
-                    x.Draw(g);
+                    increasing = false;
                 }
             }
-            /*IndexPair p = Player.PlayerCoordiantes;
-            p.I++;
-            if (!MapLoader.IsWalkable(p))
+            else
             {
-                MapLoader.ObstacleTiles.Find(e => e.TileIndecies == p).Draw(g);
-
+                point.Y = (float)(point.Y - 0.2);
+                if (point.Y <= 0)
+                {
+                    increasing = true;
+                }
             }
-            p.I--;
-            p.J++;
-            if (!MapLoader.IsWalkable(p))
-            {
-                MapLoader.ObstacleTiles.Find(e => e.TileIndecies == p).Draw(g);
-            }*/
-
         }
+
     }
 }

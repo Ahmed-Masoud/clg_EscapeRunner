@@ -28,11 +28,12 @@ namespace EscapeRunner.View
             opacityTimer.Interval = timerInterval;
             opacityTimer.Tick += OpacityTimer_Tick;
             opacityTimer.Enabled = true;
-            SetSplashScreen();
+            LoadResources();
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.ShowInTaskbar = false;
 #if !DEBUG
+            LoadResources();
             PlaySound();
 #endif
             //this.Opacity = 0.5;
@@ -102,7 +103,7 @@ namespace EscapeRunner.View
 #endif
             doneLoading = true;
         }
-        private void SetSplashScreen()
+        private void LoadResources()
         {
             string resPath = Path.GetDirectoryName(
                           Path.GetDirectoryName(
@@ -115,6 +116,7 @@ namespace EscapeRunner.View
             {
                 this.BackgroundImage = Image.FromFile(imagePath);
                 player = new System.Media.SoundPlayer(soundPath);
+                
             }
             else
                 throw new FileNotFoundException();

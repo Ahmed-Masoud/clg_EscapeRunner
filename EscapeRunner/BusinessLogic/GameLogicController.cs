@@ -3,19 +3,24 @@ using EscapeRunner.BusinessLogic.GameObjects;
 using EscapeRunner.View;
 using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Drawing;
+
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace EscapeRunner.BusinessLogic
 {
-    internal partial class Controller
+    public partial class Controller
     {
-        // TODO change this to private
-        public static Player player;
+        private delegate void DrawingOperations(Graphics g);
+        private static DrawingOperations drawGraphics;
+
+        private static Player player;
         private static List<IDrawable> drawableObjects = new List<IDrawable>();
         private static ProjectilePool projectilePool;
         private static MainWindow window;
 
+        static Timer backgroundIllusionTimer = new Timer();
         private Controller() { }
 
         public static void InitializeController()
@@ -29,11 +34,24 @@ namespace EscapeRunner.BusinessLogic
             Monster mon = new Monster();
 
             drawableObjects.Add(mon);
+            backgroundIllusionTimer.Interval = 100;
+            backgroundIllusionTimer.Elapsed += BackgroundIllusionTimer_Elapsed;
+            backgroundIllusionTimer.Enabled = true;
+#if !DEBUG
+
+            drawGraphics += MapLoader.DrawGameFlares;
+            drawGraphics += MapLoader.DrawLevelFloor;
+            drawGraphics += MapLoader.DrawLevelObstacles;
+            drawGraphics += player.UpdateGraphics;
+            drawGraphics += UpdateTiles;
+            drawGraphics += DrawShots;
+#endif
+
         }
 
-        public static void WindowRefresh(object sender, System.Windows.Forms.PaintEventArgs e)
+        private static void BackgroundIllusionTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            DrawGraphics(e.Graphics);
+            Next();
         }
 
         private static void FireBullet()

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EscapeRunner", "EscapeRunner\EscapeRunner.csproj", "{10F8ABC0-30E1-4EBC-A657-3D6353B5A054}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EscapeRunners", "EscapeRunner\EscapeRunners.csproj", "{10F8ABC0-30E1-4EBC-A657-3D6353B5A054}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelBuilder", "LevelBuilder\LevelBuilder.csproj", "{6744D865-5BBD-4E59-BD0D-9196190ADA05}"
 EndProject

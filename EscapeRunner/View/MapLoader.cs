@@ -14,15 +14,15 @@ namespace EscapeRunner.View
             { 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3},
     { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
     { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-    { 1, 2, 2, 2, 2, 3, 0, 0, 0, 3, 2, 2, 2, 2, 2, 2, 2, 4},
-    { 1, 0, 0, 0, 0, 1, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4},
-    { 1, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 4},
     { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-    { 1, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 4},
-    { 1, 0, 0, 0, 0, 1, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4},
-    { 1, 0, 0, 0, 0, 1, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4},
-    { 1, 0, 0, 0, 0, 1, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4},
-    { 1, 5, 5, 5, 5, 3, 0, 0, 0, 3, 5, 5, 5, 5, 5, 5, 5, 4},
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+    { 1, 5, 5, 5, 5, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 4},
     { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
     { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
     { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
@@ -51,22 +51,24 @@ namespace EscapeRunner.View
         /// Floor tiles that will be drawn only once
         /// </summary>
         private static List<LevelTile> walkableTiles;
+
         public static List<LevelTile> WalkableTiles { get { return walkableTiles; } }
         public static List<LevelTile> ObstacleTiles { get { return obstacleTiles; } }
         public static Point LevelStartLocation { get { return startLocation; } }
         public static Point PlayerStartLocation { get { return playerStartLocation; } }
         public static IndexPair LevelDimensions { get { return levelDimensions; } }
 
-        public static Point MonsterStartLocation
+        public static IndexPair MonsterStartLocation
         {
             get
             {
                 // Return monster position that's at least 5 tile away from the player
                 if (walkableTiles != null)
-                    return walkableTiles[randomNumberGenerator.Next(5, (walkableTiles.Count - 1))].Position;
+                    return walkableTiles[randomNumberGenerator.Next(5, (walkableTiles.Count - 1))].TileIndecies;
                 throw new InvalidOperationException("Walkable tiles isn't initialized");
             }
         }
+
         static MapLoader()
         {
             flares = Model.FlareAnimation;
@@ -109,7 +111,7 @@ namespace EscapeRunner.View
                 tile.Draw(g);
         }
 
-        public static void DrawLevelObstacle(Graphics g)
+        public static void DrawLevelObstacles(Graphics g)
         {
             // Find the player current position, don't draw the walls around it in the loop
             foreach (var tile in obstacleTiles)
