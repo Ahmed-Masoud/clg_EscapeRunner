@@ -82,7 +82,8 @@ namespace LevelBuilder
                 SaveTiles(current_working_filename);
                 codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                     tile_library, tile_width, tile_height,
-                    tbCode);
+                    tbCode,
+                    player, monsters);
                 codesGenerator.saveCSharp(current_working_filename);
                 //_my_map.SaveMap(_current_working_filename);
 
@@ -115,7 +116,8 @@ namespace LevelBuilder
                     SaveTiles(this.saveMapDialog.FileName);
                     codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                         tile_library, tile_width, tile_height,
-                        tbCode);
+                        tbCode,
+                        player, monsters);
                     codesGenerator.saveCSharp(current_working_filename);
 
                     current_working_filename = this.saveMapDialog.FileName;
@@ -133,7 +135,13 @@ namespace LevelBuilder
 
         private void loadMapToolStripMenuItem_Click(object sender, EventArgs e)
         {   // open saved map
-            openMapDialog.InitialDirectory = Application.ExecutablePath;
+            string path = Path.GetDirectoryName(
+                            Path.GetDirectoryName(
+                                Path.GetDirectoryName(
+                                    Directory.GetCurrentDirectory()))) + "\\";
+            path = Path.Combine(path, Path.Combine("EscapeRunner", Path.Combine("Res", "Levels")));
+
+            openMapDialog.InitialDirectory = path;
             DialogResult openMap = this.openMapDialog.ShowDialog();
             if (openMap == DialogResult.OK)
             {   // open Map
@@ -325,7 +333,8 @@ namespace LevelBuilder
 
             codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
-                tbCode);
+                tbCode,
+                player, monsters);
 
             if (rbCPP.Checked)
                 codesGenerator.GenerateCPP();
@@ -526,7 +535,8 @@ namespace LevelBuilder
         {   // generate C++ codes
             codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
-                tbCode);
+                tbCode,
+                player, monsters);
             codesGenerator.GenerateCPP();
             tctrlDesign.SelectedTab = tpgCode;
             rbCPP.Checked = true;
@@ -536,7 +546,8 @@ namespace LevelBuilder
         {   // generate C# codes
             codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
-                tbCode);
+                tbCode,
+                player, monsters);
             codesGenerator.GenerateCSharp();
             tctrlDesign.SelectedTab = tpgCode;
             rbCS.Checked = true;
@@ -546,7 +557,8 @@ namespace LevelBuilder
         {   // generate xml
             codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
-                tbCode);
+                tbCode,
+                player, monsters);
             codesGenerator.GenerateXML();
             tctrlDesign.SelectedTab = tpgCode;
             rbXML.Checked = true;
@@ -556,7 +568,8 @@ namespace LevelBuilder
         {   // generate codes with selected language
             codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
-                tbCode);
+                tbCode,
+                player, monsters);
 
             if (rbCPP.Checked)
                 codesGenerator.GenerateCPP();
@@ -588,7 +601,6 @@ namespace LevelBuilder
                 return;
             }
         }
-
         
         private void addMonsterToolStripMenuItem_Click(object sender, EventArgs e)
         {

@@ -497,7 +497,8 @@ namespace LevelBuilder
 
             codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
-                tbCode);
+                tbCode,
+                player, monsters);
 
             codesGenerator.GenerateCPP();
 
@@ -512,7 +513,8 @@ namespace LevelBuilder
 
             codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
-                tbCode);
+                tbCode,
+                player, monsters);
 
             codesGenerator.GenerateCSharp();
 
@@ -527,7 +529,8 @@ namespace LevelBuilder
 
             codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
-                tbCode);
+                tbCode,
+                player, monsters);
 
             codesGenerator.GenerateXML();
 
@@ -550,7 +553,8 @@ namespace LevelBuilder
 
                 codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
-                tbCode);
+                tbCode,
+                player, monsters);
 
                 if (rbCPP.Checked)
                     codesGenerator.GenerateCPP();
@@ -673,15 +677,16 @@ namespace LevelBuilder
 
             tile_library = new Model.Tile[0];
 
-            codesGenerator = new Model.CodesGenerator(map, map_name, map_width, map_height,
-                tile_library, tile_width, tile_height,
-                tbCode);
-
             playerCount = 0;
             monstersCount = 0;
 
             player = new Model.Player();
             monsters = new List<Model.Monster>();
+
+            codesGenerator = new Model.CodesGenerator(map, map_name, map_width, map_height,
+                tile_library, tile_width, tile_height,
+                tbCode,
+                player, monsters);
         }
 
         #endregion

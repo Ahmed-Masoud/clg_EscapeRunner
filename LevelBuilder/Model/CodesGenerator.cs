@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 //using System.Linq;
 //using System.Threading.Tasks;
@@ -12,14 +13,20 @@ namespace LevelBuilder.Model
         private int map_height;
         private string map_name;
         private int map_width;
-        private System.Windows.Forms.TextBox tbCode;
+
         private int tile_height;
         private Tile[] tile_library;
         private int tile_width;
 
+        private System.Windows.Forms.TextBox tbCode;
+
+        private Player player;
+        private List<Monster> monsters;
+
         public CodesGenerator(int[,] map, string map_name, int map_width, int map_height,
             Tile[] tile_library, int tile_width, int tile_height,
-            System.Windows.Forms.TextBox tbCode)
+            System.Windows.Forms.TextBox tbCode,
+            Player player, List<Monster> monsters)
         {
             this.map = map;
             this.map_name = map_name;
@@ -31,11 +38,15 @@ namespace LevelBuilder.Model
             this.tile_width = tile_width;
 
             this.tbCode = tbCode;
+
+            this.player = player;
+            this.monsters = monsters;
         }
 
         public void setCodesGenerator(int[,] map, string map_name, int map_width, int map_height,
             Tile[] tile_library, int tile_width, int tile_height,
-            System.Windows.Forms.TextBox tbCode)
+            System.Windows.Forms.TextBox tbCode,
+            Player player, List<Monster> monsters)
         {
             this.map = map;
             this.map_name = map_name;
@@ -47,6 +58,9 @@ namespace LevelBuilder.Model
             this.tile_width = tile_width;
 
             this.tbCode = tbCode;
+
+            this.player = player;
+            this.monsters = monsters;
         }
 
         public void GenerateCPP()
@@ -315,6 +329,24 @@ namespace LevelBuilder.Model
         {
             StringWriter code = new StringWriter();
 
+            code.Write("int[] playerPosition = ");
+            code.Write("{ ");
+            code.Write(player.StartPoint.X);
+            code.Write(", ");
+            code.Write(player.StartPoint.Y);
+            code.Write(", ");
+            code.Write(player.EndPoint.X);
+            code.Write(", ");
+            code.Write(player.EndPoint.Y);
+            code.Write("};\r\n\r\n");
+
+            code.Write("int cols = ");
+            code.Write(map_width);
+            code.Write(";\r\n");
+            code.Write("int rows = ");
+            code.Write(map_height);
+            code.Write(";\r\n\r\n");
+
             code.Write("int [,] ");
             code.Write(map_name);
             code.Write(" = {\r\n");
@@ -342,7 +374,7 @@ namespace LevelBuilder.Model
 
             code.Write("};\r\n");
 
-            fileName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName) + "-cs.txt";
+            fileName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName) + ".game";
             
             StreamWriter stream = new StreamWriter(fileName);
             stream.WriteLine(code.ToString());
