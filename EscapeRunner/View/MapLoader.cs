@@ -33,6 +33,7 @@ namespace EscapeRunner.View
     { 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3}
         };
 
+
         private static int levelColomns;
         private static int levelRows;
         private static Point startLocation = new Point(390, -280);
@@ -112,12 +113,13 @@ namespace EscapeRunner.View
                 tile.Draw(g);
         }
 
-        public static void DrawLevelObstacle(Graphics g)
+        public static void DrawLevelObstacles(Graphics g)
         {
             // Find the player current position, don't draw the walls around it in the loop
             foreach (var tile in obstacleTiles)
                 tile.Draw(g);
         }
+
 
         public static void LoadLevel()
         {

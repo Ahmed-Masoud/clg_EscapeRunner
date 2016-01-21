@@ -21,7 +21,7 @@ namespace EscapeRunner.BusinessLogic
             DrawMovingBackground(g);
             drawGraphics(e.Graphics);
 #else
-            MapLoader.DrawLevelObstacles(g);
+            MapLoader.DrawLevelObstacle(g);
             player.UpdateGraphics(g);
 #endif
 
@@ -60,7 +60,7 @@ namespace EscapeRunner.BusinessLogic
 
         public static void DrawMovingBackground(Graphics g)
         {
-            g.DrawImage(Model.Backgrounds[0], point.X, point.Y -30, MainWindow.RightBound, MainWindow.LowerBound + 100);
+            g.DrawImage(Model.Backgrounds[0], point.X, point.Y - 30, MainWindow.RightBound, MainWindow.LowerBound + 100);
 
         }
 
