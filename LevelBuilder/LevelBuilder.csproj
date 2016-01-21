@@ -63,7 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\CodesGenerator.cs" />
+    <Compile Include="Controller\CodesGenerator.cs" />
     <Compile Include="Model\HistoryNode.cs" />
     <Compile Include="Model\Map.cs" />
     <Compile Include="Model\Clipboard.cs" />
@@ -90,7 +90,7 @@
     <Compile Include="Model\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\SelectionTool.cs" />
+    <Compile Include="Controller\SelectionTool.cs" />
     <Compile Include="Model\Tile.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

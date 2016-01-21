@@ -34,6 +34,7 @@ namespace EscapeRunner
         {
             string projectPath = FindProjectPath();
             resFolderPath = Path.Combine(projectPath, "Res");
+            soundFiles = new List<string>();
 
         }
         public static async Task InitializeModelAsync()

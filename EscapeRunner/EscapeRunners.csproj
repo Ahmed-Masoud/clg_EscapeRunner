@@ -47,6 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\Collider.cs" />
+    <Compile Include="BusinessLogic\CollisionEvent.cs" />
+    <Compile Include="BusinessLogic\ICollide.cs" />
     <Compile Include="BusinessLogic\IndexPair.cs" />
     <Compile Include="BusinessLogic\GameObjects\Monster.cs" />
     <Compile Include="BusinessLogic\PaintController.cs" />

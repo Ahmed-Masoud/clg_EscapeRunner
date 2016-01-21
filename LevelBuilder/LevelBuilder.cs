@@ -65,9 +65,9 @@ namespace LevelBuilder
         private bool choosingPlayer;
         private bool choosingMonster;
 
-        private Model.SelectionTool selection;
+        private Controller.SelectionTool selection;
 
-        private Model.CodesGenerator codesGenerator;
+        private Controller.CodesGenerator codesGenerator;
 
         private int playerCount;
         private int monstersCount;
@@ -200,7 +200,7 @@ namespace LevelBuilder
             {
                 if (selected_tool == ToolType.selection)
                 {   // selection tool
-                    selection = new Model.SelectionTool();
+                    selection = new Controller.SelectionTool();
                     selection.IsDragging = true;
                     selection.StartDrag = new Point(mapX, mapY);
                     selection.StopDrag = new Point(mapX, mapY);
@@ -342,7 +342,7 @@ namespace LevelBuilder
             }
             else if (e.Button == MouseButtons.Right)
             {
-                selection = new Model.SelectionTool();
+                selection = new Controller.SelectionTool();
                 RenderMap();
             }
 
@@ -657,7 +657,7 @@ namespace LevelBuilder
             choosingPlayer = false;
 
             selected_tile = null;
-            selection = new Model.SelectionTool();
+            selection = new Controller.SelectionTool();
 
             // select brush as default tool
             SelectTool(ToolType.selection);
@@ -683,7 +683,7 @@ namespace LevelBuilder
             player = new Model.Player();
             monsters = new List<Model.Monster>();
 
-            codesGenerator = new Model.CodesGenerator(map, map_name, map_width, map_height,
+            codesGenerator = new Controller.CodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
                 tbCode,
                 player, monsters);

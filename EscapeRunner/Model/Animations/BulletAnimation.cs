@@ -97,19 +97,19 @@ namespace EscapeRunner.Animations
             switch (bulletDirection)
             {
                 case Directions.Right:
-                    position.Y += verticalDisplacement;
-                    break;
-
-                case Directions.Left:
-                    position.Y -= verticalDisplacement;
-                    break;
-
-                case Directions.Up:
                     position.X += horizontalDisplacement;
                     break;
 
-                case Directions.Down:
+                case Directions.Left:
                     position.X -= horizontalDisplacement;
+                    break;
+
+                case Directions.Up:
+                    position.Y += verticalDisplacement;
+                    break;
+
+                case Directions.Down:
+                    position.Y -= verticalDisplacement;
                     break;
             }
             // Set the bullet's new position

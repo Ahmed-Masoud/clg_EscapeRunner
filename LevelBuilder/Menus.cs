@@ -415,7 +415,7 @@ namespace LevelBuilder
 
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            selection = new Model.SelectionTool();
+            selection = new Controller.SelectionTool();
             selection.StartDrag = new Point(0, 0);
             selection.StopDrag = new Point(map_width, map_height);
             RenderMap();
@@ -423,7 +423,7 @@ namespace LevelBuilder
 
         private void deselectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            selection = new Model.SelectionTool();
+            selection = new Controller.SelectionTool();
             RenderMap();
         }
 

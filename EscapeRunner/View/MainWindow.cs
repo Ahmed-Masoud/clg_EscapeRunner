@@ -15,12 +15,11 @@ namespace EscapeRunner
             this.Shown += MainWindow_Shown;
             this.FormClosing += MainWindow_FormClosing;
             this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.None;
 
             // Don't start the timer until the objects are initialized
             refreshTimer.Enabled = false;
             refreshTimer.Interval = 20;
-
-            //Controller.LazyInitialize();
             refreshTimer.Tick += new EventHandler(this.refreshTimer_Tick);
         }
 
@@ -61,6 +60,12 @@ namespace EscapeRunner
                 NotifyController(Notifing.Down);
             else if (e.KeyCode == Keys.Space)
                 NotifyController(Notifing.Space);
+            else if (e.KeyCode == Keys.Escape)
+                if (this.FormBorderStyle == FormBorderStyle.None)
+                {
+                    this.FormBorderStyle = FormBorderStyle.Sizable;
+                    this.WindowState = FormWindowState.Normal;
+                }
         }
 
         // Called on Refresh()
@@ -80,10 +85,6 @@ namespace EscapeRunner
 
             // Resources are initialized, start ticking
             refreshTimer.Enabled = true;
-
-            // Fire the event with unknown args, to enter the (default) case in a switch
-            //Bitmap backG = new Bitmap(Model.Backgrounds[0], RightBound, LowerBound);
-            //this.BackgroundImage = backG;
         }
 
         private void refreshTimer_Tick(object sender, EventArgs e)
@@ -91,17 +92,10 @@ namespace EscapeRunner
             Refresh();
         }
 
-        private void MainWindow_Click(object sender, EventArgs e)
-        {
-#if DEBUG
-            MessageBox.Show($"Mouse click coordinates x:{MousePosition.X}, y:{MousePosition.Y}");
-#endif
-        }
-
         private async void MainWindow_Load(object sender, EventArgs e)
         {
             await Model.InitializeModelAsync();
-            this.BackgroundImage = await Controller.DrawBackgroundImage();
+            //this.BackgroundImage = await Controller.DrawBackgroundImage();
             Controller.InitializeController();
             if (!this.Focused)
                 this.Focus();

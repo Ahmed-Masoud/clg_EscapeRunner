@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
-    public sealed class Player : IDrawable
+    public sealed class Player : IDrawable, ICollide
     {
         private static PlayerAnimation playerAnimation;
         private static Player playerInstance;
@@ -15,6 +15,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         int dx = 2;
         int dy = 2;
         int modTwoCounter = 1;
+        private Collider collider;
         public static Directions Direction { get; set; }
 
         public static Player PlayerInstance
@@ -26,6 +27,27 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         public static Point Position { get { return playerAnimation.AnimationPosition; } }
         public static IndexPair PlayerCoordiantes { set { playerCoordinates = value; } get { return playerCoordinates; } }
 
+        public IndexPair LocationIndexes
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        Collider ICollide.collider
+        {
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         private Player()
         {
             playerCoordinates = MapLoader.WalkableTiles[0].TileIndecies;
@@ -36,6 +58,8 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             playerAnimation.AnimationPosition = playerCoordinates.IndexesToCorrdinates();
 
             Direction = Directions.Right;
+            //collider = new Collider(playerInstance);  // Null reference EXCEPTION
+
         }
 
         /// <summary>
@@ -43,14 +67,11 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         /// </summary>
         public void StartMoving(Directions direction)
         {
-            // Move the animation of the player
-            if (CanMove(direction))
+            // %2 to eliminate the double key press
+            if (modTwoCounter++ % 2 == 0)
             {
-                if (modTwoCounter++ % 2 == 0)
-                {
-                    Move(direction);
-                    modTwoCounter = 1;
-                }
+                Move(direction);
+                modTwoCounter = 1;
             }
         }
 
@@ -81,6 +102,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
                     break;
             }
 
+            // Wall detection
             if (MapLoader.IsWalkable(temp))
             {
                 playerCoordinates = temp;
@@ -92,16 +114,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         public void UpdateGraphics(Graphics g)
         {
             playerAnimation.Draw(g, Direction);
-        }
-
-        private static bool CanMove(Directions direction)
-        {
-            return true;
-        }
-
-        public void UpdateLocation(Directions direction, bool increment)
-        {
-
         }
     }
 }

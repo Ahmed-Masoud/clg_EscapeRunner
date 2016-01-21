@@ -6,11 +6,6 @@ namespace EscapeRunner.BusinessLogic
 {
     public static class IsometricExtensionMethods
     {
-        static Point startPoint;
-        static IsometricExtensionMethods()
-        {
-            Lazy<Point> startPoint = new Lazy<Point>(() => MapLoader.WalkableTiles[0].Position);
-        }
         public static Point getTileCoordinates(this Point pt, int tileHeight)
         {
             Point tempPt = new Point(0, 0);
@@ -34,6 +29,13 @@ namespace EscapeRunner.BusinessLogic
         public static Point TwoDimensionsToIso(this Point pt)
         {
             Point tempPt = new Point(0, 0);
+            tempPt.X = (pt.X - pt.Y);
+            tempPt.Y = (pt.X + pt.Y) / 2;
+            return tempPt;
+        }
+        public static PointF TwoDimensionsToIso(this PointF pt)
+        {
+            PointF tempPt = new PointF(0, 0);
             tempPt.X = (pt.X - pt.Y);
             tempPt.Y = (pt.X + pt.Y) / 2;
             return tempPt;

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 //using System.Linq;
 //using System.Threading.Tasks;
 
-namespace LevelBuilder.Model
+namespace LevelBuilder.Controller
 {
     public class CodesGenerator
     {
@@ -15,18 +15,18 @@ namespace LevelBuilder.Model
         private int map_width;
 
         private int tile_height;
-        private Tile[] tile_library;
+        private Model.Tile[] tile_library;
         private int tile_width;
 
         private System.Windows.Forms.TextBox tbCode;
 
-        private Player player;
-        private List<Monster> monsters;
+        private Model.Player player;
+        private List<Model.Monster> monsters;
 
         public CodesGenerator(int[,] map, string map_name, int map_width, int map_height,
-            Tile[] tile_library, int tile_width, int tile_height,
+            Model.Tile[] tile_library, int tile_width, int tile_height,
             System.Windows.Forms.TextBox tbCode,
-            Player player, List<Monster> monsters)
+            Model.Player player, List<Model.Monster> monsters)
         {
             this.map = map;
             this.map_name = map_name;
@@ -44,9 +44,9 @@ namespace LevelBuilder.Model
         }
 
         public void setCodesGenerator(int[,] map, string map_name, int map_width, int map_height,
-            Tile[] tile_library, int tile_width, int tile_height,
+            Model.Tile[] tile_library, int tile_width, int tile_height,
             System.Windows.Forms.TextBox tbCode,
-            Player player, List<Monster> monsters)
+            Model.Player player, List<Model.Monster> monsters)
         {
             this.map = map;
             this.map_name = map_name;
