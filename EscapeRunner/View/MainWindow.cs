@@ -60,6 +60,12 @@ namespace EscapeRunner
                 NotifyController(Notifing.Down);
             else if (e.KeyCode == Keys.Space)
                 NotifyController(Notifing.Space);
+            else if (e.KeyCode == Keys.Escape)
+                if (this.FormBorderStyle == FormBorderStyle.None)
+                {
+                    this.FormBorderStyle = FormBorderStyle.Sizable;
+                    this.WindowState = FormWindowState.Normal;
+                }
         }
 
         // Called on Refresh()
