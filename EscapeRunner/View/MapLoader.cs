@@ -39,6 +39,7 @@ namespace EscapeRunner.View
         private static Point playerStartLocation;
         private static IndexPair levelDimensions;
         private static Point location = startLocation;
+        private static List<LevelTile> walkableTiles;
         private static List<LevelTile> obstacleTiles;
         private static Random randomNumberGenerator = new Random();
 
@@ -50,20 +51,22 @@ namespace EscapeRunner.View
         /// <summary>
         /// Floor tiles that will be drawn only once
         /// </summary>
-        private static List<LevelTile> walkableTiles;
+        //public static int LevelColomns { get { return levelColomns; } }
+        //public static int LevelRows { get { return levelRows; } }
+        public static int[,] Level { get { return level; } }
         public static List<LevelTile> WalkableTiles { get { return walkableTiles; } }
         public static List<LevelTile> ObstacleTiles { get { return obstacleTiles; } }
         public static Point LevelStartLocation { get { return startLocation; } }
         public static Point PlayerStartLocation { get { return playerStartLocation; } }
         public static IndexPair LevelDimensions { get { return levelDimensions; } }
 
-        public static Point MonsterStartLocation
+        public static IndexPair MonsterStartLocation
         {
             get
             {
                 // Return monster position that's at least 5 tile away from the player
                 if (walkableTiles != null)
-                    return walkableTiles[randomNumberGenerator.Next(5, (walkableTiles.Count - 1))].Position;
+                    return walkableTiles[randomNumberGenerator.Next(5, (walkableTiles.Count - 1))].TileIndecies;
                 throw new InvalidOperationException("Walkable tiles isn't initialized");
             }
         }

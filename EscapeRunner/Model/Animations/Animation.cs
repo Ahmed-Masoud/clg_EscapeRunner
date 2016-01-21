@@ -24,6 +24,7 @@ namespace EscapeRunner.Animations
 
         // Trigger an event to alert the bullet that it has been relocated, and set its lock state
         public Point AnimationPosition { get; set; } = Point.Empty;
+        public IndexPair AnimationTileIndex { get; set; } = new IndexPair();
 
         /// <summary>
         /// Draws the target animation

@@ -50,6 +50,7 @@
     <Compile Include="BusinessLogic\IndexPair.cs" />
     <Compile Include="BusinessLogic\GameObjects\Monster.cs" />
     <Compile Include="BusinessLogic\PaintController.cs" />
+    <Compile Include="BusinessLogic\PathFinder.cs" />
     <Compile Include="Model\Animations\Animation.cs" />
     <Compile Include="Model\Animations\AnimationFactory.cs" />
     <Compile Include="Model\Animations\BulletAnimation.cs" />
