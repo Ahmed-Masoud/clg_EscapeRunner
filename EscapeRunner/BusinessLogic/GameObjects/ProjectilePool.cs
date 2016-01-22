@@ -10,7 +10,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
     /// </summary>
     public class ProjectilePool
     {
-        public static int NumberOfProjectiles = 10;
+        public static int numberOfProjectiles = 10;
 
         private static ProjectilePool instance;
         private static List<IWeapon> projectiles;
@@ -19,23 +19,29 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private int chHeight = PlayerAnimation.PlayerSize.Height, chWidth = PlayerAnimation.PlayerSize.Width;
         public static ProjectilePool Instance { get { return instance == null ? instance = new ProjectilePool() : instance; } }
 
+        public static IndexPair superWeaponIndexes;
+        public static IndexPair weaponIndexes;
+
         static ProjectilePool()
         {
-            projectiles = new List<IWeapon>(10);
+            projectiles = new List<IWeapon>(numberOfProjectiles);
 
             // Create normal weapon spawns
-            for (int i = 0; i < NumberOfProjectiles - 3; i++)
+            for (int i = 0; i < numberOfProjectiles - 3; i++)
             {
                 projectiles.Add(new ProjectileClassAlpha(i));
                 projectiles[i].Used = false;
             }
+            weaponIndexes = new IndexPair(0, numberOfProjectiles - 3);
 
             // Create super weapon spawns
-            for (int i = NumberOfProjectiles - 3; i < NumberOfProjectiles - 1; i++)
+            for (int i = numberOfProjectiles - 3; i < numberOfProjectiles - 1; i++)
             {
                 projectiles.Add(new ProjectileClassBeta(i));
                 projectiles[i].Used = false;
             }
+            superWeaponIndexes = new IndexPair(numberOfProjectiles - 3, numberOfProjectiles - 1);
+
         }
 
         // The singleton
@@ -43,38 +49,12 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         public IWeapon Acquire(Point position, bool isSuperWeapon)
         {
-            if (isSuperWeapon)
-            {
-                for (int i = NumberOfProjectiles - 3; i < NumberOfProjectiles - 1; i++)
-                {
-                    if (!projectiles[i].Used)
-                    {
-                        position = SetExplosionPlace(Player.Direction, position);
-                        projectiles[i].ExplosionPosition = position;
-                        projectiles[i].BulletStartPosition = position;
+            var returnedIWeapon = CheckBulletAvailablility(position, isSuperWeapon);
 
-                        projectiles[i].Used = true;
-                        return projectiles[i];
-                    }
-                }
-                throw new InvalidOperationException("All super weapon objects are currently in use");
-            }
-            else
-            {
-                for (int i = 0; i < NumberOfProjectiles - 3; i++)
-                {
-                    if (!projectiles[i].Used)
-                    {
-                        position = SetExplosionPlace(Player.Direction, position);
-                        projectiles[i].ExplosionPosition = position;
-                        projectiles[i].BulletStartPosition = position;
+            if (returnedIWeapon != null)
+                return returnedIWeapon;
 
-                        projectiles[i].Used = true;
-                        return projectiles[i];
-                    }
-                }
-                throw new InvalidOperationException("All normal weapons are currently in use");
-            }
+            throw new InvalidOperationException($"All weapon objects are currently in use");
         }
 
         /// <summary>
@@ -85,6 +65,8 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         /// <returns>The actual explosion position</returns>
         private Point SetExplosionPlace(Directions direction, Point position)
         {
+
+            // TODO fix for isometric view
             switch (direction)
             {
                 case Directions.Up:
@@ -110,6 +92,30 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             }
 
             return position;
+        }
+
+        private IWeapon CheckBulletAvailablility(Point position, bool isSuperWeapon)
+        {
+            IndexPair loopCounterRange;
+            // Use the index pair as a start and end point to search inside the object pool
+            if (isSuperWeapon)
+                loopCounterRange = superWeaponIndexes;
+            else
+                loopCounterRange = weaponIndexes;
+
+            for (int i = loopCounterRange.I; i < loopCounterRange.J; i++)
+            {
+                if (!projectiles[i].Used)
+                {
+                    position = SetExplosionPlace(Player.Direction, position);
+                    projectiles[i].ExplosionPosition = position;
+                    projectiles[i].BulletStartPosition = position;
+
+                    projectiles[i].Used = true;
+                    return projectiles[i];
+                }
+            }
+            return null;
         }
     }
 }
