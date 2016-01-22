@@ -48,6 +48,7 @@ namespace LevelBuilder.Controller
                 throw new InvalidCastException();
             }
         }
+
         [Serializable()]
         public class Wrapper
         {
@@ -71,6 +72,7 @@ namespace LevelBuilder.Controller
             }
 
         }
+
         private int[,] map;
         private int map_height;
         private string map_name;
@@ -389,68 +391,78 @@ namespace LevelBuilder.Controller
 
         public void saveCSharp(string fileName)
         {
-            //StringWriter code = new StringWriter();
+            StringWriter code = new StringWriter();
 
-            //code.Write("int[] playerPosition = ");
-            //code.Write("{ ");
-            //code.Write(player.StartPoint.X);
-            //code.Write(", ");
-            //code.Write(player.StartPoint.Y);
-            //code.Write(", ");
-            //code.Write(player.EndPoint.X);
-            //code.Write(", ");
-            //code.Write(player.EndPoint.Y);
-            //code.Write("};\r\n\r\n");
+            // print player location
+            code.Write("int[] playerPosition = {");
+            code.Write(player.StartPoint.X + ", ");
+            code.Write(player.StartPoint.Y + "};\r\n\r\n");
+            
+            // print monsters locations
+            code.Write("int monstersCount = " + monsters.Count + ";\r\n\r\n");
+            
+            code.Write("int [,] monsters = {\r\n");
 
-            //code.Write("int cols = ");
-            //code.Write(map_width);
-            //code.Write(";\r\n");
-            //code.Write("int rows = ");
-            //code.Write(map_height);
-            //code.Write(";\r\n\r\n");
+            for (int i = 0; i < monsters.Count; i++)
+            {
+                code.Write("\t{ ");
+                code.Write(monsters[i].StartPoint.X + ", " + monsters[i].StartPoint.Y + ", ");
+                code.Write(monsters[i].EndPoint.X + ", " + monsters[i].EndPoint.Y + "}");
 
-            //code.Write("int [,] ");
-            //code.Write(map_name);
-            //code.Write(" = {\r\n");
+                if ((i + 1) != monsters.Count)
+                    code.Write(", ");
 
-            //// Serialize map[x,y] to binary format and save it
+                code.Write("\r\n");
+            }
 
-            //for (int h = 0; h < map_height; h++)
-            //{
-            //    code.Write("\t{ ");
-            //    for (int w = 0; w < map_width; w++)
-            //    {
-            //        code.Write(map[w, h]);
+            code.Write("};\r\n\r\n");
+            
 
-            //        if ((w + 1) != map_width)
-            //            code.Write(", ");
+            // print rows & columns
+            code.Write("int cols = " + map_width + ";\r\n");
+            code.Write("int rows = " + map_height + ";\r\n\r\n");
+            
+            // print map[x,y]
+            code.Write("int [,] " + map_name + " = {\r\n");
+            
+            for (int h = 0; h < map_height; h++)
+            {
+                code.Write("\t{ ");
+                for (int w = 0; w < map_width; w++)
+                {
+                    code.Write(map[w, h]);
 
-            //    }
-            //    code.Write("}");
+                    if ((w + 1) != map_width)
+                        code.Write(", ");
 
-            //    if ((h + 1) != map_height)
-            //        code.Write(", ");
+                }
+                code.Write("}");
 
-            //    code.Write("\r\n");
-            //}
+                if ((h + 1) != map_height)
+                    code.Write(", ");
 
-            //code.Write("};\r\n");
+                code.Write("\r\n");
+            }
 
-            //fileName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName) + ".game";
+            code.Write("};\r\n");
 
-            //StreamWriter stream = new StreamWriter(fileName);
-            //stream.WriteLine(code.ToString());
+            fileName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName) + ".game";
 
-            //stream.Close();
+            StreamWriter stream = new StreamWriter(fileName);
+            stream.WriteLine(code.ToString());
+
+            stream.Close();
 
             // Fix variables
 
-            string path = Path.GetDirectoryName(
+            /*string path = Path.GetDirectoryName(
                             Path.GetDirectoryName(
                                 Directory.GetCurrentDirectory())) + "\\";
             path = Path.Combine(path, Path.Combine("Res", "Levels"))+ "level.game";
 
-            FileStream wS = new FileStream(path, FileMode.Create);
+            fileName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName) + ".game";
+
+            FileStream wS = new FileStream(fileName, FileMode.Create);
             //// Y -> I , X -> J
             Wrapper wrapper = new Wrapper(map, new IndexPair(player.StartPoint.Y, player.StartPoint.X));
             try
@@ -468,7 +480,7 @@ namespace LevelBuilder.Controller
             BinaryFormatter binaryFormatter = new BinaryFormatter();
             binaryFormatter.Serialize(wS, wrapper);
 
-            wS.Close();
+            wS.Close();*/
 
         }
 

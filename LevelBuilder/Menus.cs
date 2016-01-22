@@ -85,8 +85,7 @@ namespace LevelBuilder
                     tbCode,
                     player, monsters);
                 codesGenerator.saveCSharp(current_working_filename);
-                //_my_map.SaveMap(_current_working_filename);
-
+                
                 Cursor.Current = Cursors.Default;
             }
             catch (Exception ex)
@@ -590,9 +589,8 @@ namespace LevelBuilder
             if (playerCount == 0)
             {
                 playerCount++;
-                MessageBox.Show("Please Select Player Start & End Positions:", "Player Positions", MessageBoxButtons.OK);
+                MessageBox.Show("Please Select Player Start Position:", "Player Position", MessageBoxButtons.OK);
                 choosingPlayer = true;
-                player.Start = true;
                 return;
             }
             else

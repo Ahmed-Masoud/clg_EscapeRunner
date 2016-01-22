@@ -1,4 +1,11 @@
-int[] playerPosition = { 1, 2, 3, 4};
+int[] playerPosition = {16, 8};
+
+int monstersCount = 2;
+
+int [,] monsters = {
+	{ 1, 17, 7, 15}, 
+	{ 14, 5, 16, 9}
+};
 
 int cols = 18;
 int rows = 20;
