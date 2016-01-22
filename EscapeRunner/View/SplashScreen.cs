@@ -166,7 +166,7 @@ namespace EscapeRunner.View
             int rows = -1;
             int cols = -1;
             int[][] level;
-            Point[] playerPositions;
+            Point playerPosition;
             int monstersCount = -1;
             EscapeRunner.View.SplashScreen.Monster[] monsters;
 
@@ -179,9 +179,7 @@ namespace EscapeRunner.View
             {
                 int[] points = Array.ConvertAll(line.Substring(24, (line.Length - 26)).Split(','), s => int.Parse(s));
 
-                playerPositions = new Point[2];
-                playerPositions[0] = new Point(points[0], points[1]);
-                playerPositions[1] = new Point(points[2], points[3]);
+                playerPosition = new Point(points[0], points[1]);
             }
             line = reader.ReadLine();
 
