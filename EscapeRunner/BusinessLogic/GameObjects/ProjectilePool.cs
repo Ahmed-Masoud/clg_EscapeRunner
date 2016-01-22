@@ -17,6 +17,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         private readonly int verticalOffset = 35;
         private int chHeight = PlayerAnimation.PlayerSize.Height, chWidth = PlayerAnimation.PlayerSize.Width;
+        public static ProjectilePool Instance { get { return instance == null ? instance = new ProjectilePool() : instance; } }
 
         static ProjectilePool()
         {
@@ -38,7 +39,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         }
 
         // The singleton
-        public static ProjectilePool Instance { get { return instance == null ? instance = new ProjectilePool() : instance; } }
+
 
         public IWeapon Acquire(Point position, bool isSuperWeapon)
         {

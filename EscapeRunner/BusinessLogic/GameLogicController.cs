@@ -37,15 +37,15 @@ namespace EscapeRunner.BusinessLogic
             backgroundIllusionTimer.Interval = 100;
             backgroundIllusionTimer.Elapsed += BackgroundIllusionTimer_Elapsed;
             backgroundIllusionTimer.Enabled = true;
-#if !DEBUG
 
+#if !DEBUG
             drawGraphics += MapLoader.DrawGameFlares;
+#endif
             drawGraphics += MapLoader.DrawLevelFloor;
             drawGraphics += MapLoader.DrawLevelObstacles;
             drawGraphics += player.UpdateGraphics;
             drawGraphics += UpdateTiles;
             drawGraphics += DrawShots;
-#endif
 
         }
 

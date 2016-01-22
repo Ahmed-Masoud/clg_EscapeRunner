@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EscapeRunners", "EscapeRunn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelBuilder", "LevelBuilder\LevelBuilder.csproj", "{6744D865-5BBD-4E59-BD0D-9196190ADA05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsoleApplication", "TestConsoleApplication\TestConsoleApplication.csproj", "{5DF9D5B8-11E1-493F-BF46-4C580F9F7BA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6744D865-5BBD-4E59-BD0D-9196190ADA05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6744D865-5BBD-4E59-BD0D-9196190ADA05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6744D865-5BBD-4E59-BD0D-9196190ADA05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DF9D5B8-11E1-493F-BF46-4C580F9F7BA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DF9D5B8-11E1-493F-BF46-4C580F9F7BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DF9D5B8-11E1-493F-BF46-4C580F9F7BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DF9D5B8-11E1-493F-BF46-4C580F9F7BA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

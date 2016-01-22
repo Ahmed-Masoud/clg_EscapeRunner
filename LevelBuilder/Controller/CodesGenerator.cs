@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters.Binary;
 
 //using System.Linq;
 //using System.Threading.Tasks;
@@ -9,6 +10,67 @@ namespace LevelBuilder.Controller
 {
     public class CodesGenerator
     {
+        [Serializable()]
+        public struct IndexPair
+        {
+            int j, i;
+
+            public int J { get { return j; } set { j = value; } }
+            public int I { get { return i; } set { i = value; } }
+            public IndexPair(int i, int j)
+            {
+                this.j = j;
+                this.i = i;
+            }
+            public static bool operator ==(IndexPair p1, IndexPair p2)
+            {
+                if (p1.i == p2.i && p1.j == p2.j)
+                    return true;
+                return false;
+            }
+            public static bool operator !=(IndexPair p1, IndexPair p2)
+            {
+                if (p1.i != p2.i || p1.j != p2.j)
+                    return true;
+                return false;
+            }
+            public override bool Equals(object obj)
+            {
+                if (obj is IndexPair)
+                {
+                    IndexPair p = (IndexPair)obj;
+
+                    if (this.i == p.i && this.j == p.j)
+                        return true;
+                    else
+                        return false;
+                }
+                throw new InvalidCastException();
+            }
+        }
+        [Serializable()]
+        public class Wrapper
+        {
+            const int walkableArrayTileNumber = 0;
+            int[,] level;
+            List<IndexPair> MonsterLocations;
+            public Wrapper() { }
+
+            public Wrapper(int[,] level, IndexPair playerLocation)
+            {
+                this.level = level;
+                MonsterLocations = new List<IndexPair>();
+            }
+
+            public void AddMonster(IndexPair location)
+            {
+                if (level[location.I, location.J] == walkableArrayTileNumber)
+                    MonsterLocations.Add(location);
+                else
+                    throw new InvalidOperationException("Tile isn't walkable");
+            }
+
+        }
         private int[,] map;
         private int map_height;
         private string map_name;
@@ -297,7 +359,7 @@ namespace LevelBuilder.Controller
             code.Write("int [,] ");
             code.Write(map_name);
             code.Write(" = {\r\n");
-            
+
             // Serialize map[x,y] to binary format and save it
 
             for (int h = 0; h < map_height; h++)
@@ -306,80 +368,107 @@ namespace LevelBuilder.Controller
                 for (int w = 0; w < map_width; w++)
                 {
                     code.Write(map[w, h]);
-                    
+
                     if ((w + 1) != map_width)
                         code.Write(", ");
-                        
+
                 }
                 code.Write("}");
-                
+
                 if ((h + 1) != map_height)
                     code.Write(", ");
-                    
+
                 code.Write("\r\n");
             }
 
             code.Write("};\r\n");
-            
+
             tbCode.Text = code.ToString();
 
         }
 
         public void saveCSharp(string fileName)
         {
-            StringWriter code = new StringWriter();
+            //StringWriter code = new StringWriter();
 
-            code.Write("int[] playerPosition = ");
-            code.Write("{ ");
-            code.Write(player.StartPoint.X);
-            code.Write(", ");
-            code.Write(player.StartPoint.Y);
-            code.Write(", ");
-            code.Write(player.EndPoint.X);
-            code.Write(", ");
-            code.Write(player.EndPoint.Y);
-            code.Write("};\r\n\r\n");
+            //code.Write("int[] playerPosition = ");
+            //code.Write("{ ");
+            //code.Write(player.StartPoint.X);
+            //code.Write(", ");
+            //code.Write(player.StartPoint.Y);
+            //code.Write(", ");
+            //code.Write(player.EndPoint.X);
+            //code.Write(", ");
+            //code.Write(player.EndPoint.Y);
+            //code.Write("};\r\n\r\n");
 
-            code.Write("int cols = ");
-            code.Write(map_width);
-            code.Write(";\r\n");
-            code.Write("int rows = ");
-            code.Write(map_height);
-            code.Write(";\r\n\r\n");
+            //code.Write("int cols = ");
+            //code.Write(map_width);
+            //code.Write(";\r\n");
+            //code.Write("int rows = ");
+            //code.Write(map_height);
+            //code.Write(";\r\n\r\n");
 
-            code.Write("int [,] ");
-            code.Write(map_name);
-            code.Write(" = {\r\n");
+            //code.Write("int [,] ");
+            //code.Write(map_name);
+            //code.Write(" = {\r\n");
 
-            // Serialize map[x,y] to binary format and save it
+            //// Serialize map[x,y] to binary format and save it
 
-            for (int h = 0; h < map_height; h++)
+            //for (int h = 0; h < map_height; h++)
+            //{
+            //    code.Write("\t{ ");
+            //    for (int w = 0; w < map_width; w++)
+            //    {
+            //        code.Write(map[w, h]);
+
+            //        if ((w + 1) != map_width)
+            //            code.Write(", ");
+
+            //    }
+            //    code.Write("}");
+
+            //    if ((h + 1) != map_height)
+            //        code.Write(", ");
+
+            //    code.Write("\r\n");
+            //}
+
+            //code.Write("};\r\n");
+
+            //fileName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName) + ".game";
+
+            //StreamWriter stream = new StreamWriter(fileName);
+            //stream.WriteLine(code.ToString());
+
+            //stream.Close();
+
+            // Fix variables
+
+            string path = Path.GetDirectoryName(
+                            Path.GetDirectoryName(
+                                Directory.GetCurrentDirectory())) + "\\";
+            path = Path.Combine(path, Path.Combine("Res", "Levels"))+ "level.game";
+
+            FileStream wS = new FileStream(path, FileMode.Create);
+            //// Y -> I , X -> J
+            Wrapper wrapper = new Wrapper(map, new IndexPair(player.StartPoint.Y, player.StartPoint.X));
+            try
             {
-                code.Write("\t{ ");
-                for (int w = 0; w < map_width; w++)
-                {
-                    code.Write(map[w, h]);
-
-                    if ((w + 1) != map_width)
-                        code.Write(", ");
-
-                }
-                code.Write("}");
-
-                if ((h + 1) != map_height)
-                    code.Write(", ");
-
-                code.Write("\r\n");
+                // Add all monster locations
+                // foreach(var item in monsterLocations)
+                //  wrapper.AddMonster(new IndexPair(5, 7));
+            }
+            catch (InvalidOperationException)
+            {
+                // Monster location is invalid
             }
 
-            code.Write("};\r\n");
+            //BinaryWriter d = new BinaryWriter(s);
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            binaryFormatter.Serialize(wS, wrapper);
 
-            fileName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName) + ".game";
-            
-            StreamWriter stream = new StreamWriter(fileName);
-            stream.WriteLine(code.ToString());
-
-            stream.Close();
+            wS.Close();
 
         }
 

@@ -1,6 +1,7 @@
 ﻿using EscapeRunner.BusinessLogic;
 using System;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace EscapeRunner
 {
@@ -35,6 +36,7 @@ namespace EscapeRunner
         public static int RightBound { get; private set; }
 
         public static int UpperBound { get; } = 0;
+        public Image PaintController { get; private set; }
 
         /// <summary>
         /// This method fires the notify event
@@ -84,6 +86,8 @@ namespace EscapeRunner
             RightBound = this.Width;
 
             // Resources are initialized, start ticking
+
+
             refreshTimer.Enabled = true;
         }
 
@@ -97,6 +101,11 @@ namespace EscapeRunner
             await Model.InitializeModelAsync();
             //this.BackgroundImage = await Controller.DrawBackgroundImage();
             Controller.InitializeController();
+
+#if DEBUG
+            this.BackgroundImage = await Controller.DrawBackgroundImage();
+#endif
+
             if (!this.Focused)
                 this.Focus();
             loaded = true;

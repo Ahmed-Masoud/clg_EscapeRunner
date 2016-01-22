@@ -119,7 +119,7 @@ namespace EscapeRunner.View
             {
                 this.BackgroundImage = Image.FromFile(imagePath);
                 player = new System.Media.SoundPlayer(soundPath);
-                
+
             }
             else
                 throw new FileNotFoundException();
@@ -132,83 +132,95 @@ namespace EscapeRunner.View
 
         private void loadFromFile()
         {
+            string path = Path.GetDirectoryName(
+                            Path.GetDirectoryName(
+                                Directory.GetCurrentDirectory())) + "\\";
+            path = Path.Combine(path, Path.Combine("Res", "Levels"));
+            string[] levelFiles = Directory.GetFiles(path, "*.game");
+
+            //Don't open file dialog every time the application is launched
+            if (levelFiles.Length == 1)
+            {
+                // A single level exists, load it
+                ReadLevelFile(levelFiles[0]);
+            }
+            else
+            {
+                OpenFileDialog openLevelDialog = new OpenFileDialog();
+                openLevelDialog.Title = "Open Level";
+                openLevelDialog.Filter = "GAME Files (*.game) | *.game";
+                openLevelDialog.DefaultExt = "game";
+                openLevelDialog.InitialDirectory = path;
+
+                DialogResult openGame = openLevelDialog.ShowDialog();
+                if (openGame == DialogResult.OK)
+                {
+                    string fileName = openLevelDialog.FileName;
+                    ReadLevelFile(fileName);
+                }
+            }
+        }
+
+        private void ReadLevelFile(string folderPath)
+        {
             int rows = -1;
             int cols = -1;
             int[][] level;
             Point playerStart;
             Point playerEnd;
 
-            string path = Path.GetDirectoryName(
-                            Path.GetDirectoryName(
-                                Directory.GetCurrentDirectory())) + "\\";
-            path = Path.Combine(path, Path.Combine("Res", "Levels"));
+            StreamReader reader = new StreamReader(folderPath);
 
-            OpenFileDialog openLevelDialog = new OpenFileDialog();
-            openLevelDialog.Title = "Open Level";
-            openLevelDialog.Filter = "GAME Files (*.game) | *.game";
-            openLevelDialog.DefaultExt = "game";
-            openLevelDialog.InitialDirectory = path;
+            // read player position
+            string line = reader.ReadLine();
 
-            DialogResult openGame = openLevelDialog.ShowDialog();
-
-            if (openGame == DialogResult.OK)
+            if (line != null)
             {
-                string fileName = openLevelDialog.FileName;
-                StreamReader reader = new StreamReader(fileName);
+                int[] points = Array.ConvertAll(line.Substring(24, (line.Length - 26)).Split(','), s => int.Parse(s));
 
-                // read player position
-                string line = reader.ReadLine();
+                playerStart = new Point(points[0], points[1]);
+                playerEnd = new Point(points[2], points[3]);
+            }
+            line = reader.ReadLine();
 
-                if (line != null)
-                {
-                    int[] points = Array.ConvertAll(line.Substring(24, (line.Length - 26)).Split(','), s => int.Parse(s));
+            // read map dimensions
+            line = reader.ReadLine();
 
-                    playerStart = new Point(points[0], points[1]);
-                    playerEnd = new Point(points[2], points[3]);
-                }
+            if (line != null)
+            {
+                cols = Convert.ToInt32(line.Substring(10, (line.Length - 11)));
+            }
+
+            line = reader.ReadLine();
+
+            if (line != null)
+            {
+                string bibo = line.Substring(10, (line.Length - 11));
+                rows = Convert.ToInt32(bibo);
+            }
+
+            if (rows > 0 && cols > 0)
+            {
                 line = reader.ReadLine();
-                
-                // read map dimensions
                 line = reader.ReadLine();
 
-                if (line != null)
+                level = new int[rows][];
+                int counter = 0;
+
+                while ((line = reader.ReadLine()) != null)
                 {
-                    cols = Convert.ToInt32(line.Substring(10, (line.Length - 11)));
-                }
-
-                line = reader.ReadLine();
-
-                if (line != null)
-                {
-                    string bibo = line.Substring(10, (line.Length - 11));
-                    rows = Convert.ToInt32(bibo);
-                }
-
-                if (rows > 0 && cols > 0)
-                {
-                    line = reader.ReadLine();
-                    line = reader.ReadLine();
-
-                    level = new int[rows][];
-                    int counter = 0;
-
-                    while ((line = reader.ReadLine()) != null)
+                    if (counter < rows)
                     {
-                        if (counter < rows)
-                        {
-                            line = line.Substring(2, (line.Length - 3));
+                        line = line.Substring(2, (line.Length - 3));
 
-                            if (counter != (rows - 1))
-                                line = line.Substring(0, (line.Length - 2));
+                        if (counter != (rows - 1))
+                            line = line.Substring(0, (line.Length - 2));
 
-                            level[counter++] = Array.ConvertAll(line.Split(','), s => int.Parse(s));
-                        }
+                        level[counter++] = Array.ConvertAll(line.Split(','), s => int.Parse(s));
                     }
-
                 }
 
             }
-
         }
     }
 }

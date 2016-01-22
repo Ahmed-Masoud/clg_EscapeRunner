@@ -17,12 +17,9 @@ namespace EscapeRunner.BusinessLogic
         public static void WindowRefresh(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             Graphics g = e.Graphics;
+            drawGraphics(e.Graphics);
 #if !DEBUG
             DrawMovingBackground(g);
-            drawGraphics(e.Graphics);
-#else
-            MapLoader.DrawLevelObstacle(g);
-            player.UpdateGraphics(g);
 #endif
 
         }
