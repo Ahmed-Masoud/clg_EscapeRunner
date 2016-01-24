@@ -5,11 +5,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 {
     internal class ProjectileClassBeta : IWeapon, IDrawable
     {
-        internal ProjectileClassBeta(int index)
-        {
-            //ExplosionPosition = Point.Empty;
-            Index = index;
-        }
 
         public Point BulletStartPosition
         {
@@ -35,12 +30,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
                 // TODO add the bullet animation position to value
                 ExplosionPosition = value;
             }
-        }
-
-        public int Index
-        {
-            get { return Index; }
-            set { }
         }
 
         public bool Used { get; set; }

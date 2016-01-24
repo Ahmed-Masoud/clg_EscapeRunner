@@ -1,5 +1,6 @@
 ﻿using EscapeRunner.Animations;
 using System.Drawing;
+using System;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
@@ -25,14 +26,21 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private int paintedFrames = 0;
         private bool used;
 
-        internal ProjectileClassAlpha(int index)
+        internal ProjectileClassAlpha()
         {
             // Used for lazy initialization in the bullet pool
             explosionAni = (ExplosionAnimation)((IPrototype<Animation>)prototypeExplosion).Clone();
             bulletAni = (BulletAnimation)((IPrototype<Animation>)prototypeBullet).Clone();
             explosionAni.AnimationPosition = Point.Empty;
             bulletAni.AnimationPosition = Point.Empty;
-            Index = index;
+        }
+
+        private void BulletCollider_Collided(CollisionEventArgs e)
+        {
+            // Check the colliding object, and do the bullet's reactions
+            //if (e.CollidingObject is Monster)
+            //  System.Diagnostics.Debug.WriteLine("Collided with a monster");
+            System.Diagnostics.Debug.WriteLine("Collision detected from bullet to " + e.CollidingObject.GetType().ToString());
         }
 
         public Point BulletStartPosition
@@ -46,8 +54,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             set { explosionPosition = explosionAni.AnimationPosition = value; }
             get { return explosionPosition; }
         }
-
-        public int Index { get; set; }
 
         public bool Used
         {

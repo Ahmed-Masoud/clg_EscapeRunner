@@ -9,7 +9,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
     {
         Point BulletStartPosition { get; set; }
         Point ExplosionPosition { get; set; }
-        int Index { get; set; }
         bool Used { get; set; }
 
         void Reset();

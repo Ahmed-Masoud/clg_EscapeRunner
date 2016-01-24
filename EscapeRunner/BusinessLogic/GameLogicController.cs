@@ -46,7 +46,6 @@ namespace EscapeRunner.BusinessLogic
             drawGraphics += player.UpdateGraphics;
             drawGraphics += UpdateTiles;
             drawGraphics += DrawShots;
-
         }
 
         private static void BackgroundIllusionTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -93,7 +92,6 @@ namespace EscapeRunner.BusinessLogic
                 case Notifing.Up:
                     player.StartMoving(Directions.Up);
                     break;
-
                 default:
                     break;
             }

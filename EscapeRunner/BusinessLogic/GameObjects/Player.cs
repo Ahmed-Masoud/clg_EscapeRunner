@@ -5,17 +5,17 @@ using System.Drawing;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
-    public sealed class Player : IDrawable, ICollide
+    public sealed class Player : IDrawable
     {
         private static PlayerAnimation playerAnimation;
         private static Player playerInstance;
         private static IndexPair playerCoordinates;
-        private short stepHorizontalCounter = 0;
-        private short stepVerticalCounter = 0;
-        int dx = 2;
-        int dy = 2;
-        int modTwoCounter = 1;
-        private Collider collider;
+        AnimationFactory factory;
+        //private short stepHorizontalCounter = 0;
+        //private short stepVerticalCounter = 0;
+        //int dx = 2;
+        //int dy = 2;
+        //private Collider collider;
         public static Directions Direction { get; set; }
 
         public static Player PlayerInstance
@@ -24,35 +24,17 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             private set { playerInstance = value; }
         }
 
+        /// <summary>
+        /// 2D point of the player position
+        /// </summary>
         public static Point Position { get { return playerAnimation.AnimationPosition; } }
         public static IndexPair PlayerCoordiantes { set { playerCoordinates = value; } get { return playerCoordinates; } }
-
-        public IndexPair LocationIndexes
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        Collider ICollide.collider
-        {
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
 
         private Player()
         {
             playerCoordinates = MapLoader.WalkableTiles[0].TileIndecies;
-            AnimationFactory factory = new AnimationFactory();
-            playerAnimation = (PlayerAnimation)factory.GetAnimationCommandResult(AnimationType.PlayerAnimation);
+            factory = new AnimationFactory();
+            playerAnimation = (PlayerAnimation)factory.CreateAnimation(AnimationType.PlayerAnimation);
 
             // Initialize the player location to the top of the screen
             playerAnimation.AnimationPosition = playerCoordinates.IndexesToCorrdinates();
@@ -68,11 +50,9 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         public void StartMoving(Directions direction)
         {
             // %2 to eliminate the double key press
-            if (modTwoCounter++ % 2 == 0)
-            {
-                Move(direction);
-                modTwoCounter = 1;
-            }
+
+            Move(direction);
+
         }
 
         /// <summary>
@@ -103,14 +83,26 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             }
 
             // Wall detection
-            if (MapLoader.IsWalkable(temp))
+            if (MapLoader.IsWalkable(temp) || MapLoader.Level[temp.I, temp.J] == 6)
             {
                 playerCoordinates = temp;
                 playerAnimation.AnimationPosition = temp.IndexesToCorrdinates();
                 Direction = direction;
+                if (MapLoader.Level[temp.I, temp.J] == 6)
+                {
+                    playerCoordinates = temp;
+                    playerAnimation.AnimationPosition = temp.IndexesToCorrdinates();
+                    Direction = direction;
+                    
+                    System.Threading.Tasks.Task.Run(() =>
+                    {
+                        System.Threading.Thread.Sleep(100);
+                        Program.MainWindow.RefreshTimer.Enabled = false;
+                        System.Windows.Forms.MessageBox.Show("Game Over");
+                    });
+                }
             }
         }
-
         public void UpdateGraphics(Graphics g)
         {
             playerAnimation.Draw(g, Direction);

@@ -1,10 +1,12 @@
-﻿using EscapeRunner.BusinessLogic.GameObjects;
+﻿using EscapeRunner.BusinessLogic;
+using EscapeRunner.BusinessLogic.GameObjects;
 using System.Collections.Generic;
 using System.Drawing;
+using System;
 
 namespace EscapeRunner.Animations
 {
-    internal sealed class BulletAnimation : Animation, IPrototype<Animation>
+    internal sealed class BulletAnimation : Animation, ICollide, IPrototype<Animation>
     {
         // List is marked static to avoid loading the resources from the hard disk each time an
         // explosion occurs
@@ -13,9 +15,17 @@ namespace EscapeRunner.Animations
         private Directions bulletDirection;
         private new int imageIndex;
         private bool needDirection = true;
+        private Collider collider;
 
         // Horizontal displacement is bigger because the screen is always horizontally bigger
         private int verticalDisplacement = 9, horizontalDisplacement = 18;
+
+
+        public Collider Collider
+        {
+            get { return collider; }
+            set { collider = value; }
+        }
 
         public BulletAnimation()
         {
@@ -28,8 +38,10 @@ namespace EscapeRunner.Animations
             animationWidth = 30;
         }
 
+
         public int ImageCount { get; private set; }
         public bool Locked { get; set; }
+        public IndexPair ColliderLocationIndexes { get { return collider.LocationIndexes; } set { collider.LocationIndexes = value; } }
 
         public bool BulletReachedEnd()
         {
@@ -55,7 +67,6 @@ namespace EscapeRunner.Animations
             {
                 DrawFrame(g, bulletImages[imageIndex]);
             }
-
             LoadNextAnimationImage();
         }
 

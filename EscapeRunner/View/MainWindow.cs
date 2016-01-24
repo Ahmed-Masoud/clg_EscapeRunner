@@ -8,6 +8,7 @@ namespace EscapeRunner
     public partial class MainWindow : Form
     {
         private Timer refreshTimer = new Timer();
+        public Timer RefreshTimer { get { return refreshTimer; } }
         private bool loaded = false;
 
         public MainWindow()
@@ -66,7 +67,7 @@ namespace EscapeRunner
                 if (this.FormBorderStyle == FormBorderStyle.None)
                 {
                     this.FormBorderStyle = FormBorderStyle.Sizable;
-                    this.WindowState = FormWindowState.Normal;
+                    this.WindowState = FormWindowState.Maximized;
                 }
         }
 
@@ -100,7 +101,7 @@ namespace EscapeRunner
         {
             await Model.InitializeModelAsync();
             //this.BackgroundImage = await Controller.DrawBackgroundImage();
-            Controller.InitializeController();
+            //Controller.InitializeController();
 
 #if DEBUG
             this.BackgroundImage = await Controller.DrawBackgroundImage();

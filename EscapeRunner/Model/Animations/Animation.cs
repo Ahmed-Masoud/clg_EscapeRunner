@@ -33,6 +33,9 @@ namespace EscapeRunner.Animations
         public Rectangle ObjectBounds { get { return objectBounds; } }
 
         // Trigger an event to alert the bullet that it has been relocated, and set its lock state
+        /// <summary>
+        /// 2D point of the player position
+        /// </summary>
         public Point AnimationPosition { get; set; } = Point.Empty;
         public IndexPair AnimationTileIndex { get; set; } = new IndexPair();
 

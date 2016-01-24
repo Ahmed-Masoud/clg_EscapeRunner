@@ -29,7 +29,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             // Create normal weapon spawns
             for (int i = 0; i < numberOfProjectiles - 3; i++)
             {
-                projectiles.Add(new ProjectileClassAlpha(i));
+                projectiles.Add(new ProjectileClassAlpha());
                 projectiles[i].Used = false;
             }
             weaponIndexes = new IndexPair(0, numberOfProjectiles - 3);
@@ -37,7 +37,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             // Create super weapon spawns
             for (int i = numberOfProjectiles - 3; i < numberOfProjectiles - 1; i++)
             {
-                projectiles.Add(new ProjectileClassBeta(i));
+                projectiles.Add(new ProjectileClassBeta());
                 projectiles[i].Used = false;
             }
             superWeaponIndexes = new IndexPair(numberOfProjectiles - 3, numberOfProjectiles - 1);

@@ -1,15 +1,40 @@
-﻿using System.Collections.Generic;
+﻿using EscapeRunner.BusinessLogic;
+using System.Collections.Generic;
 using System.Drawing;
+using System;
 
 namespace EscapeRunner.Animations
 {
-    public sealed class MonsterAnimation : Animation
+    public sealed class MonsterAnimation : Animation, ICollide
     {
         private static List<Bitmap> animationImages;
+        private IndexPair colliderLocation;
+
+        private Collider collider;
+
+        public Collider Collider
+        {
+            get { return collider; }
+            set { collider = value; }
+        }
+
+        public IndexPair ColliderLocationIndexes
+        {
+            get
+            {
+                return colliderLocation;
+            }
+
+            set
+            {
+                colliderLocation = value;
+            }
+        }
 
         public MonsterAnimation()
         {
             imageIndex = 0;
+
             if (animationImages == null)
             {
                 animationImages = Model.MonsterAnimation;
@@ -18,8 +43,6 @@ namespace EscapeRunner.Animations
             animationWidth = 64;
             objectBounds = new Rectangle(AnimationPosition, new Size(animationWidth, animationHeight));
         }
-
-        public static Size MonsterSize { get; private set; }
 
         public void Draw(Graphics g, Directions direction)
         {

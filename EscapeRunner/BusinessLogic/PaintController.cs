@@ -16,6 +16,7 @@ namespace EscapeRunner.BusinessLogic
 
         public static void WindowRefresh(object sender, System.Windows.Forms.PaintEventArgs e)
         {
+            
             Graphics g = e.Graphics;
             drawGraphics(e.Graphics);
 #if !DEBUG

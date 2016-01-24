@@ -11,8 +11,9 @@ namespace EscapeRunner.BusinessLogic
     {
         private static Dictionary<ICollide, IndexPair> collidables = new Dictionary<ICollide, IndexPair>(8);
         ICollide parentObject;
-        private delegate void Colliding(CollisionEventArgs e);
-        event Colliding Collided;
+        public delegate void Colliding(CollisionEventArgs e);
+
+        public event Colliding Collided;
         IndexPair locationIndexes;
         public IndexPair LocationIndexes
         {
@@ -33,13 +34,14 @@ namespace EscapeRunner.BusinessLogic
         {
             // Set the start location of the collider
             parentObject = obj;
-            collidables.Add(obj, obj.LocationIndexes);
+            collidables.Add(obj, obj.ColliderLocationIndexes);
+            this.locationIndexes = obj.ColliderLocationIndexes;
         }
 
         private ICollide CheckCollision()
         {
             // If I'm not colliding with myself or an object of my same type, return that object
-            return collidables.Where(p => p.Value == this.parentObject.LocationIndexes && p.Key.GetType() != this.parentObject.GetType()).First().Key;
+            return collidables.Where(p => p.Value == this.parentObject.ColliderLocationIndexes && p.Key.GetType() != this.parentObject.GetType()).First().Key;
         }
     }
 }

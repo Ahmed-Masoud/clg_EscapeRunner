@@ -1,4 +1,6 @@
-﻿namespace EscapeRunner.Animations
+﻿using EscapeRunner.BusinessLogic;
+
+namespace EscapeRunner.Animations
 {
     public enum AnimationType
     {
@@ -13,28 +15,34 @@
     /// </summary>
     public class AnimationFactory
     {
-
-        public Animation GetAnimationCommandResult(AnimationType animationName)
+        Animation temp;
+        public Animation CreateAnimation(AnimationType animationName, IndexPair startLocation)
         {
             switch (animationName)
             {
                 case AnimationType.PlayerAnimation:
-                    return new PlayerAnimation();
-
+                    temp = new PlayerAnimation();
+                    break;
                 case AnimationType.MonsterAnimation:
-                    return new MonsterAnimation(); // new MonsterAnimation();
-
+                    temp = new MonsterAnimation(); // new MonsterAnimation();
+                    ((MonsterAnimation)temp).Collider = new Collider(((MonsterAnimation)temp));
+                    break;
                 // The animation point will be set when its requested from the pool
                 case AnimationType.BulletAnimation:
-                    return new BulletAnimation();
-
+                    temp = new BulletAnimation();
+                    ((BulletAnimation)temp).Collider = new Collider(((BulletAnimation)temp));
+                    break;
                 // The animation point will be set when its requested from the pool
                 case AnimationType.ExplosionAnimation:
-                    return new ExplosionAnimation();
-
+                    temp = new ExplosionAnimation();
+                    break;
                 default:
                     return null;
             }
+            return temp;
         }
+        public Animation CreateAnimation(AnimationType animationName)
+        { return new PlayerAnimation(); }
+
     }
 }
