@@ -21,17 +21,6 @@ namespace LevelBuilder
         fill = 5
     }
 
-    public enum CursorType
-    {
-        arrow = 1,
-        wait = 2,
-        brush = 3,
-        selectColor = 4,
-        eraser = 5,
-        selection = 6,
-        fill = 7
-    }
-
     public partial class LevelBuilder : Form
     {
         #region private members
@@ -300,22 +289,10 @@ namespace LevelBuilder
 
                 if (choosingPlayer)
                 {
-                    if (player.Start)
-                    {
-                        player.StartPoint = new Point(mapX, mapY);
-                        player.Start = false;
-                        player.End = true;
-                        return;
-                    }
-                    if (player.End)
-                    {
-                        player.EndPoint = new Point(mapX, mapY);
-                        player.End = false;
-                        choosingPlayer = false;
-                        MessageBox.Show("Player Start Point x: " + player.StartPoint.X + ", y: " + player.StartPoint.Y + "\n" +
-                                        "Player End Point x: " + player.EndPoint.X + ", y: " + player.EndPoint.Y);
-                        return;
-                    }
+                    player.StartPoint = new Point(mapX, mapY);
+                    choosingPlayer = false;
+                    MessageBox.Show("Player Start Point x: " + player.StartPoint.X + ", y: " + player.StartPoint.Y);
+                    return;
                 }
 
                 if (choosingMonster)

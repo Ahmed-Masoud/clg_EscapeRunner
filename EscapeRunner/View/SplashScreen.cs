@@ -166,8 +166,9 @@ namespace EscapeRunner.View
             int rows = -1;
             int cols = -1;
             int[][] level;
-            Point playerStart;
-            Point playerEnd;
+            Point playerPosition;
+            int monstersCount = -1;
+            EscapeRunner.View.SplashScreen.Monster[] monsters;
 
             StreamReader reader = new StreamReader(folderPath);
 
@@ -178,11 +179,51 @@ namespace EscapeRunner.View
             {
                 int[] points = Array.ConvertAll(line.Substring(24, (line.Length - 26)).Split(','), s => int.Parse(s));
 
-                playerStart = new Point(points[0], points[1]);
-                playerEnd = new Point(points[2], points[3]);
+                playerPosition = new Point(points[0], points[1]);
             }
             line = reader.ReadLine();
 
+            // read monsters count
+            line = reader.ReadLine();
+
+            if (line != null)
+            {
+                monstersCount = Convert.ToInt32(line.Substring(20, (line.Length - 21)));
+            }
+            line = reader.ReadLine();
+
+            // read monsters locations
+            if (monstersCount > 0)
+            {
+                line = reader.ReadLine();
+
+                monsters = new EscapeRunner.View.SplashScreen.Monster[monstersCount];
+                int counter = 0;
+
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (counter < monstersCount)
+                    {
+                        line = line.Substring(2, (line.Length - 3));
+
+                        if (counter != (monstersCount - 1))
+                            line = line.Substring(0, (line.Length - 2));
+
+                        int[] points = Array.ConvertAll(line.Split(','), s => int.Parse(s));
+
+                        Point start = new Point(points[0], points[1]);
+                        Point end = new Point(points[2], points[3]);
+                        monsters[counter] = new Monster(start, end);
+                        counter++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            line = reader.ReadLine();
+            
             // read map dimensions
             line = reader.ReadLine();
 
@@ -195,10 +236,10 @@ namespace EscapeRunner.View
 
             if (line != null)
             {
-                string bibo = line.Substring(10, (line.Length - 11));
-                rows = Convert.ToInt32(bibo);
+                rows = Convert.ToInt32(line.Substring(10, (line.Length - 11)));
             }
 
+            // read level
             if (rows > 0 && cols > 0)
             {
                 line = reader.ReadLine();
@@ -218,8 +259,36 @@ namespace EscapeRunner.View
 
                         level[counter++] = Array.ConvertAll(line.Split(','), s => int.Parse(s));
                     }
+                    else
+                    {
+                        break;
+                    }
                 }
 
+            }
+        }
+
+        public struct Monster
+        {
+            Point startPoint;
+            Point endPoint;
+
+            public Point StartPoint
+            {
+                get { return startPoint; }
+                set { startPoint = value; }
+            }
+
+            public Point EndPoint
+            {
+                get { return endPoint; }
+                set { endPoint = value; }
+            }
+
+            public Monster(Point p1, Point p2)
+            {
+                this.startPoint = p1;
+                this.endPoint = p2;
             }
         }
     }

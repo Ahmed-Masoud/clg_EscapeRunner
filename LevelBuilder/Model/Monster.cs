@@ -18,6 +18,8 @@ namespace LevelBuilder.Model
         {
             start = false;
             end = false;
+            startPoint = new Point(-1, -1);
+            endPoint = new Point(-1, -1);
         }
 
         public Point StartPoint
