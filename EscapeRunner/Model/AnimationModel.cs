@@ -39,8 +39,11 @@ namespace EscapeRunner
         }
         public static async Task InitializeModelAsync()
         {
-            await LoadAnimations();
-            LoadSounds();
+            if (characterAnimation == null)
+            {
+                await LoadAnimations();
+                LoadSounds();
+            }
         }
         public static List<Bitmap> Backgrounds { get { return backgrounds; } }
         public static List<Bitmap> BulletAnimation { get { return bulletClassA; } }
@@ -53,6 +56,7 @@ namespace EscapeRunner
         public static List<Bitmap> MonsterAnimation { get { return monsterAnimation; } }
         public static string ResFolder { get { return resFolderPath; } }
         public static List<Bitmap> TileTextures { get { return tileTextures; } }
+        public static List<string> SoundFiles { get { return soundFiles; } }
 
         private static Func<string, Bitmap> bitmapRead = ((string file) => ((Bitmap)Image.FromFile(file)));
 

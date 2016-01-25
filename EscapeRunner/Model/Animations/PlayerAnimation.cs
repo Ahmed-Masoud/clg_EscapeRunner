@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using EscapeRunner.BusinessLogic;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace EscapeRunner.Animations
@@ -17,7 +18,8 @@ namespace EscapeRunner.Animations
             }
             animationHeight = 64;
             animationWidth = 64;
-            objectBounds = new Rectangle(AnimationPosition, new Size(animationWidth, animationHeight));
+
+            this.collider = new Collider(new Rectangle(AnimationPosition, new Size(animationWidth, animationHeight)));
 
             PlayerSize = new Size(animationWidth, animationHeight);
         }
@@ -52,6 +54,11 @@ namespace EscapeRunner.Animations
         {
             imageIndex++;
             imageIndex %= animationImages.Count;
+        }
+
+        public override string ToString()
+        {
+            return "player";
         }
     }
 }

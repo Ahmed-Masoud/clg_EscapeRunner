@@ -1,6 +1,5 @@
 ﻿using EscapeRunner.Animations;
 using EscapeRunner.View;
-using System;
 using System.Drawing;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
@@ -10,7 +9,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private static PlayerAnimation playerAnimation;
         private static Player playerInstance;
         private static IndexPair playerCoordinates;
-        AnimationFactory factory;
+
         //private short stepHorizontalCounter = 0;
         //private short stepVerticalCounter = 0;
         //int dx = 2;
@@ -28,20 +27,23 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         /// 2D point of the player position
         /// </summary>
         public static Point Position { get { return playerAnimation.AnimationPosition; } }
+
         public static IndexPair PlayerCoordiantes { set { playerCoordinates = value; } get { return playerCoordinates; } }
 
         private Player()
         {
             playerCoordinates = MapLoader.WalkableTiles[0].TileIndecies;
-            factory = new AnimationFactory();
-            playerAnimation = (PlayerAnimation)factory.CreateAnimation(AnimationType.PlayerAnimation);
+            playerAnimation = (PlayerAnimation)AnimationFactory.CreateEmpyAnimation(AnimationType.PlayerAnimation);
 
             // Initialize the player location to the top of the screen
             playerAnimation.AnimationPosition = playerCoordinates.IndexesToCorrdinates();
-
+            playerAnimation.Collider.Collided += Collider_Collided;
             Direction = Directions.Right;
-            //collider = new Collider(playerInstance);  // Null reference EXCEPTION
+        }
 
+        private void Collider_Collided(CollisionEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Player collided with " + e.CollidingObject.ToString());
         }
 
         /// <summary>
@@ -52,7 +54,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             // %2 to eliminate the double key press
 
             Move(direction);
-
         }
 
         /// <summary>
@@ -69,15 +70,19 @@ namespace EscapeRunner.BusinessLogic.GameObjects
                 case Directions.Up:
                     temp.I--;
                     break;
+
                 case Directions.Down:
                     temp.I++;
                     break;
+
                 case Directions.Left:
                     temp.J--;
                     break;
+
                 case Directions.Right:
                     temp.J++;
                     break;
+
                 default:
                     break;
             }
@@ -93,7 +98,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
                     playerCoordinates = temp;
                     playerAnimation.AnimationPosition = temp.IndexesToCorrdinates();
                     Direction = direction;
-                    
+
                     System.Threading.Tasks.Task.Run(() =>
                     {
                         System.Threading.Thread.Sleep(100);
@@ -103,6 +108,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
                 }
             }
         }
+
         public void UpdateGraphics(Graphics g)
         {
             playerAnimation.Draw(g, Direction);

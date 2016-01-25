@@ -3,10 +3,6 @@ using System.IO;
 
 namespace EscapeRunner
 {
-    enum SoundEffects
-    {
-
-    }
     /// <summary>
     /// The sound part from model
     /// </summary>

@@ -14,6 +14,7 @@ namespace EscapeRunner.BusinessLogic
 
         public int J { get { return j; } set { j = value; } }
         public int I { get { return i; } set { i = value; } }
+
         public IndexPair(int i, int j)
         {
             this.j = j;
@@ -43,6 +44,11 @@ namespace EscapeRunner.BusinessLogic
                     return false;
             }
             throw new InvalidCastException();
+        }
+
+        public override string ToString()
+        {
+            return $"{i},{j}";
         }
     }
 #pragma warning restore

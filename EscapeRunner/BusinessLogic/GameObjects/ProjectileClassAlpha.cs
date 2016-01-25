@@ -7,40 +7,53 @@ namespace EscapeRunner.BusinessLogic.GameObjects
     /// <summary>
     /// Projectiles are implemented using object pool design pattern
     /// </summary>
-    public class ProjectileClassAlpha : IWeapon, IDrawable
+    public sealed class ProjectileClassAlpha : IWeapon, IDrawable
     {
-        private static BulletAnimation prototypeBullet = new BulletAnimation();
-        private static ExplosionAnimation prototypeExplosion = new ExplosionAnimation();
+        private static BulletAnimation prototypeBulletAnimation =
+            (BulletAnimation)AnimationFactory.CreateEmpyAnimation(AnimationType.BulletAnimation);
+
+        private static ExplosionAnimation prototypeExplosionAnimation =
+            (ExplosionAnimation)AnimationFactory.CreateEmpyAnimation(AnimationType.ExplosionAnimation);
+
         private BulletAnimation bulletAni;
         private Point bulletStartPosition = Point.Empty;
+        private Point explosionPosition = Point.Empty;
         private ExplosionAnimation explosionAni;   // Change ExplosionAnimation class to public to make this work
 
-        /// <summary>
-        /// Keeps the explosion happening until it finishes, even if the bullet itself was removed
-        /// </summary>
-        private bool explosionAwake;
 
-        //private BulletAnimation bulletAnimation;
-        private Point explosionPosition = Point.Empty;
-
-        private int paintedFrames = 0;
         private bool used;
 
         internal ProjectileClassAlpha()
         {
             // Used for lazy initialization in the bullet pool
-            explosionAni = (ExplosionAnimation)((IPrototype<Animation>)prototypeExplosion).Clone();
-            bulletAni = (BulletAnimation)((IPrototype<Animation>)prototypeBullet).Clone();
+            explosionAni = (ExplosionAnimation)((IPrototype<Animation>)prototypeExplosionAnimation).Clone();
+            bulletAni = (BulletAnimation)((IPrototype<Animation>)prototypeBulletAnimation).Clone();
+
+
             explosionAni.AnimationPosition = Point.Empty;
             bulletAni.AnimationPosition = Point.Empty;
+            bulletAni.Collider.Collided += BulletCollider_Collided;
+        }
+
+        private void ProjectileAlpha_Collided(CollisionEventArgs e)
+        {
+            // TODO collision check for monster and remove it
+            if (e.CollidingObject is Monster)
+                MainWindow.monsterDie.Play();
         }
 
         private void BulletCollider_Collided(CollisionEventArgs e)
         {
+            if (e.CollidingObject.ToString() == "player")
+                return;
             // Check the colliding object, and do the bullet's reactions
             //if (e.CollidingObject is Monster)
             //  System.Diagnostics.Debug.WriteLine("Collided with a monster");
             System.Diagnostics.Debug.WriteLine("Collision detected from bullet to " + e.CollidingObject.GetType().ToString());
+            bulletAni.Collider.ColliderActive = false;
+
+            // Setting the usage of bullet to false
+            bulletAni.Visible = false;
         }
 
         public Point BulletStartPosition
@@ -58,53 +71,34 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         public bool Used
         {
             get
-            {
-                return used;
-            }
+            { return used; }
             set
             {
                 if (value == true)
                 {
-                    // Initiate explosion
-                    paintedFrames = 0;
-                    explosionAwake = true;
-
-                    used = value;
+                    bulletAni.Collider.ColliderActive = true;
+                    bulletAni.Visible = true;
                 }
-                // Setting the usage of bullet to false
-                bulletAni.Locked = false;
+                else
+                {
+                    // Deactivate the collider to avoid keeping the bullet's collider when it's not active
+                    bulletAni.Collider.ColliderActive = false;
+                    bulletAni.Locked = false;
+                }
                 used = value;
-            }
-        }
-
-        /// <summary>
-        /// Updates the object state when it has finished animating and mark it for re-use
-        /// </summary>
-        public void Reset()
-        {
-            paintedFrames++;
-            paintedFrames %= explosionAni.ImageCount;
-            if (paintedFrames == 0)
-            {
-                paintedFrames = 0;
-                explosionAwake = false;
-                // TODO check if removing the place reset affects the painting
-                //ExplosionPosition = Point.Empty;
-            }
-            if (bulletAni.BulletReachedEnd() && !explosionAwake)
-            {
-                // Release the bullet when all animations are drawn
-                Used = false;
             }
         }
 
         public void UpdateGraphics(Graphics g)
         {
-            // The position is set in the object pool
-            if (explosionAwake)
-                explosionAni.DrawFrame(g);
-            bulletAni.DrawFrame(g);
-            Reset();
+            bulletAni.DrawBullet(g);
+            UpdateShotState();
+        }
+
+        private void UpdateShotState()
+        {
+            if (bulletAni.Visible == false)
+                this.Used = false;
         }
     }
 }

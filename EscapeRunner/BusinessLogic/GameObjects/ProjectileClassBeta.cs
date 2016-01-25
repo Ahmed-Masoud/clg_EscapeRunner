@@ -34,12 +34,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         public bool Used { get; set; }
 
-        public void Reset()
-        {
-            //ExplosionPosition = Point.Empty;
-            Used = false;
-        }
-
         public void UpdateGraphics(Graphics g)
         {
             throw new NotImplementedException();

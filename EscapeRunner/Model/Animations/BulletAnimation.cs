@@ -3,54 +3,53 @@ using EscapeRunner.BusinessLogic.GameObjects;
 using System.Collections.Generic;
 using System.Drawing;
 using System;
+using EscapeRunner.View;
 
 namespace EscapeRunner.Animations
 {
     internal sealed class BulletAnimation : Animation, ICollide, IPrototype<Animation>
     {
         // List is marked static to avoid loading the resources from the hard disk each time an
-        // explosion occurs
         private static readonly List<Bitmap> bulletImages = Model.BulletAnimation;
-
         private Directions bulletDirection;
-        private new int imageIndex;
-        private bool needDirection = true;
-        private Collider collider;
+        private new int imageIndex = 0;
+        private bool needDirection = true;  // Bullets needs a direction and plays
+        private Point levelOrigin = new IndexPair(1, 1).IndexesToCorrdinates();
+        private Point levelEdge = MapLoader.LevelDimensions.IndexesToCorrdinates();
+        bool visible = false;
 
         // Horizontal displacement is bigger because the screen is always horizontally bigger
         private int verticalDisplacement = 9, horizontalDisplacement = 18;
-
-
-        public Collider Collider
+        public bool Visible
         {
-            get { return collider; }
-            set { collider = value; }
+            get { return visible; }
+            set { visible = value; }
         }
 
         public BulletAnimation()
         {
             imageIndex = 0;
-
             if (bulletImages != null)
                 ImageCount = bulletImages.Count;
 
             animationHeight = 30;
             animationWidth = 30;
+            this.collider = new Collider(new Rectangle(0, 0, animationWidth, animationHeight));
+            Point tempEdge =
+                new IndexPair(MapLoader.LevelDimensions.I - 1, MapLoader.LevelDimensions.J - 1).IndexesToCorrdinates();
+            levelEdge = tempEdge;
         }
-
 
         public int ImageCount { get; private set; }
+
         public bool Locked { get; set; }
-        public IndexPair ColliderLocationIndexes { get { return collider.LocationIndexes; } set { collider.LocationIndexes = value; } }
 
-        public bool BulletReachedEnd()
-        {
-            // The bullet is reads to be redrawn when it reaches the end of the screen or collides
-            // with an object
-            return needDirection;
-        }
 
-        public void DrawFrame(Graphics g)
+        /// <summary>
+        /// Draws the bullet and updates to the next animation
+        /// </summary>
+        /// <param name="g"></param>
+        public void DrawBullet(Graphics g)
         {
             // Move the bullet image to the end of the screen / until it collides The bullet object
             // disposes when it hits a wall / end of screen
@@ -83,11 +82,13 @@ namespace EscapeRunner.Animations
             imageIndex++;
             imageIndex %= ImageCount;
 
-            // TODO check collision
-            if (AnimationPosition.X >= MainWindow.RightBound || AnimationPosition.X <= MainWindow.LeftBound
-                || AnimationPosition.Y >= MainWindow.LowerBound || AnimationPosition.Y <= MainWindow.UpperBound)
+            // If the bullet is outside the bounds
+            if (AnimationPosition.X >= levelEdge.X
+                || AnimationPosition.X <= levelOrigin.X
+                || AnimationPosition.Y >= levelEdge.Y
+                || AnimationPosition.Y <= levelOrigin.Y)
             {
-                needDirection = true;
+                Visible = false;
             }
         }
 
@@ -96,15 +97,12 @@ namespace EscapeRunner.Animations
             Point position = AnimationPosition;
 
             // Get the direction of the shot only once per shot
-
-            if (needDirection)
+            if (!Locked)
             {
-                if (!Locked)
-                    bulletDirection = Player.Direction;
+                bulletDirection = Player.Direction;
                 Locked = true;
-                needDirection = false;
+                visible = true;
             }
-
             switch (bulletDirection)
             {
                 case Directions.Right:
@@ -125,6 +123,16 @@ namespace EscapeRunner.Animations
             }
             // Set the bullet's new position
             AnimationPosition = position;
+        }
+        public bool BulletReachedEnd()
+        {
+            // The bullet is reads to be redrawn when it reaches the end of the screen or collides
+            // with an object
+            return needDirection;
+        }
+        public override string ToString()
+        {
+            return "bullet";
         }
     }
 }

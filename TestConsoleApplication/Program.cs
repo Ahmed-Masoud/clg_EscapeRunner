@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace TestConsoleApplication
 {
+#pragma warning disable
     [Serializable()]
     public struct IndexPair
     {

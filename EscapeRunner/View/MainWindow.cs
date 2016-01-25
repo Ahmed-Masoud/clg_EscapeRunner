@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Media;
 
 namespace EscapeRunner
 {
@@ -10,6 +11,9 @@ namespace EscapeRunner
         private Timer refreshTimer = new Timer();
         public Timer RefreshTimer { get { return refreshTimer; } }
         private bool loaded = false;
+        public static System.Media.SoundPlayer laser;
+        public static System.Media.SoundPlayer monsterDie;
+        private SoundPlayer backgroundMusic;
 
         public MainWindow()
         {
@@ -100,6 +104,10 @@ namespace EscapeRunner
         private async void MainWindow_Load(object sender, EventArgs e)
         {
             await Model.InitializeModelAsync();
+            laser = new SoundPlayer(Model.SoundFiles[0]);
+            monsterDie = new SoundPlayer(Model.SoundFiles[1]);
+            backgroundMusic = new SoundPlayer(Model.SoundFiles[3]);
+            backgroundMusic.PlayLooping();
             //this.BackgroundImage = await Controller.DrawBackgroundImage();
             //Controller.InitializeController();
 

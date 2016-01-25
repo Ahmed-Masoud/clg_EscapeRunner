@@ -22,11 +22,11 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         public static IndexPair superWeaponIndexes;
         public static IndexPair weaponIndexes;
 
-        static ProjectilePool()
+        public ProjectilePool()
         {
             projectiles = new List<IWeapon>(numberOfProjectiles);
 
-            // Create normal weapon spawns
+            // Create normal weapon spawns  
             for (int i = 0; i < numberOfProjectiles - 3; i++)
             {
                 projectiles.Add(new ProjectileClassAlpha());
@@ -43,7 +43,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             superWeaponIndexes = new IndexPair(numberOfProjectiles - 3, numberOfProjectiles - 1);
 
         }
-
         // The singleton
 
 
@@ -107,8 +106,8 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             {
                 if (!projectiles[i].Used)
                 {
-                    position = SetExplosionPlace(Player.Direction, position);
-                    projectiles[i].ExplosionPosition = position;
+                    //position = SetExplosionPlace(Player.Direction, position);
+                    //projectiles[i].ExplosionPosition = position;
                     projectiles[i].BulletStartPosition = position;
 
                     projectiles[i].Used = true;

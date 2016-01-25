@@ -113,7 +113,7 @@ namespace EscapeRunner.View
                               Directory.GetCurrentDirectory())) + "\\Res";
 
             string imagePath = resPath + "\\SplashScreen.jpg";
-            string soundPath = resPath + "\\Terrorist.wav";
+            string soundPath = resPath + "\\Sounds\\03_Terrorist.wav";
 
             if (File.Exists(imagePath) && File.Exists(soundPath))
             {
@@ -223,7 +223,7 @@ namespace EscapeRunner.View
                 }
             }
             line = reader.ReadLine();
-            
+
             // read map dimensions
             line = reader.ReadLine();
 

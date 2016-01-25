@@ -8,28 +8,6 @@ namespace EscapeRunner.Animations
     public sealed class MonsterAnimation : Animation, ICollide
     {
         private static List<Bitmap> animationImages;
-        private IndexPair colliderLocation;
-
-        private Collider collider;
-
-        public Collider Collider
-        {
-            get { return collider; }
-            set { collider = value; }
-        }
-
-        public IndexPair ColliderLocationIndexes
-        {
-            get
-            {
-                return colliderLocation;
-            }
-
-            set
-            {
-                colliderLocation = value;
-            }
-        }
 
         public MonsterAnimation()
         {
@@ -41,7 +19,9 @@ namespace EscapeRunner.Animations
             }
             animationHeight = 64;
             animationWidth = 64;
-            objectBounds = new Rectangle(AnimationPosition, new Size(animationWidth, animationHeight));
+
+            // Initialize Collider
+            this.Collider = new Collider(new Rectangle(AnimationPosition.X, AnimationPosition.Y, animationWidth, animationHeight));
         }
 
         public void Draw(Graphics g, Directions direction)
@@ -69,6 +49,10 @@ namespace EscapeRunner.Animations
         {
             imageIndex++;
             imageIndex %= animationImages.Count;
+        }
+        public override string ToString()
+        {
+            return "monster";
         }
     }
 }

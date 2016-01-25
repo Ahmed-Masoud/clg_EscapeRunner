@@ -15,7 +15,7 @@ namespace EscapeRunner.Animations
     /// </summary>
     public class AnimationFactory
     {
-        Animation temp;
+        static Animation temp;
         public Animation CreateAnimation(AnimationType animationName, IndexPair startLocation)
         {
             switch (animationName)
@@ -25,12 +25,14 @@ namespace EscapeRunner.Animations
                     break;
                 case AnimationType.MonsterAnimation:
                     temp = new MonsterAnimation(); // new MonsterAnimation();
-                    ((MonsterAnimation)temp).Collider = new Collider(((MonsterAnimation)temp));
+                    temp.AddCollider();
+                    //((MonsterAnimation)temp).Collider = new Collider(((MonsterAnimation)temp));
                     break;
                 // The animation point will be set when its requested from the pool
                 case AnimationType.BulletAnimation:
                     temp = new BulletAnimation();
-                    ((BulletAnimation)temp).Collider = new Collider(((BulletAnimation)temp));
+                    temp.AddCollider();
+                    //((BulletAnimation)temp).Collider = new Collider(((BulletAnimation)temp));
                     break;
                 // The animation point will be set when its requested from the pool
                 case AnimationType.ExplosionAnimation:
@@ -41,8 +43,36 @@ namespace EscapeRunner.Animations
             }
             return temp;
         }
-        public Animation CreateAnimation(AnimationType animationName)
-        { return new PlayerAnimation(); }
+        public static Animation CreateEmpyAnimation(AnimationType animationName)
+        {
+            IndexPair startLocation = new IndexPair(0, 0);
+            switch (animationName)
+            {
+                case AnimationType.PlayerAnimation:
+                    temp = new PlayerAnimation();
+                    temp.AddCollider();
+                    break;
+                case AnimationType.MonsterAnimation:
+                    temp = new MonsterAnimation(); // new MonsterAnimation();
+                    temp.AddCollider();
+                    //((MonsterAnimation)temp).Collider = new Collider(((MonsterAnimation)temp));
+                    break;
+                // The animation point will be set when its requested from the pool
+                case AnimationType.BulletAnimation:
 
+                    temp = new BulletAnimation();
+                    temp.AddCollider();
+                    //((BulletAnimation)temp).Collider = new Collider(((BulletAnimation)temp));
+                    break;
+                // The animation point will be set when its requested from the pool
+                case AnimationType.ExplosionAnimation:
+                    temp = new ExplosionAnimation();
+                    temp.Collider = new Collider(temp, System.Drawing.Rectangle.Empty);
+                    break;
+                default:
+                    return null;
+            }
+            return temp;
+        }
     }
 }

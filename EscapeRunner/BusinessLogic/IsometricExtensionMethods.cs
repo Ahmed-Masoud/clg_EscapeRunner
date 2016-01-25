@@ -6,7 +6,13 @@ namespace EscapeRunner.BusinessLogic
 {
     public static class IsometricExtensionMethods
     {
- 
+        public static IndexPair GetTileCoordinates(this Point pt, int tileHeight)
+        {
+            IndexPair tempPt = new IndexPair(0, 0);
+            tempPt.I = (int)Math.Floor((double)(pt.X / tileHeight));
+            tempPt.J = (int)Math.Floor((double)(pt.Y / tileHeight));
+            return tempPt;
+        }
 
         public static Point IsoToTwoDimensions(this Point pt)
         {
@@ -23,13 +29,6 @@ namespace EscapeRunner.BusinessLogic
         public static Point TwoDimensionsToIso(this Point pt)
         {
             Point tempPt = new Point(0, 0);
-            tempPt.X = (pt.X - pt.Y);
-            tempPt.Y = (pt.X + pt.Y) / 2;
-            return tempPt;
-        }
-        public static PointF TwoDimensionsToIso(this PointF pt)
-        {
-            PointF tempPt = new PointF(0, 0);
             tempPt.X = (pt.X - pt.Y);
             tempPt.Y = (pt.X + pt.Y) / 2;
             return tempPt;

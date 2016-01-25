@@ -15,7 +15,7 @@ namespace EscapeRunner.Animations
         Right,
     }
 
-    public abstract class Animation
+    public abstract class Animation : ICollide
     {
         #region DebugStuff
 #if DEBUG
@@ -29,15 +29,27 @@ namespace EscapeRunner.Animations
         #endregion
         protected int animationWidth, animationHeight;
         protected int imageIndex;
-        protected Rectangle objectBounds;
-        public Rectangle ObjectBounds { get { return objectBounds; } }
+        protected Collider collider = new Collider(Rectangle.Empty);
+        protected Point animationPosition = Point.Empty;
 
+        public Collider Collider
+        {
+            get { return collider; }
+            set { collider = value; }
+        }
         // Trigger an event to alert the bullet that it has been relocated, and set its lock state
         /// <summary>
         /// 2D point of the player position
         /// </summary>
-        public Point AnimationPosition { get; set; } = Point.Empty;
-        public IndexPair AnimationTileIndex { get; set; } = new IndexPair();
+        public Point AnimationPosition
+        {
+            get { return animationPosition; }
+            set
+            {
+                collider.Location = value;
+                animationPosition = value;
+            }
+        }
 
         /// <summary>
         /// Draws the target animation
@@ -49,9 +61,8 @@ namespace EscapeRunner.Animations
             //g.FillRectangle(Brushes.Yellow, objectBounds);
             //Point isoLocation = AnimationPosition.TwoDimensionsToIso();
             //g.DrawString($"{AnimationPosition.X.ToString()},{AnimationPosition.Y.ToString()}", font, Brushes.Azure, AnimationPosition);
-            g.DrawRectangle(Pens.White, AnimationPosition.X, AnimationPosition.Y, objectBounds.Width, objectBounds.Height);
+            g.DrawRectangle(Pens.White, collider.Location.X, collider.Location.Y, animationWidth, animationHeight);
 #endif
-            objectBounds.Location = AnimationPosition;
         }
 
         public abstract void LoadNextAnimationImage();
@@ -82,6 +93,11 @@ namespace EscapeRunner.Animations
             }
 
             return returnBitmap;
+        }
+        public void AddCollider()
+        {
+            this.Collider = new Collider(this, new Rectangle(AnimationPosition, new Size(animationWidth, animationHeight)));
+            this.Collider.ColliderActive = true;
         }
     }
 }
