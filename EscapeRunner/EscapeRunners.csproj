@@ -49,6 +49,11 @@
   <ItemGroup>
     <Compile Include="BusinessLogic\Collider.cs" />
     <Compile Include="BusinessLogic\CollisionEvent.cs" />
+    <Compile Include="BusinessLogic\GameObjects\Bomb.cs" />
+    <Compile Include="BusinessLogic\GameObjects\BombA.cs" />
+    <Compile Include="BusinessLogic\GameObjects\BulletGift.cs" />
+    <Compile Include="BusinessLogic\GameObjects\CoinGift.cs" />
+    <Compile Include="BusinessLogic\GameObjects\Gifts.cs" />
     <Compile Include="BusinessLogic\ICollide.cs" />
     <Compile Include="BusinessLogic\IndexPair.cs" />
     <Compile Include="BusinessLogic\GameObjects\Monster.cs" />

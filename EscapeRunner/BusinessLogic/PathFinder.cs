@@ -46,7 +46,7 @@ namespace EscapeRunner.BusinessLogic
             }
         }
         public float F { get; set; }
-        public float G { get; set; } 
+        public float G { get; set; }
         public float H { get; set; }
         public Node(IndexPair destination, IndexPair index)
         {
@@ -113,8 +113,7 @@ namespace EscapeRunner.BusinessLogic
                 // Reverse the list so it's in the correct order when returned
                 path.Reverse();
             }
-
-            return path;
+            return Minimize(path);
         }
         /// <summary>
         /// returns true if(the path leads to the destination and false if the path leads to dead end
@@ -150,7 +149,7 @@ namespace EscapeRunner.BusinessLogic
         private List<Node> GetAdjacentWalkableNodes(Node fromNode)
         {
             List<Node> walkableNodes = new List<Node>();
-            IEnumerable<IndexPair> nextLocations = GetAdjacentLocations(fromNode.Location);           
+            IEnumerable<IndexPair> nextLocations = GetAdjacentLocations(fromNode.Location);
             foreach (var location in nextLocations)
             {
                 int x = location.I;
@@ -200,6 +199,106 @@ namespace EscapeRunner.BusinessLogic
                 new IndexPair(fromLocation.I+1, fromLocation.J  ),
                 new IndexPair(fromLocation.I,   fromLocation.J-1)
             };
+        }
+        private static List<IndexPair> Minimize(List<IndexPair> path)
+        {
+            int temp = 0;
+            for (int i = 0; i < path.Count; i++)
+            {
+                for (int j = i + 1; j < path.Count; j++)
+                {
+                    if (IsShortCut(path[i], path[j]))
+                        temp = j;
+                }
+                if (temp != 0)
+                {
+                    path = InsertList(path, GetStraighPath(path[i], path[temp]), i, temp);
+                    temp = 0;
+                }
+            }
+            return path;
+        }
+        private static bool IsShortCut(IndexPair firstIndex, IndexPair lastIndex)
+        {
+            if (firstIndex.I != lastIndex.I && firstIndex.J != lastIndex.J) return false;
+            if (firstIndex == lastIndex) return false;
+            int I = firstIndex.I, J = firstIndex.J, delta;
+            if (firstIndex.I == lastIndex.I)
+            {
+                if (firstIndex.J > lastIndex.J)
+                    delta = -1;
+                else delta = 1;
+                while (J != lastIndex.J)
+                {
+                    J += delta;
+                    if (!MapLoader.IsWalkable(new IndexPair(I, J)))
+                        return false;
+                }
+                return true;
+            }
+            else if (firstIndex.J == lastIndex.J)
+            {
+                if (firstIndex.I > lastIndex.I)
+                    delta = -1;
+                else delta = 1;
+                while (I != lastIndex.I)
+                {
+                    I += delta;
+                    if (!MapLoader.IsWalkable(new IndexPair(I, J)))
+                        return false;
+                }
+                return true;
+            }
+            return false;
+        }
+        private static List<IndexPair> GetStraighPath(IndexPair firstIndex, IndexPair lastIndex)
+        {
+            List<IndexPair> newPath = new List<IndexPair>();
+            int I = firstIndex.I, J = firstIndex.J, delta;
+            if (firstIndex.I == lastIndex.I)
+            {
+                if (firstIndex.J > lastIndex.J)
+                    delta = -1;
+                else delta = 1;
+                newPath.Add(firstIndex);
+                while (J != lastIndex.J)
+                {
+                    J += delta;
+                    newPath.Add(new IndexPair(I, J));
+                }
+            }
+            else if (firstIndex.J == lastIndex.J)
+            {
+                if (firstIndex.I > lastIndex.I)
+                    delta = -1;
+                else delta = 1;
+                newPath.Add(firstIndex);
+                while (I != lastIndex.I)
+                {
+                    I += delta;
+                    newPath.Add(new IndexPair(I, J));
+                }
+            }
+            return newPath;
+        }
+        private static List<IndexPair> InsertList(List<IndexPair> insertIn, List<IndexPair> toBeInserted, int startIndex, int lastIndex)
+        {
+            if (lastIndex < startIndex) return null;
+            if (startIndex > insertIn.Count || lastIndex > insertIn.Count) return null;
+            List<IndexPair> newList = new List<IndexPair>();
+            for (int i = 0; i < startIndex; i++)
+            {
+                newList.Add(insertIn[i]);
+            }
+            for (int i = 0; i < toBeInserted.Count; i++)
+            {
+                newList.Add(toBeInserted[i]);
+            }
+            for (int i = lastIndex + 1; i < insertIn.Count; i++)
+            {
+                newList.Add(insertIn[i]);
+            }
+            return newList;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using EscapeRunner.Animations;
 using EscapeRunner.View;
 using System.Drawing;
+using System;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
@@ -29,6 +30,14 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         public static Point Position { get { return playerAnimation.AnimationPosition; } }
 
         public static IndexPair PlayerCoordiantes { set { playerCoordinates = value; } get { return playerCoordinates; } }
+
+        public Point myPoint
+        {
+            get
+            {
+                return playerAnimation.AnimationPosition;
+            }
+        }
 
         public void Initialize()
         {

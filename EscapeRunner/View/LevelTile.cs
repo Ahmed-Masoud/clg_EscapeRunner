@@ -1,5 +1,7 @@
 ﻿using EscapeRunner.BusinessLogic;
+using EscapeRunner.BusinessLogic.GameObjects;
 using System.Drawing;
+using System;
 
 namespace EscapeRunner.View
 {
@@ -13,7 +15,7 @@ namespace EscapeRunner.View
         SouthWall,
     }
 
-    public class LevelTile
+    public class LevelTile : IDrawable
     {
         private Size dimensions;
 
@@ -62,6 +64,18 @@ namespace EscapeRunner.View
         private Point TwoDimPoint
         { get { return twoDimPoint; } }
 
+        public Point myPoint
+        {
+            get
+            {
+                if (type == TileType.Corner)
+                {
+                    return new Point(TwoDimPoint.X + 64, TwoDimPoint.Y + 64);
+                }
+                return TwoDimPoint;
+            }
+        }
+
         /// <summary>
         /// Draw the tile on the screen
         /// </summary>
@@ -83,6 +97,12 @@ namespace EscapeRunner.View
 #endif
 
             #endregion Debug Stuff
+        }
+
+        public void UpdateGraphics(Graphics g)
+        {
+            Point tempPoint = twoDimPoint.TwoDimensionsToIso();
+            g.DrawImage(texture, tempPoint.X, tempPoint.Y, dimensions.Width, dimensions.Height);
         }
     }
 }

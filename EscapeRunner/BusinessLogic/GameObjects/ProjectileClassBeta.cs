@@ -32,6 +32,14 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             }
         }
 
+        public Point myPoint
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public bool Used { get; set; }
 
         public void UpdateGraphics(Graphics g)

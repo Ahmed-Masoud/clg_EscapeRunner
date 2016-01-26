@@ -69,6 +69,14 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         public Directions Direction { get; set; }
         public Point Position { get { return monsterAnimation.AnimationPosition; } set { monsterAnimation.AnimationPosition = value; } }
 
+        public Point myPoint
+        {
+            get
+            {
+                return monsterAnimation.AnimationPosition;
+            }
+        }
+
 
         //public void Move(Directions direction)
         //{

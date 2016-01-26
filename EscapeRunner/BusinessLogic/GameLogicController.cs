@@ -16,10 +16,15 @@ namespace EscapeRunner.BusinessLogic
         private static DrawingOperations drawGraphics;
 
         private static Player player;
-        private static List<IDrawable> drawableObjects = new List<IDrawable>();
-        public static List<IDrawable> DrawableObjects
+        private static List<IDrawable> movingObjects = new List<IDrawable>();
+        private static List<IDrawable> constantObjects = new List<IDrawable>();
+        public static List<IDrawable> MovingObjects
         {
-            get { return drawableObjects; }
+            get { return movingObjects; }
+        }
+        public static List<IDrawable> ConstantObjects
+        {
+            get { return constantObjects; }
         }
         private static ProjectilePool projectilePool;
         private static MainWindow window;
@@ -40,9 +45,14 @@ namespace EscapeRunner.BusinessLogic
             projectilePool.Initialize();
 
             Monster mon = new Monster();
-
-            drawableObjects.Add(mon);
-            drawableObjects.Add(player);
+            BulletGift giftaya = new BulletGift(new IndexPair(15, 7));
+            CoinGift giftayatanya = new CoinGift(new IndexPair(15, 10));
+            BombA bombaya = new BombA(new IndexPair(15, 4));
+            constantObjects.Add(bombaya);
+            ConstantObjects.Add(giftayatanya);
+            constantObjects.Add(giftaya);
+            movingObjects.Add(player);
+            movingObjects.Add(mon);
             backgroundIllusionTimer.Interval = 100;
             backgroundIllusionTimer.Elapsed += BackgroundIllusionTimer_Elapsed;
             backgroundIllusionTimer.Enabled = true;
@@ -71,7 +81,7 @@ namespace EscapeRunner.BusinessLogic
             {
                 // Create a new explosion and add it to the drawable list
                 IWeapon projectile = projectilePool.Acquire(Player.Position, false);
-                drawableObjects.Add((ProjectileClassAlpha)projectile);
+                movingObjects.Add((ProjectileClassAlpha)projectile);
 
                 // TODO play sound
             }

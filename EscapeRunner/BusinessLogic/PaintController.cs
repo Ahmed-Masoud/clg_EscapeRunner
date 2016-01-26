@@ -1,5 +1,6 @@
 ﻿using EscapeRunner.BusinessLogic.GameObjects;
 using EscapeRunner.View;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace EscapeRunner.BusinessLogic
@@ -39,53 +40,15 @@ namespace EscapeRunner.BusinessLogic
 
         public static void UpdateTiles(Graphics g)
         {
-            foreach (LevelTile x in MapLoader.ObstacleTiles)
+            List<IDrawable> allReDrawable = new List<IDrawable>(MapLoader.ObstacleTiles.Count + Controller.MovingObjects.Count + Controller.ConstantObjects.Count);
+            allReDrawable.AddRange(MapLoader.ObstacleTiles);
+            allReDrawable.AddRange(Controller.MovingObjects);
+            allReDrawable.AddRange(Controller.ConstantObjects);
+            //sorting them
+            allReDrawable.Sort((p1, p2) => (p1.myPoint.X + p1.myPoint.Y).CompareTo(p2.myPoint.X + p2.myPoint.Y));
+            foreach (IDrawable x in allReDrawable)
             {
-                foreach (IDrawable y in DrawableObjects)
-                {
-                    if (y is Player)
-                    {
-                        IndexPair tempCoordinates = Player.PlayerCoordiantes;
-                        if ((x.TileIndecies.I == tempCoordinates.I && x.TileIndecies.J == tempCoordinates.J + 1)
-                            || (x.TileIndecies.J == tempCoordinates.J && x.TileIndecies.I == tempCoordinates.I + 1)
-                            || (x.TileIndecies.J == tempCoordinates.J + 1 && x.TileIndecies.I == tempCoordinates.I + 1))
-                        {
-                            ((Player)y).UpdateGraphics(g);
-                            x.Draw(g);
-                            break;
-                        }
-                        else if ((x.TileIndecies.I == tempCoordinates.I && x.TileIndecies.J == tempCoordinates.J - 1)
-                            || (x.TileIndecies.J == tempCoordinates.J && x.TileIndecies.I == tempCoordinates.I - 1)
-                            || (x.TileIndecies.I == tempCoordinates.I - 1 && x.TileIndecies.J == tempCoordinates.J - 1))
-                        {
-                            x.Draw(g);
-                            ((Player)y).UpdateGraphics(g);
-                            break;
-                        }
-                        else
-                        {
-                            x.Draw(g);
-                        }
-                    }
-                    /*if (y is Monster)
-                    {
-                        temp = IsometricExtensionMethods.IndexesToCorrdinates(x.TileIndecies);
-                        if ((temp.X == ((Monster)y).Position.X && temp.Y == ((Monster)y).Position.Y + 32) || (temp.Y == ((Monster)y).Position.Y && temp.X == ((Monster)y).Position.X + 32) || (temp.X == ((Monster)y).Position.X + 32 && temp.Y == ((Monster)y).Position.Y + 32))
-                        {
-                            x.Draw(g);
-                            ((Monster)y).UpdateGraphics(g);
-
-                            break;
-                        }
-                        else if ((temp.X == ((Monster)y).Position.X && temp.Y == ((Monster)y).Position.Y - 32) || (temp.Y == ((Monster)y).Position.Y && temp.X == ((Monster)y).Position.X - 32) || (temp.X == ((Monster)y).Position.X - 32 && temp.Y == ((Monster)y).Position.Y - 32))
-                        {
-                            x.Draw(g);
-                            ((Monster)y).UpdateGraphics(g);
-                            break;
-                        }
-                        else x.Draw(g);
-                    }*/
-                }
+                x.UpdateGraphics(g);
             }
         }
 
@@ -96,12 +59,12 @@ namespace EscapeRunner.BusinessLogic
 
         public static void DrawShots(Graphics g)
         {
-            if (drawableObjects.Count > 0)
+            if (movingObjects.Count > 0)
             {
                 // Draw the bullets
-                for (int i = 0; i < drawableObjects.Count; i++)
+                for (int i = 0; i < movingObjects.Count; i++)
                 {
-                    var temp = drawableObjects[i];
+                    var temp = movingObjects[i];
                     if (temp is Monster)
                         temp.UpdateGraphics(g);
                     else
@@ -113,9 +76,9 @@ namespace EscapeRunner.BusinessLogic
                             else
                             {
                                 // Release bullet resources
-                                drawableObjects.RemoveAt(i);
+                                movingObjects.RemoveAt(i);
                                 i--;
-                                if (drawableObjects.Count == 0)
+                                if (movingObjects.Count == 0)
                                     break;
                             }
                     }

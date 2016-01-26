@@ -90,6 +90,14 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             }
         }
 
+        public Point myPoint
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public void UpdateGraphics(Graphics g)
         {
             bulletAni.DrawBullet(g);
