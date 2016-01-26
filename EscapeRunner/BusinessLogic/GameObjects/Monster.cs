@@ -1,4 +1,5 @@
 ﻿using EscapeRunner.Animations;
+using EscapeRunner.Sounds;
 using EscapeRunner.View;
 using System;
 using System.Collections.Generic;
@@ -46,8 +47,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         {
             if (e.CollidingObject.ToString() == "bullet")
             {
-                MainWindow.monsterDie.Play();
-
+                AudioController.playSpaceTrashSound();
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using EscapeRunner.Animations;
 using System.Drawing;
 using System;
+using EscapeRunner.Sounds;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
@@ -39,7 +40,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         {
             // TODO collision check for monster and remove it
             if (e.CollidingObject is Monster)
-                MainWindow.monsterDie.Play();
+                AudioController.playSpaceTrashSound();
         }
 
         private void BulletCollider_Collided(CollisionEventArgs e)

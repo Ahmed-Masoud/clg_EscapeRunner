@@ -11,7 +11,7 @@ namespace EscapeRunner
         private static List<string> soundFiles;
         private static void LoadSounds()
         {
-            string soundFolder = Path.Combine(resFolderPath, "Sounds");
+            string soundFolder = Path.Combine(resFolderPath, "Sounds\\");
 
             if (Directory.Exists(soundFolder))
             {

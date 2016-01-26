@@ -1,4 +1,5 @@
 ﻿using EscapeRunner.Animations;
+using EscapeRunner.Sounds;
 using EscapeRunner.View;
 using System.Drawing;
 
@@ -44,6 +45,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private void Collider_Collided(CollisionEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("Player collided with " + e.CollidingObject.ToString());
+            AudioController.playTerroristSound();
         }
 
         /// <summary>
