@@ -57,10 +57,11 @@ namespace EscapeRunner.Animations
             // Change animation position because the bullet moves
             SetBulletPlace();
 
+            // Flip the bullet
             if (bulletDirection == Directions.Up || bulletDirection == Directions.Down)
             {
                 Bitmap temp = bulletImages[imageIndex];
-                DrawFrame(g, RotateAnimation(temp, RotateFlipType.Rotate90FlipNone, RotateFlipType.Rotate270FlipNone));
+                DrawFrame(g, RotateAnimation(temp, RotateFlipType.Rotate180FlipNone, RotateFlipType.Rotate180FlipNone));
             }
             else
             {
@@ -114,11 +115,11 @@ namespace EscapeRunner.Animations
                     break;
 
                 case Directions.Up:
-                    position.Y += verticalDisplacement;
+                    position.Y -= verticalDisplacement;
                     break;
 
                 case Directions.Down:
-                    position.Y -= verticalDisplacement;
+                    position.Y += verticalDisplacement;
                     break;
             }
             // Set the bullet's new position

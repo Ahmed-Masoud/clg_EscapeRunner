@@ -34,16 +34,13 @@ namespace EscapeRunner
         {
             string projectPath = FindProjectPath();
             resFolderPath = Path.Combine(projectPath, "Res");
-            soundFiles = new List<string>();
+            
 
         }
         public static async Task InitializeModelAsync()
         {
-            if (characterAnimation == null)
-            {
-                await LoadAnimations();
-                LoadSounds();
-            }
+            await LoadAnimations();
+            LoadSounds();
         }
         public static List<Bitmap> Backgrounds { get { return backgrounds; } }
         public static List<Bitmap> BulletAnimation { get { return bulletClassA; } }
@@ -63,6 +60,8 @@ namespace EscapeRunner
 
         private static async Task LoadAnimations()
         {
+            if (flareAnimation != null)
+                return;
             // Check for the main resource folder
             if (Directory.Exists(resFolderPath))
             {

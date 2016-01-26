@@ -61,7 +61,7 @@ namespace EscapeRunner.Animations
             //g.FillRectangle(Brushes.Yellow, objectBounds);
             //Point isoLocation = AnimationPosition.TwoDimensionsToIso();
             //g.DrawString($"{AnimationPosition.X.ToString()},{AnimationPosition.Y.ToString()}", font, Brushes.Azure, AnimationPosition);
-            g.DrawRectangle(Pens.White, collider.Location.X, collider.Location.Y, animationWidth, animationHeight);
+            //g.DrawRectangle(Pens.White, collider.Location.X, collider.Location.Y, animationWidth, animationHeight);
 #endif
         }
 

@@ -3,6 +3,7 @@ using System;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Media;
+using System.Threading.Tasks;
 
 namespace EscapeRunner
 {
@@ -13,7 +14,7 @@ namespace EscapeRunner
         private bool loaded = false;
         public static System.Media.SoundPlayer laser;
         public static System.Media.SoundPlayer monsterDie;
-        private SoundPlayer backgroundMusic;
+        public static SoundPlayer backgroundMusic;
 
         public MainWindow()
         {
@@ -28,7 +29,10 @@ namespace EscapeRunner
             refreshTimer.Interval = 20;
             refreshTimer.Tick += new EventHandler(this.refreshTimer_Tick);
         }
+        public async Task InitializeStaticClasses()
+        {
 
+        }
         // Event for the MVC Pattern
         public delegate void KeyDownDelegate(ViewNotificationEventArgs x);
 
@@ -104,16 +108,19 @@ namespace EscapeRunner
         private async void MainWindow_Load(object sender, EventArgs e)
         {
             await Model.InitializeModelAsync();
-            laser = new SoundPlayer(Model.SoundFiles[0]);
-            monsterDie = new SoundPlayer(Model.SoundFiles[1]);
-            backgroundMusic = new SoundPlayer(Model.SoundFiles[3]);
-            backgroundMusic.PlayLooping();
+
             //this.BackgroundImage = await Controller.DrawBackgroundImage();
             //Controller.InitializeController();
 
 #if DEBUG
             this.BackgroundImage = await Controller.DrawBackgroundImage();
 #endif
+            laser = new SoundPlayer(Model.SoundFiles[0]);
+            monsterDie = new SoundPlayer(Model.SoundFiles[1]);
+            backgroundMusic = new SoundPlayer(Model.SoundFiles[3]);
+            System.Threading.Thread backSound = new System.Threading.Thread(() => backgroundMusic.PlayLooping());
+            backSound.IsBackground = true;
+            backSound.Start();
 
             if (!this.Focused)
                 this.Focus();

@@ -51,20 +51,24 @@ namespace EscapeRunner.BusinessLogic
 
         public static void UpdateTiles(Graphics g)
         {
-            Point temp;
             foreach (LevelTile x in MapLoader.ObstacleTiles)
             {
-                foreach (IDrawable y in Controller.DrawableObjects)
+                foreach (IDrawable y in DrawableObjects)
                 {
                     if (y is Player)
                     {
-                        if ((x.TileIndecies.I == Player.PlayerCoordiantes.I && x.TileIndecies.J == Player.PlayerCoordiantes.J + 1) || (x.TileIndecies.J == Player.PlayerCoordiantes.J && x.TileIndecies.I == Player.PlayerCoordiantes.I + 1) || (x.TileIndecies.J == Player.PlayerCoordiantes.J + 1 && x.TileIndecies.I == Player.PlayerCoordiantes.I + 1))
+                        IndexPair tempCoordinates = Player.PlayerCoordiantes;
+                        if ((x.TileIndecies.I == tempCoordinates.I && x.TileIndecies.J == tempCoordinates.J + 1)
+                            || (x.TileIndecies.J == tempCoordinates.J && x.TileIndecies.I == tempCoordinates.I + 1)
+                            || (x.TileIndecies.J == tempCoordinates.J + 1 && x.TileIndecies.I == tempCoordinates.I + 1))
                         {
                             ((Player)y).UpdateGraphics(g);
                             x.Draw(g);
                             break;
                         }
-                        else if ((x.TileIndecies.I == Player.PlayerCoordiantes.I && x.TileIndecies.J == Player.PlayerCoordiantes.J - 1) || (x.TileIndecies.J == Player.PlayerCoordiantes.J && x.TileIndecies.I == Player.PlayerCoordiantes.I - 1) || (x.TileIndecies.I == Player.PlayerCoordiantes.I - 1 && x.TileIndecies.J == Player.PlayerCoordiantes.J - 1))
+                        else if ((x.TileIndecies.I == tempCoordinates.I && x.TileIndecies.J == tempCoordinates.J - 1)
+                            || (x.TileIndecies.J == tempCoordinates.J && x.TileIndecies.I == tempCoordinates.I - 1)
+                            || (x.TileIndecies.I == tempCoordinates.I - 1 && x.TileIndecies.J == tempCoordinates.J - 1))
                         {
                             x.Draw(g);
                             ((Player)y).UpdateGraphics(g);

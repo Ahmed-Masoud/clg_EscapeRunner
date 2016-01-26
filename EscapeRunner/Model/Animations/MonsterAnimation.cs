@@ -38,7 +38,7 @@ namespace EscapeRunner.Animations
                         break;
 
                     case Directions.Left:
-                        animationImage = RotateAnimation(animationImage, RotateFlipType.RotateNoneFlipX, RotateFlipType.RotateNoneFlipX);
+                        //animationImage = RotateAnimation(animationImage, RotateFlipType.RotateNoneFlipX, RotateFlipType.RotateNoneFlipX);
                         break;
                 }
                 base.DrawFrame(g, animationImage);

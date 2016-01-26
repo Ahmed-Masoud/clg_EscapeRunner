@@ -35,13 +35,18 @@ namespace EscapeRunner.Animations
                 switch (direction)
                 {
                     case Directions.Up:
+                        //animationImage = RotateAnimation(animationImage, RotateFlipType.RotateNoneFlipX, RotateFlipType.RotateNoneFlipX);
                         break;
 
                     case Directions.Down:
+                        //animationImage = RotateAnimation(animationImage, RotateFlipType.RotateNoneFlipX, RotateFlipType.RotateNoneFlipNone);
                         break;
 
                     case Directions.Left:
-                        animationImage = RotateAnimation(animationImage, RotateFlipType.RotateNoneFlipX, RotateFlipType.RotateNoneFlipX);
+                        //animationImage = RotateAnimation(animationImage, RotateFlipType., RotateFlipType.RotateNoneFlipX);
+                        break;
+                    case Directions.Right:
+                       
                         break;
                 }
 
