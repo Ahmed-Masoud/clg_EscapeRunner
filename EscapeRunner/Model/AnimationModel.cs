@@ -23,6 +23,12 @@ namespace EscapeRunner
 
         private static List<Bitmap> monsterAnimation;
 
+        private static List<Bitmap> coinGift;
+
+        private static List<Bitmap> bulletGift;
+
+        private static List<Bitmap> bombA;
+
         private static string resFolderPath;
 
         private static List<Bitmap> tileTextures;
@@ -54,6 +60,9 @@ namespace EscapeRunner
         public static string ResFolder { get { return resFolderPath; } }
         public static List<Bitmap> TileTextures { get { return tileTextures; } }
         public static List<string> SoundFiles { get { return soundFiles; } }
+        public static List<Bitmap> CoinGift { get { return coinGift; } }
+        public static List<Bitmap> BulletGift { get { return bulletGift; } }
+        public static List<Bitmap> BombA { get { return bombA; } }
 
         private static Func<string, Bitmap> bitmapRead = ((string file) => ((Bitmap)Image.FromFile(file)));
 
@@ -73,13 +82,19 @@ namespace EscapeRunner
                 string flareFolder = Path.Combine(resFolderPath, "Flare");
                 string backgroundFolder = Path.Combine(resFolderPath, "Background");
                 string monsterFolder = Path.Combine(resFolderPath, "Monster");
+                string coinGiftFolder = Path.Combine(resFolderPath, "CoinGift");
+                string bulletGiftFolder = Path.Combine(resFolderPath, "BulletGift");
+                string bombAFolder = Path.Combine(resFolderPath, "BombA");
 
                 if (Directory.Exists(charAnimationsFolder)
                     && Directory.Exists(explosionAnimationsFolder)
                     && Directory.Exists(bulletAnimationsFolder)
                     && Directory.Exists(levelTileFolder)
                     && Directory.Exists(backgroundFolder)
-                    && Directory.Exists(monsterFolder))
+                    && Directory.Exists(monsterFolder)
+                    && Directory.Exists(coinGiftFolder)
+                    && Directory.Exists(bombAFolder)
+                    && Directory.Exists(bulletGiftFolder))
                 {
                     flareAnimation = await LoadResourceFromDisk(bitmapRead, flareFolder, "*.png");
                     characterAnimation = await LoadResourceFromDisk(bitmapRead, charAnimationsFolder, "*.png");
@@ -89,6 +104,9 @@ namespace EscapeRunner
 
                     monsterAnimation = await LoadResourceFromDisk(bitmapRead, monsterFolder, "*.png");
                     backgrounds = await LoadResourceFromDisk(bitmapRead, backgroundFolder, "*.png");
+                    coinGift = await LoadResourceFromDisk(bitmapRead, coinGiftFolder, "*.png");
+                    bulletGift = await LoadResourceFromDisk(bitmapRead, bulletGiftFolder, "*.png");
+                    bombA = await LoadResourceFromDisk(bitmapRead, bombAFolder, "*.png");
 
                 }
                 else
