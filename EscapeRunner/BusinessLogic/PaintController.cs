@@ -1,6 +1,8 @@
 ﻿using EscapeRunner.BusinessLogic.GameObjects;
 using EscapeRunner.View;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 
 namespace EscapeRunner.BusinessLogic
@@ -40,16 +42,25 @@ namespace EscapeRunner.BusinessLogic
 
         public static void UpdateTiles(Graphics g)
         {
-            List<IDrawable> allReDrawable = new List<IDrawable>(MapLoader.ObstacleTiles.Count + Controller.MovingObjects.Count + Controller.ConstantObjects.Count);
+            allReDrawable = new List<IDrawable>(MapLoader.ObstacleTiles.Count + MovingObjects.Count + ConstantObjects.Count);
             allReDrawable.AddRange(MapLoader.ObstacleTiles);
-            allReDrawable.AddRange(Controller.MovingObjects);
-            allReDrawable.AddRange(Controller.ConstantObjects);
+            allReDrawable.AddRange(MovingObjects);
+            allReDrawable.AddRange(ConstantObjects);
+
             //sorting them
-            allReDrawable.Sort((p1, p2) => (p1.myPoint.X + p1.myPoint.Y).CompareTo(p2.myPoint.X + p2.myPoint.Y));
-            foreach (IDrawable x in allReDrawable)
+            try
             {
-                x.UpdateGraphics(g);
+                allReDrawable.Sort((p1, p2) => (p1.DrawLocation.X + p1.DrawLocation.Y).CompareTo(p2.DrawLocation.X + p2.DrawLocation.Y));
+                foreach (IDrawable x in allReDrawable)
+                {
+                    x.UpdateGraphics(g);
+                }
             }
+            catch (InvalidOperationException)
+            {
+                Debugger.Break();
+            }
+
         }
 
         public static void DrawMovingBackground(Graphics g)

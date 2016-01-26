@@ -8,6 +8,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
     public interface IDrawable
     {
         void UpdateGraphics(Graphics g);
-        Point myPoint { get; }
+        Point DrawLocation { get; }
     }
 }

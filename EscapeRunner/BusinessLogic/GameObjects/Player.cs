@@ -31,7 +31,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         public static IndexPair PlayerCoordiantes { set { playerCoordinates = value; } get { return playerCoordinates; } }
 
-        public Point myPoint
+        public Point DrawLocation
         {
             get
             {

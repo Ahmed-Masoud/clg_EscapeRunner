@@ -30,6 +30,8 @@ namespace EscapeRunner.BusinessLogic
         private static ProjectilePool projectilePool;
         private static MainWindow window;
 
+        static List<IDrawable> allReDrawable;
+
         static Timer backgroundIllusionTimer = new Timer();
         private Controller() { }
 
@@ -69,6 +71,7 @@ namespace EscapeRunner.BusinessLogic
             drawGraphics += UpdateTiles;
             drawGraphics += DrawShots;
 
+           
         }
 
         private static void BackgroundIllusionTimer_Elapsed(object sender, ElapsedEventArgs e)
