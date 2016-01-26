@@ -31,7 +31,19 @@ namespace EscapeRunner
         }
         public async Task InitializeStaticClasses()
         {
+            await Model.InitializeModelAsync();
+            Controller.InitializeController();
+#if DEBUG
+            this.BackgroundImage = Controller.DrawBackgroundImage();
+#endif
+            laser = new SoundPlayer(Model.SoundFiles[0]);
+            monsterDie = new SoundPlayer(Model.SoundFiles[1]);
+            backgroundMusic = new SoundPlayer(Model.SoundFiles[3]);
+            System.Threading.Thread backSound = new System.Threading.Thread(() => backgroundMusic.PlayLooping());
+            backSound.IsBackground = true;
+            backSound.Start();
 
+            loaded = true;
         }
         // Event for the MVC Pattern
         public delegate void KeyDownDelegate(ViewNotificationEventArgs x);
@@ -95,36 +107,12 @@ namespace EscapeRunner
             RightBound = this.Width;
 
             // Resources are initialized, start ticking
-
-
             refreshTimer.Enabled = true;
         }
 
         private void refreshTimer_Tick(object sender, EventArgs e)
         {
             Refresh();
-        }
-
-        private async void MainWindow_Load(object sender, EventArgs e)
-        {
-            await Model.InitializeModelAsync();
-
-            //this.BackgroundImage = await Controller.DrawBackgroundImage();
-            //Controller.InitializeController();
-
-#if DEBUG
-            this.BackgroundImage = await Controller.DrawBackgroundImage();
-#endif
-            laser = new SoundPlayer(Model.SoundFiles[0]);
-            monsterDie = new SoundPlayer(Model.SoundFiles[1]);
-            backgroundMusic = new SoundPlayer(Model.SoundFiles[3]);
-            System.Threading.Thread backSound = new System.Threading.Thread(() => backgroundMusic.PlayLooping());
-            backSound.IsBackground = true;
-            backSound.Start();
-
-            if (!this.Focused)
-                this.Focus();
-            loaded = true;
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)

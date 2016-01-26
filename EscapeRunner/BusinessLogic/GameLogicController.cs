@@ -30,13 +30,15 @@ namespace EscapeRunner.BusinessLogic
         public static void InitializeController()
         {
             window = Program.MainWindow;
-            
+
             // Subscribe to the notify event
             window.ViewNotification += Window_ViewNotification;
             player = Player.PlayerInstance;
-
+            player.Initialize();
             // Lazy initialization of projectile pool
             projectilePool = ProjectilePool.Instance;
+            projectilePool.Initialize();
+
             Monster mon = new Monster();
 
             drawableObjects.Add(mon);
@@ -46,8 +48,10 @@ namespace EscapeRunner.BusinessLogic
             backgroundIllusionTimer.Enabled = true;
 
 #if !DEBUG
-            drawGraphics += MapLoader.DrawGameFlares;
+            
 #endif
+            drawGraphics += DrawMovingBackground;
+            drawGraphics += MapLoader.DrawGameFlares;
             drawGraphics += MapLoader.DrawLevelFloor;
             drawGraphics += MapLoader.DrawLevelObstacles;
             drawGraphics += player.UpdateGraphics;

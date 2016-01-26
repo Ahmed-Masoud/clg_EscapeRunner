@@ -28,14 +28,17 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             timer.Elapsed += Timer_Elapsed;
             timer.Enabled = true;
             timer.Interval = 250;
+            
             //MapLoader.MonsterStartLocation;
             //monsterAnimation.AnimationTileIndex = new IndexPair(1, 1);//temp.TileIndecies;
+
             monsterAnimation = (MonsterAnimation)factory.CreateAnimation(AnimationType.MonsterAnimation, tempPath[0]);
             monsterAnimation.AnimationPosition = temp.IndexesToCorrdinates();
 
             // TODO set Monster start position at game start. TODO set Monster Direction at game start.
             monsterAnimation.Collider.Collided += Monster_Collided;
         }
+
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {

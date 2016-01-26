@@ -24,6 +24,10 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         public ProjectilePool()
         {
+        }
+        // The singleton
+        public void Initialize()
+        {
             projectiles = new List<IWeapon>(numberOfProjectiles);
 
             // Create normal weapon spawns  
@@ -41,10 +45,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
                 projectiles[i].Used = false;
             }
             superWeaponIndexes = new IndexPair(numberOfProjectiles - 3, numberOfProjectiles - 1);
-
         }
-        // The singleton
-
 
         public IWeapon Acquire(Point position, bool isSuperWeapon)
         {

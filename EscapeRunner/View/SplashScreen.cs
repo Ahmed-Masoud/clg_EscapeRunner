@@ -40,18 +40,19 @@ namespace EscapeRunner.View
             PlaySound();
 #endif
             //this.Opacity = 0.5;
-
-            //this.ClientSize = this.BackgroundImage.Size;
-            splashScreenThread = new Thread(ShowForm);
-            splashScreenThread.IsBackground = true;
-            splashScreenThread.Start();
-
             window = new MainWindow();
             window.Opacity = 0.01;
             window.Show();
             //window.Hide();
             window.Opacity = 0;
             Program.MainWindow = window;
+
+            //this.ClientSize = this.BackgroundImage.Size;
+            splashScreenThread = new Thread(InitializeGameWindow);
+            splashScreenThread.IsBackground = true;
+            splashScreenThread.Start();
+
+
             Application.Run(this);
         }
 
@@ -96,14 +97,14 @@ namespace EscapeRunner.View
             }
         }
 
-        static public async void ShowForm()
+        public async void InitializeGameWindow()
         {
-            await Model.InitializeModelAsync();
-            Controller.InitializeController();
 
 #if !DEBUG
+            // Make the splash screen wait
             await Task.Run(() => Thread.Sleep(2500));
 #endif
+            await window.InitializeStaticClasses();
             doneLoading = true;
         }
         private void LoadResources()

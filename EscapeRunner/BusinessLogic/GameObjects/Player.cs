@@ -30,7 +30,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         public static IndexPair PlayerCoordiantes { set { playerCoordinates = value; } get { return playerCoordinates; } }
 
-        private Player()
+        public void Initialize()
         {
             playerCoordinates = MapLoader.WalkableTiles[0].TileIndecies;
             playerAnimation = (PlayerAnimation)AnimationFactory.CreateEmpyAnimation(AnimationType.PlayerAnimation);
@@ -43,12 +43,11 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         private void Collider_Collided(CollisionEventArgs e)
         {
-            
             //System.Threading.Tasks.Task.Run(() =>
             //{
             //    //System.Threading.Thread.Sleep(100);
             //    //Program.MainWindow.RefreshTimer.Enabled = false;
-                
+
             //});
         }
 
@@ -57,8 +56,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         /// </summary>
         public void StartMoving(Directions direction)
         {
-            // %2 to eliminate the double key press
-
             Move(direction);
         }
 
@@ -111,7 +108,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
                     playerAnimation.AnimationPosition = temp.IndexesToCorrdinates();
                     Direction = direction;
 
-
                     System.Threading.Tasks.Task.Run(() =>
                     {
                         System.Threading.Thread.Sleep(100);
@@ -125,6 +121,10 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         public void UpdateGraphics(Graphics g)
         {
             playerAnimation.Draw(g, Direction);
+        }
+
+        private Player()
+        {
         }
     }
 }

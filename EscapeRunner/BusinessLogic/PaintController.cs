@@ -1,51 +1,42 @@
 ﻿using EscapeRunner.BusinessLogic.GameObjects;
 using EscapeRunner.View;
 using System.Drawing;
-using System.Threading.Tasks;
 
 namespace EscapeRunner.BusinessLogic
 {
-
     /// <summary>
     /// Controller partial class to implement the drawing and sort algorithms
     /// </summary>
     public partial class Controller
     {
-        static PointF point = new PointF();
-        static bool increasing = true;
+        private static PointF point = new PointF();
+        private static bool increasing = true;
 
         public static void WindowRefresh(object sender, System.Windows.Forms.PaintEventArgs e)
         {
-
             Graphics g = e.Graphics;
             drawGraphics(e.Graphics);
 #if !DEBUG
             DrawMovingBackground(g);
 #endif
-
         }
 
         /// <summary>
         /// This method draws the floor only which causes no problems
         /// </summary>
         /// <param name="g"></param>
-        public static async Task<Bitmap> DrawBackgroundImage()
+        public static Bitmap DrawBackgroundImage()
         {
-
             Bitmap returnBitmap = new Bitmap(window.Width, window.Height);
-            await Task.Run(() =>
-            { // Used window ( Forms.ActiveForm ) didn't work as the main window wasn't yet set as the ActiveForm
+            using (Graphics gfx = Graphics.FromImage(returnBitmap))
+            {
+                gfx.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
+                gfx.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.GammaCorrected;
 
-                using (Graphics gfx = Graphics.FromImage(returnBitmap))
-                {
-                    gfx.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
-                    gfx.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.GammaCorrected;
-
-                    gfx.DrawImage(Model.Backgrounds[0], 0, 0, MainWindow.RightBound, MainWindow.LowerBound);
-                    MapLoader.DrawLevelFloor(gfx);
-                    gfx.Save();
-                }
-            });
+                gfx.DrawImage(Model.Backgrounds[0], 0, 0, MainWindow.RightBound, MainWindow.LowerBound);
+                MapLoader.DrawLevelFloor(gfx);
+                gfx.Save();
+            }
             return returnBitmap;
         }
 
@@ -86,7 +77,7 @@ namespace EscapeRunner.BusinessLogic
                         {
                             x.Draw(g);
                             ((Monster)y).UpdateGraphics(g);
-                            
+
                             break;
                         }
                         else if ((temp.X == ((Monster)y).Position.X && temp.Y == ((Monster)y).Position.Y - 32) || (temp.Y == ((Monster)y).Position.Y && temp.X == ((Monster)y).Position.X - 32) || (temp.X == ((Monster)y).Position.X - 32 && temp.Y == ((Monster)y).Position.Y - 32))
@@ -104,7 +95,6 @@ namespace EscapeRunner.BusinessLogic
         public static void DrawMovingBackground(Graphics g)
         {
             g.DrawImage(Model.Backgrounds[0], point.X, point.Y - 30, MainWindow.RightBound, MainWindow.LowerBound + 100);
-
         }
 
         public static void DrawShots(Graphics g)
@@ -136,12 +126,11 @@ namespace EscapeRunner.BusinessLogic
             }
         }
 
-
         public static void Next()
         {
             if (increasing)
             {
-                point.Y = (float)(point.Y + 0.2);
+                point.Y = (float)(point.Y + 0.7);
                 if (point.Y >= 5)
                 {
                     increasing = false;
@@ -149,13 +138,12 @@ namespace EscapeRunner.BusinessLogic
             }
             else
             {
-                point.Y = (float)(point.Y - 0.2);
+                point.Y = (float)(point.Y - 0.7);
                 if (point.Y <= 0)
                 {
                     increasing = true;
                 }
             }
         }
-
     }
 }
