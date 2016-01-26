@@ -1,4 +1,5 @@
 ﻿using EscapeRunner.Animations;
+using EscapeRunner.Sounds;
 using EscapeRunner.View;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             timer.Elapsed += Timer_Elapsed;
             timer.Enabled = true;
             timer.Interval = 250;
-            
+
             //MapLoader.MonsterStartLocation;
             //monsterAnimation.AnimationTileIndex = new IndexPair(1, 1);//temp.TileIndecies;
 
@@ -51,15 +52,12 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             // Game over
             if (e.CollidingObject.ToString().Equals("player"))
             {
-                System.Windows.Forms.MessageBox.Show("Game Over");
+                //System.Windows.Forms.MessageBox.Show("Game Over");
             }
 
             if (e.CollidingObject.ToString().Equals("bullet"))
             {
-                Task monsterMusic = new Task(() => MainWindow.monsterDie.Play());
-                monsterMusic.Start();
-                //Task.WaitAll(monsterMusic);
-                //MainWindow.backgroundMusic.PlayLooping();
+                Task.Run(() => AudioController.PlayMonsterDieSound());
             }
 
         }

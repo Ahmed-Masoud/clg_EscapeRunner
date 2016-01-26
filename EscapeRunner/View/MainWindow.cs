@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Media;
 using System.Threading.Tasks;
+using EscapeRunner.Sounds;
 
 namespace EscapeRunner
 {
@@ -12,9 +13,7 @@ namespace EscapeRunner
         private Timer refreshTimer = new Timer();
         public Timer RefreshTimer { get { return refreshTimer; } }
         private bool loaded = false;
-        public static System.Media.SoundPlayer laser;
-        public static System.Media.SoundPlayer monsterDie;
-        public static SoundPlayer backgroundMusic;
+
 
         public MainWindow()
         {
@@ -33,15 +32,14 @@ namespace EscapeRunner
         {
             await Model.InitializeModelAsync();
             Controller.InitializeController();
+            AudioController.Initialize();
 #if DEBUG
             this.BackgroundImage = Controller.DrawBackgroundImage();
 #endif
-            laser = new SoundPlayer(Model.SoundFiles[0]);
-            monsterDie = new SoundPlayer(Model.SoundFiles[1]);
-            backgroundMusic = new SoundPlayer(Model.SoundFiles[3]);
-            System.Threading.Thread backSound = new System.Threading.Thread(() => backgroundMusic.PlayLooping());
+
+            System.Threading.Thread backSound = new System.Threading.Thread(() => AudioController.PlayBackgroundSound());
             backSound.IsBackground = true;
-            backSound.Start();
+
 
             loaded = true;
         }
