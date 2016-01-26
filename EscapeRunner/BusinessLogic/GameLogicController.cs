@@ -17,6 +17,10 @@ namespace EscapeRunner.BusinessLogic
 
         private static Player player;
         private static List<IDrawable> drawableObjects = new List<IDrawable>();
+        public static List<IDrawable> DrawableObjects
+        {
+            get { return drawableObjects; }
+        }
         private static ProjectilePool projectilePool;
         private static MainWindow window;
 
@@ -26,14 +30,17 @@ namespace EscapeRunner.BusinessLogic
         public static void InitializeController()
         {
             window = Program.MainWindow;
+            
             // Subscribe to the notify event
             window.ViewNotification += Window_ViewNotification;
             player = Player.PlayerInstance;
+
             // Lazy initialization of projectile pool
             projectilePool = ProjectilePool.Instance;
             Monster mon = new Monster();
 
             drawableObjects.Add(mon);
+            drawableObjects.Add(player);
             backgroundIllusionTimer.Interval = 100;
             backgroundIllusionTimer.Elapsed += BackgroundIllusionTimer_Elapsed;
             backgroundIllusionTimer.Enabled = true;
@@ -46,6 +53,7 @@ namespace EscapeRunner.BusinessLogic
             drawGraphics += player.UpdateGraphics;
             drawGraphics += UpdateTiles;
             drawGraphics += DrawShots;
+
         }
 
         private static void BackgroundIllusionTimer_Elapsed(object sender, ElapsedEventArgs e)

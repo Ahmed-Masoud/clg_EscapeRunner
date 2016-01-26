@@ -16,7 +16,7 @@ namespace EscapeRunner.BusinessLogic
 
         public static void WindowRefresh(object sender, System.Windows.Forms.PaintEventArgs e)
         {
-            
+
             Graphics g = e.Graphics;
             drawGraphics(e.Graphics);
 #if !DEBUG
@@ -31,6 +31,7 @@ namespace EscapeRunner.BusinessLogic
         /// <param name="g"></param>
         public static async Task<Bitmap> DrawBackgroundImage()
         {
+
             Bitmap returnBitmap = new Bitmap(window.Width, window.Height);
             await Task.Run(() =>
             { // Used window ( Forms.ActiveForm ) didn't work as the main window wasn't yet set as the ActiveForm
@@ -50,10 +51,50 @@ namespace EscapeRunner.BusinessLogic
 
         public static void UpdateTiles(Graphics g)
         {
-
+            Point temp;
             foreach (LevelTile x in MapLoader.ObstacleTiles)
-                if (x.TileIndecies.I > Player.PlayerCoordiantes.I || x.TileIndecies.J > Player.PlayerCoordiantes.J)
-                    x.Draw(g);
+            {
+                foreach (IDrawable y in Controller.DrawableObjects)
+                {
+                    if (y is Player)
+                    {
+                        if ((x.TileIndecies.I == Player.PlayerCoordiantes.I && x.TileIndecies.J == Player.PlayerCoordiantes.J + 1) || (x.TileIndecies.J == Player.PlayerCoordiantes.J && x.TileIndecies.I == Player.PlayerCoordiantes.I + 1) || (x.TileIndecies.J == Player.PlayerCoordiantes.J + 1 && x.TileIndecies.I == Player.PlayerCoordiantes.I + 1))
+                        {
+                            ((Player)y).UpdateGraphics(g);
+                            x.Draw(g);
+                            break;
+                        }
+                        else if ((x.TileIndecies.I == Player.PlayerCoordiantes.I && x.TileIndecies.J == Player.PlayerCoordiantes.J - 1) || (x.TileIndecies.J == Player.PlayerCoordiantes.J && x.TileIndecies.I == Player.PlayerCoordiantes.I - 1) || (x.TileIndecies.I == Player.PlayerCoordiantes.I - 1 && x.TileIndecies.J == Player.PlayerCoordiantes.J - 1))
+                        {
+                            x.Draw(g);
+                            ((Player)y).UpdateGraphics(g);
+                            break;
+                        }
+                        else
+                        {
+                            x.Draw(g);
+                        }
+                    }
+                    /*if (y is Monster)
+                    {
+                        temp = IsometricExtensionMethods.IndexesToCorrdinates(x.TileIndecies);
+                        if ((temp.X == ((Monster)y).Position.X && temp.Y == ((Monster)y).Position.Y + 32) || (temp.Y == ((Monster)y).Position.Y && temp.X == ((Monster)y).Position.X + 32) || (temp.X == ((Monster)y).Position.X + 32 && temp.Y == ((Monster)y).Position.Y + 32))
+                        {
+                            x.Draw(g);
+                            ((Monster)y).UpdateGraphics(g);
+                            
+                            break;
+                        }
+                        else if ((temp.X == ((Monster)y).Position.X && temp.Y == ((Monster)y).Position.Y - 32) || (temp.Y == ((Monster)y).Position.Y && temp.X == ((Monster)y).Position.X - 32) || (temp.X == ((Monster)y).Position.X - 32 && temp.Y == ((Monster)y).Position.Y - 32))
+                        {
+                            x.Draw(g);
+                            ((Monster)y).UpdateGraphics(g);
+                            break;
+                        }
+                        else x.Draw(g);
+                    }*/
+                }
+            }
         }
 
         public static void DrawMovingBackground(Graphics g)
@@ -74,17 +115,18 @@ namespace EscapeRunner.BusinessLogic
                         temp.UpdateGraphics(g);
                     else
                     {
-                        if (((IWeapon)temp).Used == true)
-                            temp.UpdateGraphics(g);
-                        // Delete the shot directly if it finished animation
-                        else
-                        {
-                            // Release bullet resources
-                            drawableObjects.RemoveAt(i);
-                            i--;
-                            if (drawableObjects.Count == 0)
-                                break;
-                        }
+                        if (temp is IWeapon)
+                            if (((IWeapon)temp).Used == true)
+                                temp.UpdateGraphics(g);
+                            // Delete the shot directly if it finished animation
+                            else
+                            {
+                                // Release bullet resources
+                                drawableObjects.RemoveAt(i);
+                                i--;
+                                if (drawableObjects.Count == 0)
+                                    break;
+                            }
                     }
                 }
             }

@@ -3,6 +3,7 @@ using EscapeRunner.View;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
@@ -21,7 +22,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             increasing = true;
             counter = 0;
             AnimationFactory factory = new AnimationFactory();
-            IndexPair temp = new IndexPair(1, 1);
+            IndexPair temp = new IndexPair(4, 1);
             myPath = new PathFinder(new RouteInformation(temp, new IndexPair(15, 15)));
             tempPath = myPath.FindPath();
             timer.Elapsed += Timer_Elapsed;
@@ -44,11 +45,20 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         private void Monster_Collided(CollisionEventArgs e)
         {
-            if (e.CollidingObject.ToString() == "bullet")
+            // Game over
+            if (e.CollidingObject.ToString().Equals("player"))
             {
-                MainWindow.monsterDie.Play();
-
+                System.Windows.Forms.MessageBox.Show("Game Over");
             }
+
+            if (e.CollidingObject.ToString().Equals("bullet"))
+            {
+                Task monsterMusic = new Task(() => MainWindow.monsterDie.Play());
+                monsterMusic.Start();
+                //Task.WaitAll(monsterMusic);
+                //MainWindow.backgroundMusic.PlayLooping();
+            }
+
         }
 
         public static int DX { get; } = 5;

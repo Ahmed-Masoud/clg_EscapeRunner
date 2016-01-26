@@ -43,7 +43,13 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         private void Collider_Collided(CollisionEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("Player collided with " + e.CollidingObject.ToString());
+            
+            //System.Threading.Tasks.Task.Run(() =>
+            //{
+            //    //System.Threading.Thread.Sleep(100);
+            //    //Program.MainWindow.RefreshTimer.Enabled = false;
+                
+            //});
         }
 
         /// <summary>
@@ -88,16 +94,23 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             }
 
             // Wall detection
-            if (MapLoader.IsWalkable(temp) || MapLoader.Level[temp.I, temp.J] == 6)
+            if (MapLoader.IsWalkable(temp) || MapLoader.Level[temp.I, temp.J] == 6 || MapLoader.Level[temp.I, temp.J] == 7)
             {
                 playerCoordinates = temp;
                 playerAnimation.AnimationPosition = temp.IndexesToCorrdinates();
                 Direction = direction;
+                if (MapLoader.Level[temp.I, temp.J] == 7)
+                {
+                    ProjectilePool pool = ProjectilePool.Instance;
+                    IWeapon y = pool.Acquire(Position, false);
+                    System.Windows.Forms.MessageBox.Show("Gift");
+                }
                 if (MapLoader.Level[temp.I, temp.J] == 6)
                 {
                     playerCoordinates = temp;
                     playerAnimation.AnimationPosition = temp.IndexesToCorrdinates();
                     Direction = direction;
+
 
                     System.Threading.Tasks.Task.Run(() =>
                     {

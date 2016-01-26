@@ -61,7 +61,11 @@ namespace EscapeRunner.BusinessLogic
                 {
                     // Fire the event
                     if (Collided != null)
+                    {
+                        // Notify Both objects
                         Collided(new CollisionEventArgs(another));
+                        another.Collider.Collided(new CollisionEventArgs(this.parentObject));
+                    }
                 }
             }
         }
