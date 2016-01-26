@@ -16,9 +16,6 @@ namespace EscapeRunner.BusinessLogic
         {
             Graphics g = e.Graphics;
             drawGraphics(e.Graphics);
-#if !DEBUG
-            DrawMovingBackground(g);
-#endif
         }
 
         /// <summary>
