@@ -39,8 +39,8 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private void ProjectileAlpha_Collided(CollisionEventArgs e)
         {
             // TODO collision check for monster and remove it
-            //if (e.CollidingObject is Monster)
-            //AudioController.();
+            if (e.CollidingObject is Monster)
+                AudioController.playSpaceTrashSound();
         }
 
         private void BulletCollider_Collided(CollisionEventArgs e)

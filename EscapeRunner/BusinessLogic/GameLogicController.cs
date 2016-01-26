@@ -1,6 +1,5 @@
 ﻿using EscapeRunner.Animations;
 using EscapeRunner.BusinessLogic.GameObjects;
-using EscapeRunner.Sounds;
 using EscapeRunner.View;
 using System;
 using System.Collections.Generic;
@@ -61,7 +60,7 @@ namespace EscapeRunner.BusinessLogic
             backgroundIllusionTimer.Enabled = true;
 
 #if !DEBUG
-
+            
 #endif
             drawGraphics += DrawMovingBackground;
             drawGraphics += MapLoader.DrawGameFlares;
@@ -101,7 +100,6 @@ namespace EscapeRunner.BusinessLogic
             {
                 case Notifing.Space:
                     FireBullet();
-                    AudioController.PlayLaserSound();
                     break;
 
                 case Notifing.Right:

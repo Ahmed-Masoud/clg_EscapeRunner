@@ -1,79 +1,75 @@
-﻿using System.Diagnostics;
-using System.IO;
-
-namespace EscapeRunner.Sounds
+﻿namespace EscapeRunner.Sounds
 {
     /// <summary>
     /// This class handles the audio play during the game
     /// </summary>
     internal sealed class AudioController
     {
-        private static WMPLib.WindowsMediaPlayer backgroundPlayer = new WMPLib.WindowsMediaPlayer();
-        private static WMPLib.WindowsMediaPlayer laserPlayer = new WMPLib.WindowsMediaPlayer();
-        private static WMPLib.WindowsMediaPlayer terroristPlayer = new WMPLib.WindowsMediaPlayer();
-        private static WMPLib.WindowsMediaPlayer torpedoPlayer = new WMPLib.WindowsMediaPlayer();
-        private static WMPLib.WindowsMediaPlayer monsterDiePlayer = new WMPLib.WindowsMediaPlayer();
 
-        public static void Initialize()
+        static WMPLib.WindowsMediaPlayer backgroundPlayer = new WMPLib.WindowsMediaPlayer();
+        static WMPLib.WindowsMediaPlayer laserPlayer = new WMPLib.WindowsMediaPlayer();
+        static WMPLib.WindowsMediaPlayer terroristPlayer = new WMPLib.WindowsMediaPlayer();
+        static WMPLib.WindowsMediaPlayer torpedoPlayer = new WMPLib.WindowsMediaPlayer();
+        static WMPLib.WindowsMediaPlayer spaceTrashPlayer = new WMPLib.WindowsMediaPlayer();
+        
+        public static void playBackgroundSound()
         {
-            try
-            {
-                laserPlayer.URL = Model.SoundFiles[0];
-                monsterDiePlayer.URL = Model.SoundFiles[1];
-                backgroundPlayer.URL = Model.SoundFiles[2];
-                terroristPlayer.URL = Model.SoundFiles[3];
-                backgroundPlayer.EndOfStream += BackgroundPlayer_EndOfStream;
-                (backgroundPlayer.settings as WMPLib.IWMPSettings).setMode("loop", true);
-            }
-            catch (FileNotFoundException)
-            {
-                Debugger.Break();
-            }
-        }
+            backgroundPlayer.URL = Model.SoundFiles[4];
 
-        public static void PlayBackgroundSound()
-        {
             backgroundPlayer.controls.play();
         }
 
-        private static void BackgroundPlayer_EndOfStream(int Result)
-        {
-            backgroundPlayer.controls.play();
-        }
-
-        public static void StopBackgroundSound()
+        public static void stopBackgroundSound()
         {
             backgroundPlayer.controls.stop();
         }
 
-        public static void PlayLaserSound()
+        public static void playLaserSound()
         {
+            laserPlayer.URL = Model.SoundFiles[0];
+
             laserPlayer.controls.play();
         }
 
-        public static void StopLaserSound()
+        public static void stopLaserSound()
         {
             laserPlayer.controls.stop();
         }
 
-        public static void PlayTerroristSound()
+        public static void playTerroristSound()
         {
+            terroristPlayer.URL = Model.SoundFiles[3];
+
             terroristPlayer.controls.play();
         }
 
-        public static void StopTerrorsitSound()
+        public static void stopTerrorsitSound()
         {
             terroristPlayer.controls.stop();
         }
 
-        public static void PlayMonsterDieSound()
+        public static void playTorpedoSound()
         {
-            monsterDiePlayer.controls.play();
+            torpedoPlayer.URL = Model.SoundFiles[5];
+
+            torpedoPlayer.controls.play();
         }
 
-        public static void StopMonsterDieSound()
+        public static void stopTorpedoSound()
         {
-            monsterDiePlayer.controls.stop();
+            torpedoPlayer.controls.stop();
+        }
+
+        public static void playSpaceTrashSound()
+        {
+            spaceTrashPlayer.URL = Model.SoundFiles[1];
+
+            spaceTrashPlayer.controls.play();
+        }
+
+        public static void stopSpaceTrashSound()
+        {
+            spaceTrashPlayer.controls.stop();
         }
     }
 }
