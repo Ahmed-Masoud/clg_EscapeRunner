@@ -249,7 +249,7 @@ namespace LevelBuilder
             string tileFileName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName) + "-tile.xml";
             FileStream tfs = new FileStream(tileFileName, FileMode.Create);
             XmlTextWriter textWriter = new XmlTextWriter(tfs, null);
-            
+
             string pbDirName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName);
             Directory.CreateDirectory(pbDirName);
 

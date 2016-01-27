@@ -1,10 +1,9 @@
 ﻿using EscapeRunner.BusinessLogic;
-using System;
-using System.Windows.Forms;
-using System.Drawing;
-using System.Media;
-using System.Threading.Tasks;
 using EscapeRunner.Sounds;
+using System;
+using System.Drawing;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace EscapeRunner
 {
@@ -13,7 +12,6 @@ namespace EscapeRunner
         private Timer refreshTimer = new Timer();
         public Timer RefreshTimer { get { return refreshTimer; } }
         private bool loaded = false;
-
 
         public MainWindow()
         {
@@ -28,6 +26,7 @@ namespace EscapeRunner
             refreshTimer.Interval = 20;
             refreshTimer.Tick += new EventHandler(this.refreshTimer_Tick);
         }
+
         public async Task InitializeStaticClasses()
         {
             await Model.InitializeModelAsync();
@@ -40,9 +39,9 @@ namespace EscapeRunner
             System.Threading.Thread backSound = new System.Threading.Thread(() => AudioController.PlayBackgroundSound());
             backSound.IsBackground = true;
 
-
             loaded = true;
         }
+
         // Event for the MVC Pattern
         public delegate void KeyDownDelegate(ViewNotificationEventArgs x);
 
@@ -117,6 +116,5 @@ namespace EscapeRunner
         {
             Application.Exit();
         }
-
     }
 }

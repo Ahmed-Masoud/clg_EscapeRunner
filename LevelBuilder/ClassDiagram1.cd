@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="LevelBuilder.Controller.CodesGenerator">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Struct Name="LevelBuilder.Controller.CodesGenerator.IndexPair" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Controller\CodesGenerator.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Class Name="LevelBuilder.Controller.CodesGenerator.Wrapper" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Controller\CodesGenerator.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>IAAIEAAAQIAgAAAAAAAIAQAAAAAAAAAFAAIAAAIIACA=</HashCode>
+      <FileName>Controller\CodesGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LevelBuilder.Controller.SelectionTool">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBAAAAAgAAAAAAAAAAAAAIAABACAhAAAAwRAAAARAA=</HashCode>
+      <FileName>Controller\SelectionTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LevelBuilder.LevelBuilder" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>LTzBv79MU6I0CAaLwV3NwUL/hctWghYfqOdG1Le5tmI=</HashCode>
+      <FileName>LevelBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LevelBuilder.MapSetup">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAYDIAAAAAAIGgQAAGIAAACAACACAQAAAQACA=</HashCode>
+      <FileName>MapSetup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LevelBuilder.Model.Clipboard">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAQAQAAAAEAAAAAAABAAAAAQAAAAAAA=</HashCode>
+      <FileName>Model\Clipboard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LevelBuilder.Model.ClipboardNode">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MAAAAAAAAAAIAAABAAAAAAAAAAAAACAAAAAgAAAAAAA=</HashCode>
+      <FileName>Model\ClipboardNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LevelBuilder.Model.HistoryNode">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MAACAAAAAAAIAAABAAAAAAAAAAAAACAAAAAgAAAAAgA=</HashCode>
+      <FileName>Model\HistoryNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LevelBuilder.Model.LevelTile">
+    <Position X="10.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAgAAAgAAAAAAAAABAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\LevelTile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LevelBuilder.Model.Map">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAIAAQIAAAAgAAAAAASEAAAAAAAgAAAABAQIQEBA=</HashCode>
+      <FileName>Model\Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LevelBuilder.Model.Monster">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIACAACACAAQAAgAEAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Model\Monster.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LevelBuilder.Model.Player">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Model\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LevelBuilder.Model.Tile">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAQAACACAACCAEIAAAEAAAAUAIAhA=</HashCode>
+      <FileName>Model\Tile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="LevelBuilder.ToolType">
+    <Position X="4" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAIAAAAAAAAEAAAAAhAAAAAAAA=</HashCode>
+      <FileName>LevelBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LevelBuilder.Model.TileType">
+    <Position X="8.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAgAAAAAAAAACAAAAgAAEAAAAACAAAA=</HashCode>
+      <FileName>Model\LevelTile.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

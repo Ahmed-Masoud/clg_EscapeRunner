@@ -108,6 +108,7 @@ namespace LevelBuilder
             this.addPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deletePlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addMonsterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteMonsterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialogLoadTiles = new System.Windows.Forms.FolderBrowserDialog();
             this.saveMapDialog = new System.Windows.Forms.SaveFileDialog();
             this.openMapDialog = new System.Windows.Forms.OpenFileDialog();
@@ -124,7 +125,13 @@ namespace LevelBuilder
             this.contextMenuStripTile = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemWalkable = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteMonsterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addObjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addBombToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteBombToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addCoinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteCoinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addBulletToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteBulletToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlDesign.SuspendLayout();
             this.tctrlDesign.SuspendLayout();
             this.tpgDesign.SuspendLayout();
@@ -887,7 +894,8 @@ namespace LevelBuilder
             this.addPlayerToolStripMenuItem,
             this.deletePlayerToolStripMenuItem,
             this.addMonsterToolStripMenuItem,
-            this.deleteMonsterToolStripMenuItem});
+            this.deleteMonsterToolStripMenuItem,
+            this.addObjectsToolStripMenuItem});
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
             this.addToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.addToolStripMenuItem.Text = "Add";
@@ -912,6 +920,13 @@ namespace LevelBuilder
             this.addMonsterToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.addMonsterToolStripMenuItem.Text = "Add Monster";
             this.addMonsterToolStripMenuItem.Click += new System.EventHandler(this.addMonsterToolStripMenuItem_Click);
+            // 
+            // deleteMonsterToolStripMenuItem
+            // 
+            this.deleteMonsterToolStripMenuItem.Name = "deleteMonsterToolStripMenuItem";
+            this.deleteMonsterToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.deleteMonsterToolStripMenuItem.Text = "Delete Monster";
+            this.deleteMonsterToolStripMenuItem.Click += new System.EventHandler(this.deleteMonsterToolStripMenuItem_Click);
             // 
             // saveMapDialog
             // 
@@ -1071,12 +1086,60 @@ namespace LevelBuilder
             this.toolStripMenuItemDelete.Text = "Delete";
             this.toolStripMenuItemDelete.Click += new System.EventHandler(this.toolStripMenuItemDelete_Click);
             // 
-            // deleteMonsterToolStripMenuItem
+            // addObjectsToolStripMenuItem
             // 
-            this.deleteMonsterToolStripMenuItem.Name = "deleteMonsterToolStripMenuItem";
-            this.deleteMonsterToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.deleteMonsterToolStripMenuItem.Text = "Delete Monster";
-            this.deleteMonsterToolStripMenuItem.Click += new System.EventHandler(this.deleteMonsterToolStripMenuItem_Click);
+            this.addObjectsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addBombToolStripMenuItem,
+            this.deleteBombToolStripMenuItem,
+            this.addCoinToolStripMenuItem,
+            this.deleteCoinToolStripMenuItem,
+            this.addBulletToolStripMenuItem,
+            this.deleteBulletToolStripMenuItem});
+            this.addObjectsToolStripMenuItem.Name = "addObjectsToolStripMenuItem";
+            this.addObjectsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.addObjectsToolStripMenuItem.Text = "Add Objects";
+            // 
+            // addBombToolStripMenuItem
+            // 
+            this.addBombToolStripMenuItem.Name = "addBombToolStripMenuItem";
+            this.addBombToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addBombToolStripMenuItem.Text = "Add Bomb";
+            this.addBombToolStripMenuItem.Click += new System.EventHandler(this.addBombToolStripMenuItem_Click);
+            // 
+            // deleteBombToolStripMenuItem
+            // 
+            this.deleteBombToolStripMenuItem.Name = "deleteBombToolStripMenuItem";
+            this.deleteBombToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteBombToolStripMenuItem.Text = "Delete Bomb";
+            this.deleteBombToolStripMenuItem.Click += new System.EventHandler(this.deleteBombToolStripMenuItem_Click);
+            // 
+            // addCoinToolStripMenuItem
+            // 
+            this.addCoinToolStripMenuItem.Name = "addCoinToolStripMenuItem";
+            this.addCoinToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addCoinToolStripMenuItem.Text = "Add Coin";
+            this.addCoinToolStripMenuItem.Click += new System.EventHandler(this.addCoinToolStripMenuItem_Click);
+            // 
+            // deleteCoinToolStripMenuItem
+            // 
+            this.deleteCoinToolStripMenuItem.Name = "deleteCoinToolStripMenuItem";
+            this.deleteCoinToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteCoinToolStripMenuItem.Text = "Delete Coin";
+            this.deleteCoinToolStripMenuItem.Click += new System.EventHandler(this.deleteCoinToolStripMenuItem_Click);
+            // 
+            // addBulletToolStripMenuItem
+            // 
+            this.addBulletToolStripMenuItem.Name = "addBulletToolStripMenuItem";
+            this.addBulletToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addBulletToolStripMenuItem.Text = "Add Bullet";
+            this.addBulletToolStripMenuItem.Click += new System.EventHandler(this.addBulletToolStripMenuItem_Click);
+            // 
+            // deleteBulletToolStripMenuItem
+            // 
+            this.deleteBulletToolStripMenuItem.Name = "deleteBulletToolStripMenuItem";
+            this.deleteBulletToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteBulletToolStripMenuItem.Text = "Delete Bullet";
+            this.deleteBulletToolStripMenuItem.Click += new System.EventHandler(this.deleteBulletToolStripMenuItem_Click);
             // 
             // LevelBuilder
             // 
@@ -1225,9 +1288,16 @@ namespace LevelBuilder
         private System.Windows.Forms.ToolStripMenuItem addMonsterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deletePlayerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteMonsterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addObjectsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addCoinToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteCoinToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addBulletToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteBulletToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteBombToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addBombToolStripMenuItem;
 
         #endregion
-
+        
     }
 }
 

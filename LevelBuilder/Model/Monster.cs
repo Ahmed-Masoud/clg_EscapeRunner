@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace LevelBuilder.Model
 {
-    public class Monster
+    public class Monster : MapObject
     {
-        private Point startPoint;
         private Point endPoint;
 
         private bool start;
@@ -18,14 +13,7 @@ namespace LevelBuilder.Model
         {
             start = false;
             end = false;
-            startPoint = new Point(-1, -1);
             endPoint = new Point(-1, -1);
-        }
-
-        public Point StartPoint
-        {
-            get { return startPoint; }
-            set { startPoint = value; }
         }
 
         public Point EndPoint

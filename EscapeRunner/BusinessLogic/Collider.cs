@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EscapeRunner.BusinessLogic
 {
     public class Collider
     {
         private static Dictionary<ICollide, Rectangle> collidables = new Dictionary<ICollide, Rectangle>(8);
-        ICollide parentObject;
+        private ICollide parentObject;
+
         public delegate void Colliding(CollisionEventArgs e);
+
         private bool colliderActive = false;
+
         public event Colliding Collided;
+
         // Start placeholder values to avoid null exceptions
-        Rectangle colliderRectangle = Rectangle.Empty;
+        private Rectangle colliderRectangle = Rectangle.Empty;
 
         public bool ColliderActive
         {
@@ -42,7 +43,6 @@ namespace EscapeRunner.BusinessLogic
                 colliderActive = value;
             }
         }
-
 
         public Point Location
         {
@@ -96,7 +96,6 @@ namespace EscapeRunner.BusinessLogic
             {
                 foreach (var item in collidables)
                 {
-
                     if (this.colliderRectangle.IntersectsWith(item.Value) && item.Key.GetType() != this.parentObject.GetType())
                     {
                         return item.Key;

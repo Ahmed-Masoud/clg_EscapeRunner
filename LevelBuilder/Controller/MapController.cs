@@ -41,7 +41,6 @@ namespace LevelBuilder
                         for (int x = 0; x < map_width; x++)
                             for (int y = 0; y < map_height; y++)
                                 map[x, y] = -1;
-
                     }
                     else if (reader.Name == "Player")
                     {
@@ -65,12 +64,51 @@ namespace LevelBuilder
 
                         if (startX > 0 && startY > 0 && endX > 0 && endY > 0)
                         {
-                            monstersCount = Convert.ToInt32(reader.GetAttribute("id"));
+                            //monstersCount = Convert.ToInt32(reader.GetAttribute("id"));
                             monster.StartPoint = new Point(startX, startY);
                             monster.EndPoint = new Point(endX, endY);
                         }
 
                         monsters.Add(monster);
+                    }
+                    else if (reader.Name == "Bomb")
+                    {
+                        Model.Bomb bomb = new Model.Bomb();
+
+                        int XX = Convert.ToInt32(reader.GetAttribute("X"));
+                        int YY = Convert.ToInt32(reader.GetAttribute("Y"));
+
+                        if (XX > 0 && YY > 0)
+                        {
+                            bomb.StartPoint = new Point(XX, YY);
+                        }
+                        bombs.Add(bomb);
+                    }
+                    else if (reader.Name == "Coin")
+                    {
+                        Model.CoinGift coin = new Model.CoinGift();
+
+                        int XX = Convert.ToInt32(reader.GetAttribute("X"));
+                        int YY = Convert.ToInt32(reader.GetAttribute("Y"));
+
+                        if (XX > 0 && YY > 0)
+                        {
+                            coin.StartPoint = new Point(XX, YY);
+                        }
+                        coins.Add(coin);
+                    }
+                    else if (reader.Name == "Bullet")
+                    {
+                        Model.BulletGift bullet = new Model.BulletGift();
+
+                        int XX = Convert.ToInt32(reader.GetAttribute("X"));
+                        int YY = Convert.ToInt32(reader.GetAttribute("Y"));
+
+                        if (XX > 0 && YY > 0)
+                        {
+                            bullet.StartPoint = new Point(XX, YY);
+                        }
+                        bullets.Add(bullet);
                     }
                     else if (reader.Name == "Row")
                     {
@@ -95,7 +133,6 @@ namespace LevelBuilder
 
         public void RenderMap()
         {   // render map
-
             if (isIsometric)
             {
                 pbMap.Width = (tile_width * map_width) + 270;
@@ -163,8 +200,6 @@ namespace LevelBuilder
                 }
             }
 
-
-
             if (map_width > map_height)
             {
                 int mh = map_height * 150 / map_width;
@@ -194,7 +229,6 @@ namespace LevelBuilder
 
                 for (int b = 1; b < map_height; b++)
                 {   // draw horizontal lines
-
                     gfx.DrawLine(Pens.Gray, 0, b * tile_height, map_width * tile_width, b * tile_height);
                 }
             }
@@ -220,7 +254,6 @@ namespace LevelBuilder
 
             gfx.Dispose();
             pbMap.Refresh();
-
         }
 
         public void ResetMap()
@@ -316,7 +349,7 @@ namespace LevelBuilder
             w.WriteAttributeString("MapHeight", map_height.ToString());
             w.WriteAttributeString("TileWidth", tile_width.ToString());
             w.WriteAttributeString("TileHeight", tile_height.ToString());
-            
+
             w.WriteStartElement("Player");
             w.WriteAttributeString("PlayerX", player.StartPoint.X.ToString());
             w.WriteAttributeString("PlayerY", player.StartPoint.Y.ToString());
@@ -324,7 +357,7 @@ namespace LevelBuilder
 
             w.WriteStartElement("Monsters");
 
-            for (int i = 0; i < monstersCount; i++)
+            for (int i = 0; i < monsters.Count; i++)
             {
                 w.WriteStartElement("Monster");
                 w.WriteAttributeString("id", (i + 1).ToString());
@@ -332,6 +365,45 @@ namespace LevelBuilder
                 w.WriteAttributeString("startY", monsters[i].StartPoint.Y.ToString());
                 w.WriteAttributeString("endX", monsters[i].EndPoint.X.ToString());
                 w.WriteAttributeString("endY", monsters[i].EndPoint.Y.ToString());
+                w.WriteEndElement();
+            }
+
+            w.WriteEndElement();
+
+            w.WriteStartElement("Bombs");
+
+            for (int i = 0; i < bombs.Count; i++)
+            {
+                w.WriteStartElement("Bomb");
+                w.WriteAttributeString("id", (i + 1).ToString());
+                w.WriteAttributeString("X", bombs[i].StartPoint.X.ToString());
+                w.WriteAttributeString("Y", bombs[i].StartPoint.Y.ToString());
+                w.WriteEndElement();
+            }
+
+            w.WriteEndElement();
+
+            w.WriteStartElement("Coins");
+
+            for (int i = 0; i < coins.Count; i++)
+            {
+                w.WriteStartElement("Coin");
+                w.WriteAttributeString("id", (i + 1).ToString());
+                w.WriteAttributeString("X", coins[i].StartPoint.X.ToString());
+                w.WriteAttributeString("Y", coins[i].StartPoint.Y.ToString());
+                w.WriteEndElement();
+            }
+
+            w.WriteEndElement();
+
+            w.WriteStartElement("Bullets");
+
+            for (int i = 0; i < bullets.Count; i++)
+            {
+                w.WriteStartElement("Bullet");
+                w.WriteAttributeString("id", (i + 1).ToString());
+                w.WriteAttributeString("X", bullets[i].StartPoint.X.ToString());
+                w.WriteAttributeString("Y", bullets[i].StartPoint.Y.ToString());
                 w.WriteEndElement();
             }
 
@@ -415,7 +487,6 @@ namespace LevelBuilder
 
             // change mouse cursor
             pbMap.Cursor = Cursors.Cross;
-
         }
 
         public void SetupMap()
@@ -443,14 +514,6 @@ namespace LevelBuilder
             ClearSelectedTile();
         }
 
-        public static Point isoTo2D(Point pt)
-        {
-            Point tempPt = new Point();
-            tempPt.X = (2 * pt.Y + pt.X) / 2;
-            tempPt.Y = (2 * pt.Y - pt.X) / 2;
-            return tempPt;
-        }
-
         public static Point twoDToIso(Point pt)
         {
             Point tempPt = new Point(0, 0);
@@ -458,6 +521,5 @@ namespace LevelBuilder
             tempPt.Y = (pt.X + pt.Y) / 2;
             return (tempPt);
         }
-
     }
 }

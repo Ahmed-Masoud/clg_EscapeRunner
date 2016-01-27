@@ -7,7 +7,6 @@ namespace LevelBuilder
 {
     public partial class LevelBuilder
     {
-
         #region File Menu
 
         private void newMapToolStripMenuItem_Click(object sender, EventArgs e)
@@ -83,9 +82,9 @@ namespace LevelBuilder
                 codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                     tile_library, tile_width, tile_height,
                     tbCode,
-                    player, monsters);
+                    player, monsters, coins, bullets, bombs);
                 codesGenerator.saveCSharp(current_working_filename);
-                
+
                 Cursor.Current = Cursors.Default;
             }
             catch (Exception ex)
@@ -98,7 +97,6 @@ namespace LevelBuilder
 
         private void saveMapAsToolStripMenuItem_Click(object sender, EventArgs e)
         {   // save map as
-
             string initialPath = Path.GetDirectoryName(
                             Path.GetDirectoryName(
                                 Directory.GetCurrentDirectory())) + "\\" + "Levels";
@@ -116,7 +114,7 @@ namespace LevelBuilder
                     codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                         tile_library, tile_width, tile_height,
                         tbCode,
-                        player, monsters);
+                        player, monsters, coins, bullets, bombs);
                     codesGenerator.saveCSharp(current_working_filename);
 
                     current_working_filename = this.saveMapDialog.FileName;
@@ -184,7 +182,7 @@ namespace LevelBuilder
             Application.Exit();
         }
 
-        #endregion
+        #endregion File Menu
 
         #region Edit Menu
 
@@ -320,7 +318,7 @@ namespace LevelBuilder
                 undoToolStripMenuItem.Enabled = false;
         }
 
-        #endregion
+        #endregion Edit Menu
 
         #region View Menu
 
@@ -333,7 +331,7 @@ namespace LevelBuilder
             codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
                 tbCode,
-                player, monsters);
+                player, monsters, coins, bullets, bombs);
 
             if (rbCPP.Checked)
                 codesGenerator.GenerateCPP();
@@ -408,7 +406,7 @@ namespace LevelBuilder
             RenderMap();
         }
 
-        #endregion
+        #endregion View Menu
 
         #region Select Menu
 
@@ -426,13 +424,12 @@ namespace LevelBuilder
             RenderMap();
         }
 
-        #endregion
+        #endregion Select Menu
 
         #region Tiles Menu
 
         private void addTilesToolStripMenuItem_Click(object sender, EventArgs e)
         {   // add tiles to tile library
-
             string path = Path.GetDirectoryName(
                             Path.GetDirectoryName(
                                 Path.GetDirectoryName(
@@ -496,14 +493,13 @@ namespace LevelBuilder
             backup_map.IsTileLibraryChanged = true;
         }
 
-        #endregion
+        #endregion Tiles Menu
 
         #region Tools
 
         private void btnToolBrush_Click(object sender, EventArgs e)
         {
             SelectTool(ToolType.brush);
-
         }
 
         private void btnToolEraser_Click(object sender, EventArgs e)
@@ -526,7 +522,7 @@ namespace LevelBuilder
             SelectTool(ToolType.selection);
         }
 
-        #endregion
+        #endregion Tools
 
         #region Generate Code
 
@@ -535,7 +531,7 @@ namespace LevelBuilder
             codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
                 tbCode,
-                player, monsters);
+                player, monsters, coins, bullets, bombs);
             codesGenerator.GenerateCPP();
             tctrlDesign.SelectedTab = tpgCode;
             rbCPP.Checked = true;
@@ -546,7 +542,7 @@ namespace LevelBuilder
             codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
                 tbCode,
-                player, monsters);
+                player, monsters, coins, bullets, bombs);
             codesGenerator.GenerateCSharp();
             tctrlDesign.SelectedTab = tpgCode;
             rbCS.Checked = true;
@@ -557,7 +553,7 @@ namespace LevelBuilder
             codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
                 tbCode,
-                player, monsters);
+                player, monsters, coins, bullets, bombs);
             codesGenerator.GenerateXML();
             tctrlDesign.SelectedTab = tpgCode;
             rbXML.Checked = true;
@@ -568,7 +564,7 @@ namespace LevelBuilder
             codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
                 tbCode,
-                player, monsters);
+                player, monsters, coins, bullets, bombs);
 
             if (rbCPP.Checked)
                 codesGenerator.GenerateCPP();
@@ -580,7 +576,7 @@ namespace LevelBuilder
             tctrlDesign.SelectedTab = tpgCode;
         }
 
-        #endregion
+        #endregion Generate Code
 
         #region Add Menu
 
@@ -599,16 +595,6 @@ namespace LevelBuilder
                 return;
             }
         }
-        
-        private void addMonsterToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            monstersCount++;
-            Model.Monster monster = new Model.Monster();
-            monsters.Add(monster);
-            MessageBox.Show("Please Select Monster " + monstersCount + " Start & End Positions:", "Monster" + monstersCount + "Positions", MessageBoxButtons.OK);
-            choosingMonster = true;
-            monsters[monstersCount - 1].Start = true;
-        }
 
         private void deletePlayerToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -617,40 +603,49 @@ namespace LevelBuilder
                 player = new Model.Player();
                 playerCount = 0;
                 MessageBox.Show("Player Deleted !", "Player Deletion", MessageBoxButtons.OK);
-            } 
+            }
             else
             {
                 MessageBox.Show("There is no player to delete !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+        private void addMonsterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Model.Monster monster = new Model.Monster();
+            monsters.Add(monster);
+            MessageBox.Show("Please Select Monster " + monsters.Count + " Start & End Positions:", "Monster " + monsters.Count + " Position", MessageBoxButtons.OK);
+            choosingMonster = true;
+            monsters[monsters.Count - 1].Start = true;
+        }
+
         private void deleteMonsterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (monstersCount > 0)
+            if (monsters.Count > 0)
             {
-                makeDeleteForm();
-                monstersCount--;
+                makeMonsterDeleteForm();
+                //monstersCount--;
             }
             else
             {
                 MessageBox.Show("There are no monsters to delete !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        
-        private void makeDeleteForm()
+
+        private void makeMonsterDeleteForm()
         {
             Form f = new Form();
             ListBox lb = new ListBox();
-            
-            lb.MouseDoubleClick += (s, e) => 
+
+            lb.MouseDoubleClick += (s, e) =>
             {
                 int index = lb.IndexFromPoint(e.Location);
                 monsters.RemoveAt(index);
                 MessageBox.Show("Monster" + (index + 1) + "deleted !", "Monster Deletion", MessageBoxButtons.OK);
                 f.Close();
             };
-            
-            for (int i = 0; i < monstersCount; i++)
+
+            for (int i = 0; i < monsters.Count; i++)
             {
                 lb.Items.Add("Monster " + (i + 1));
             }
@@ -661,7 +656,138 @@ namespace LevelBuilder
             f.Show();
         }
 
-        #endregion
+        private void addBombToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Model.Bomb bomb = new Model.Bomb();
+            bombs.Add(bomb);
+            MessageBox.Show("Please Select Bomb " + bombs.Count + " Position:", "Bomb " + bombs.Count + " Position", MessageBoxButtons.OK);
+            choosingBomb = true;
+        }
 
+        private void deleteBombToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (bombs.Count > 0)
+            {
+                makeBombDeleteForm();
+            }
+            else
+            {
+                MessageBox.Show("There are no bombs to delete !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void makeBombDeleteForm()
+        {
+            Form f = new Form();
+            ListBox lb = new ListBox();
+
+            lb.MouseDoubleClick += (s, e) =>
+            {
+                int index = lb.IndexFromPoint(e.Location);
+                bombs.RemoveAt(index);
+                MessageBox.Show("Bomb" + (index + 1) + "deleted !", "Bomb Deletion", MessageBoxButtons.OK);
+                f.Close();
+            };
+
+            for (int i = 0; i < bombs.Count; i++)
+            {
+                lb.Items.Add("Bomb " + (i + 1));
+            }
+
+            f.Controls.Add(lb);
+            f.Size = new Size(300, 200);
+            lb.Width = f.Width;
+            f.Show();
+        }
+
+        private void addCoinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Model.CoinGift coin = new Model.CoinGift();
+            coins.Add(coin);
+            MessageBox.Show("Please Select Coin " + coins.Count + " Position:", "Coin " + coins.Count + " Position", MessageBoxButtons.OK);
+            choosingCoin = true;
+        }
+
+        private void deleteCoinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (coins.Count > 0)
+            {
+                makeCoinDeleteForm();
+            }
+            else
+            {
+                MessageBox.Show("There are no coins to delete !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void makeCoinDeleteForm()
+        {
+            Form f = new Form();
+            ListBox lb = new ListBox();
+
+            lb.MouseDoubleClick += (s, e) =>
+            {
+                int index = lb.IndexFromPoint(e.Location);
+                coins.RemoveAt(index);
+                MessageBox.Show("Coin" + (index + 1) + "deleted !", "Coin Deletion", MessageBoxButtons.OK);
+                f.Close();
+            };
+
+            for (int i = 0; i < coins.Count; i++)
+            {
+                lb.Items.Add("Coin " + (i + 1));
+            }
+
+            f.Controls.Add(lb);
+            f.Size = new Size(300, 200);
+            lb.Width = f.Width;
+            f.Show();
+        }
+
+        private void addBulletToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Model.BulletGift bullet = new Model.BulletGift();
+            bullets.Add(bullet);
+            MessageBox.Show("Please Select Bullet " + bullets.Count + " Position:", "Bomb " + bullets.Count + " Position", MessageBoxButtons.OK);
+            choosingBullet = true;
+        }
+
+        private void deleteBulletToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (bullets.Count > 0)
+            {
+                makeBulletDeleteForm();
+            }
+            else
+            {
+                MessageBox.Show("There are no bullets to delete !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void makeBulletDeleteForm()
+        {
+            Form f = new Form();
+            ListBox lb = new ListBox();
+
+            lb.MouseDoubleClick += (s, e) =>
+            {
+                int index = lb.IndexFromPoint(e.Location);
+                bullets.RemoveAt(index);
+                MessageBox.Show("Bullet" + (index + 1) + "deleted !", "Bullet Deletion", MessageBoxButtons.OK);
+                f.Close();
+            };
+
+            for (int i = 0; i < bullets.Count; i++)
+            {
+                lb.Items.Add("Bullet " + (i + 1));
+            }
+
+            f.Controls.Add(lb);
+            f.Size = new Size(300, 200);
+            lb.Width = f.Width;
+            f.Show();
+        }
+
+        #endregion Add Menu
     }
 }

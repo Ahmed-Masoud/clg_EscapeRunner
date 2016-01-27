@@ -9,6 +9,7 @@ namespace EscapeRunner
     public static partial class Model
     {
         private static List<string> soundFiles;
+
         private static void LoadSounds()
         {
             if (soundFiles != null)

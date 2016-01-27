@@ -1,6 +1,5 @@
 ﻿using EscapeRunner.Animations;
 using EscapeRunner.Sounds;
-using EscapeRunner.View;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -18,13 +17,13 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private bool increasing;
         private int counter;
 
-        public Monster()
+        public Monster(IndexPair startPoint, IndexPair endPoint)
         {
             increasing = true;
             counter = 0;
             AnimationFactory factory = new AnimationFactory();
-            IndexPair temp = new IndexPair(4, 1);
-            myPath = new PathFinder(new RouteInformation(temp, new IndexPair(15, 15)));
+            IndexPair temp = startPoint;
+            myPath = new PathFinder(new RouteInformation(startPoint, endPoint));
             tempPath = myPath.FindPath();
             timer.Elapsed += Timer_Elapsed;
             timer.Enabled = true;
@@ -39,7 +38,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             // TODO set Monster start position at game start. TODO set Monster Direction at game start.
             monsterAnimation.Collider.Collided += Monster_Collided;
         }
-
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -59,7 +57,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             {
                 Task.Run(() => AudioController.PlayMonsterDieSound());
             }
-
         }
 
         public static int DX { get; } = 5;
@@ -74,7 +71,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
                 return monsterAnimation.AnimationPosition;
             }
         }
-
 
         //public void Move(Directions direction)
         //{
@@ -106,7 +102,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         public void UpdateGraphics(Graphics g)
         {
             monsterAnimation.Draw(g, Direction);
-
 
             // Update the collider's location
             monsterAnimation.Collider.Location = monsterAnimation.AnimationPosition = tempPath[counter].IndexesToCorrdinates();

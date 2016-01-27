@@ -40,9 +40,7 @@ namespace EscapeRunner.BusinessLogic
 
         public static void UpdateTiles(Graphics g)
         {
-            List<IDrawable> allReDrawable = new List<IDrawable>(MapLoader.ObstacleTiles.Count + Controller.MovingObjects.Count + Controller.ConstantObjects.Count);
-            allReDrawable.AddRange(MapLoader.ObstacleTiles);
-            allReDrawable.AddRange(Controller.MovingObjects);
+            List<IDrawable> allReDrawable = new List<IDrawable>(Controller.ConstantObjects.Count);
             allReDrawable.AddRange(Controller.ConstantObjects);
             //sorting them
             allReDrawable.Sort((p1, p2) => (p1.myPoint.X + p1.myPoint.Y).CompareTo(p2.myPoint.X + p2.myPoint.Y));

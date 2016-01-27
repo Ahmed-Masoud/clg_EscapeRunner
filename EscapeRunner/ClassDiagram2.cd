@@ -1,0 +1,321 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EscapeRunner.BusinessLogic.Collider" Collapsed="true">
+    <Position X="13.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQEAIIABAAAAAAAAACAAAAAABAAAAE=</HashCode>
+      <FileName>BusinessLogic\Collider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.BusinessLogic.CollisionEventArgs" Collapsed="true">
+    <Position X="15.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAg=</HashCode>
+      <FileName>BusinessLogic\CollisionEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.BusinessLogic.Controller" Collapsed="true">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ggAIAIKAgAgAAAAAEAAAAAAAAkAAAwBZAAAAAAAgCgA=</HashCode>
+      <FileName>BusinessLogic\GameLogicController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.BusinessLogic.IsometricExtensionMethods" Collapsed="true">
+    <Position X="10" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAEAAAAAAAAAAAQQAAAAAAA=</HashCode>
+      <FileName>BusinessLogic\IsometricExtensionMethods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.BusinessLogic.RouteInformation" Collapsed="true">
+    <Position X="17" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQBA=</HashCode>
+      <FileName>BusinessLogic\PathFinder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.BusinessLogic.Node" Collapsed="true">
+    <Position X="11.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAIAAAAQAAAAACAAAAAAHEAYAAA=</HashCode>
+      <FileName>BusinessLogic\PathFinder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.BusinessLogic.PathFinder" Collapsed="true">
+    <Position X="13.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAACAAABAAAAkAAAAACAAAAAAAAIAAAgAAAAAgIgQ=</HashCode>
+      <FileName>BusinessLogic\PathFinder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.BusinessLogic.GameObjects.Bomb" Collapsed="true">
+    <Position X="5.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAEAAAAIAAAAAAAAABAEAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>BusinessLogic\GameObjects\Bomb.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EscapeRunner.BusinessLogic.GameObjects.BombA" Collapsed="true">
+    <Position X="5.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAIAAAAAAAAIBAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>BusinessLogic\GameObjects\BombA.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.BusinessLogic.GameObjects.BulletGift" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAIAAAAAAAAIBAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>BusinessLogic\GameObjects\BulletGift.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.BusinessLogic.GameObjects.CoinGift" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAIAAAAAAAAIBAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>BusinessLogic\GameObjects\CoinGift.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.BusinessLogic.GameObjects.Gift" Collapsed="true">
+    <Position X="1.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAEAAAAIAAAAAAAAABAEAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>BusinessLogic\GameObjects\Gifts.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EscapeRunner.BusinessLogic.GameObjects.Monster" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIABAAAAAAYAAgACECAAAAAgAAIAkAAARAgAAAAAA=</HashCode>
+      <FileName>BusinessLogic\GameObjects\Monster.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EscapeRunner.BusinessLogic.GameObjects.Player" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABABAAAIAAIQAgACCAABAAAAgAAAEIAAAAAAIAAAA=</HashCode>
+      <FileName>BusinessLogic\GameObjects\Player.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EscapeRunner.BusinessLogic.GameObjects.ProjectileClassAlpha" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAABAAAAAIoAAAAAAAAAAEAAgAJAAAIAAAQAIAAGQ=</HashCode>
+      <FileName>BusinessLogic\GameObjects\ProjectileClassAlpha.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EscapeRunner.BusinessLogic.GameObjects.ProjectileClassBeta" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAIAAAAAAAAAAEAAAAAAAAIAAAAAAAAEA=</HashCode>
+      <FileName>BusinessLogic\GameObjects\ProjectileClassBeta.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EscapeRunner.BusinessLogic.GameObjects.ProjectilePool" Collapsed="true">
+    <Position X="13.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAEAQAAQAAggAAAAANAABAAAAAQABAAAAAAAA=</HashCode>
+      <FileName>BusinessLogic\GameObjects\ProjectilePool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.Model" Collapsed="true">
+    <Position X="17" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AggQAJCAEBAQADAQEQEgEAEAAACAIAAAAIJAgARIBAA=</HashCode>
+      <FileName>Model\AnimationModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.ViewNotificationEventArgs" Collapsed="true">
+    <Position X="13.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\KeyChangedEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.MainWindow" Collapsed="true">
+    <Position X="13.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAEABgADAAAAABAACCAAACAAEAAAAQBAAAEAQAIAA=</HashCode>
+      <FileName>View\MainWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.Animations.Animation" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAACAAIAAgAAAAAADAAAAAAAAIAwAABAFAAAAAA=</HashCode>
+      <FileName>Model\Animations\Animation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EscapeRunner.Animations.AnimationFactory" Collapsed="true">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgACAAAAAAAAAAIA=</HashCode>
+      <FileName>Model\Animations\AnimationFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.Animations.BulletAnimation" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAkMAABgAAIAgAAEAABgAAAAAAAAAAAIAABgCQAAAIA=</HashCode>
+      <FileName>Model\Animations\BulletAnimation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EscapeRunner.Animations.ExplosionAnimation" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAIAABAAAAAgAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Animations\ExplosionAnimation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EscapeRunner.Animations.MonsterAnimation" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAgAEAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Animations\MonsterAnimation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EscapeRunner.Animations.PlayerAnimation" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAggEAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Animations\PlayerAnimation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.Sounds.AudioController" Collapsed="true">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAEAAAEQQAAAAEAAAAAEiAAAAAGAAAAAAAA0A=</HashCode>
+      <FileName>Model\Sounds\AudioController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.View.Program" Collapsed="true">
+    <Position X="17" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.View.LevelTile" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAoAABAAAAAAIgAgAggACAAAAAABAgAAAUgAAABAAAA=</HashCode>
+      <FileName>View\LevelTile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="EscapeRunner.View.MapLoader" Collapsed="true">
+    <Position X="15.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAEAwgAAAJAEQAABJABAOAAEACCABAIAQAAKHAAA=</HashCode>
+      <FileName>View\MapLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.View.SplashScreen" Collapsed="true">
+    <Position X="11.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAASgAAAAAAACQAAgCCAAABAAJCAABEAAAAAA=</HashCode>
+      <FileName>View\SplashScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.Properties.Resources" Collapsed="true">
+    <Position X="15.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EscapeRunner.Properties.Settings" Collapsed="true">
+    <Position X="10" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="EscapeRunner.BusinessLogic.IndexPair" Collapsed="true">
+    <Position X="10" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAAIAEAACABAiA=</HashCode>
+      <FileName>BusinessLogic\IndexPair.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="EscapeRunner.BusinessLogic.ICollide" Collapsed="true">
+    <Position X="10" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessLogic\ICollide.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EscapeRunner.BusinessLogic.GameObjects.IDrawable" Collapsed="true">
+    <Position X="11.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessLogic\GameObjects\IDrawable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EscapeRunner.BusinessLogic.GameObjects.IWeapon" Collapsed="true">
+    <Position X="17" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAIAAAAAAAAEA=</HashCode>
+      <FileName>BusinessLogic\GameObjects\IWeapon.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EscapeRunner.Animations.IPrototype&lt;T&gt;" Collapsed="true">
+    <Position X="13.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Model\Animations\IPrototype.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EscapeRunner.Animations.IReciever" Collapsed="true">
+    <Position X="15.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Model\Animations\IReciever.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="EscapeRunner.BusinessLogic.NodeState" Collapsed="true">
+    <Position X="13.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>BusinessLogic\PathFinder.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EscapeRunner.Notifing" Collapsed="true">
+    <Position X="15.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACIAAAAAAAAAAAAAAAAAAAAAAAAACACAAAAAAAI=</HashCode>
+      <FileName>View\KeyChangedEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EscapeRunner.Animations.Directions" Collapsed="true">
+    <Position X="11.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAACACAAAAAAAI=</HashCode>
+      <FileName>Model\Animations\Animation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EscapeRunner.Animations.AnimationType" Collapsed="true">
+    <Position X="10" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAACAAAgAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Model\Animations\AnimationFactory.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EscapeRunner.View.TileType" Collapsed="true">
+    <Position X="17" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAgAAAAAAAAACAAAAgAAEAAAAACAAAA=</HashCode>
+      <FileName>View\LevelTile.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

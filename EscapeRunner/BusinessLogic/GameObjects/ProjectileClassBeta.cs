@@ -5,7 +5,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 {
     internal class ProjectileClassBeta : IWeapon, IDrawable
     {
-
         public Point BulletStartPosition
         {
             get

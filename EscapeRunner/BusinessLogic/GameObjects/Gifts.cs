@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
-    abstract class Gift : IDrawable
+    internal abstract class Gift : IDrawable
     {
         //protected Image myGif;
         protected IndexPair indexPair;
+
         protected Point isoPoint;
+
         public bool IsTaken
         {
             get; set;
@@ -27,6 +24,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         protected static Size dimension = new Size(40, 40);
 
-        public abstract  void UpdateGraphics(Graphics g);
+        public abstract void UpdateGraphics(Graphics g);
     }
 }

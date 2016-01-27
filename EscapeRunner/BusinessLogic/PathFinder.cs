@@ -1,11 +1,10 @@
 ﻿using EscapeRunner.View;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace EscapeRunner.BusinessLogic
 {
-    enum NodeState
+    internal enum NodeState
     {
         Untested,//isn't tested Yet
         Open,//taken in consideration while finding the path(monster can use it)
@@ -16,11 +15,13 @@ namespace EscapeRunner.BusinessLogic
     {
         public IndexPair StartLocationIndex { get; set; }
         public IndexPair EndLocationIndex { get; set; }
+
         public RouteInformation(LevelTile startLocation, LevelTile endLocation)
         {
             StartLocationIndex = startLocation.TileIndecies;
             EndLocationIndex = endLocation.TileIndecies;
         }
+
         public RouteInformation(IndexPair startLocation, IndexPair endLocation)
         {
             StartLocationIndex = startLocation;
@@ -28,13 +29,14 @@ namespace EscapeRunner.BusinessLogic
         }
     }
 
-    class Node
+    internal class Node
     {
         public NodeState State { get; set; }
         public bool walkable;
         public IndexPair destinationLocation;
         public IndexPair Location { get; set; }
         private Node parentNode;
+
         public Node ParentNode
         {
             get { return parentNode; }
@@ -45,9 +47,11 @@ namespace EscapeRunner.BusinessLogic
                 F = G + H;
             }
         }
+
         public float F { get; set; }
         public float G { get; set; }
         public float H { get; set; }
+
         public Node(IndexPair destination, IndexPair index)
         {
             if (MapLoader.IsWalkable(index))
@@ -59,22 +63,23 @@ namespace EscapeRunner.BusinessLogic
             G = 0;
             H = GetTraversalCost(index, destination);
         }
+
         internal static float GetTraversalCost(IndexPair location, IndexPair otherLocation)
         {
             float deltaX = otherLocation.I - location.I;
             float deltaY = otherLocation.J - location.J;
             return (float)Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
         }
-
     }
 
-    class PathFinder
+    internal class PathFinder
     {
         private RouteInformation informations;
         private Node startNode;
         private Node endNode;
         private IndexPair levelSize;
         public Node[,] Map { get; set; }
+
         public PathFinder(RouteInformation informations)
         {
             levelSize = MapLoader.LevelDimensions;
@@ -84,6 +89,7 @@ namespace EscapeRunner.BusinessLogic
             startNode.State = NodeState.Open;
             endNode = Map[informations.EndLocationIndex.I, informations.EndLocationIndex.J];
         }
+
         public void initializeMap()
         {
             Map = new Node[levelSize.I, levelSize.J];
@@ -95,6 +101,7 @@ namespace EscapeRunner.BusinessLogic
                 }
             }
         }
+
         public List<IndexPair> FindPath()
         {
             // The start node is the first entry in the 'open' list
@@ -115,6 +122,7 @@ namespace EscapeRunner.BusinessLogic
             }
             return Minimize(path);
         }
+
         /// <summary>
         /// returns true if(the path leads to the destination and false if the path leads to dead end
         /// </summary>
@@ -146,6 +154,7 @@ namespace EscapeRunner.BusinessLogic
             // The method returns false if this path leads to be a dead end
             return false;
         }
+
         private List<Node> GetAdjacentWalkableNodes(Node fromNode)
         {
             List<Node> walkableNodes = new List<Node>();
@@ -188,8 +197,8 @@ namespace EscapeRunner.BusinessLogic
                 }
             }
             return walkableNodes;
-
         }
+
         private static IEnumerable<IndexPair> GetAdjacentLocations(IndexPair fromLocation)
         {
             return new IndexPair[]
@@ -200,6 +209,7 @@ namespace EscapeRunner.BusinessLogic
                 new IndexPair(fromLocation.I,   fromLocation.J-1)
             };
         }
+
         private static List<IndexPair> Minimize(List<IndexPair> path)
         {
             int temp = 0;
@@ -218,6 +228,7 @@ namespace EscapeRunner.BusinessLogic
             }
             return path;
         }
+
         private static bool IsShortCut(IndexPair firstIndex, IndexPair lastIndex)
         {
             if (firstIndex.I != lastIndex.I && firstIndex.J != lastIndex.J) return false;
@@ -251,6 +262,7 @@ namespace EscapeRunner.BusinessLogic
             }
             return false;
         }
+
         private static List<IndexPair> GetStraighPath(IndexPair firstIndex, IndexPair lastIndex)
         {
             List<IndexPair> newPath = new List<IndexPair>();
@@ -281,6 +293,7 @@ namespace EscapeRunner.BusinessLogic
             }
             return newPath;
         }
+
         private static List<IndexPair> InsertList(List<IndexPair> insertIn, List<IndexPair> toBeInserted, int startIndex, int lastIndex)
         {
             if (lastIndex < startIndex) return null;
@@ -302,5 +315,3 @@ namespace EscapeRunner.BusinessLogic
         }
     }
 }
-
-

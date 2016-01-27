@@ -15,7 +15,8 @@ namespace EscapeRunner.Animations
     /// </summary>
     public class AnimationFactory
     {
-        static Animation temp;
+        private static Animation temp;
+
         public Animation CreateAnimation(AnimationType animationName, IndexPair startLocation)
         {
             switch (animationName)
@@ -23,6 +24,7 @@ namespace EscapeRunner.Animations
                 case AnimationType.PlayerAnimation:
                     temp = new PlayerAnimation();
                     break;
+
                 case AnimationType.MonsterAnimation:
                     temp = new MonsterAnimation(); // new MonsterAnimation();
                     temp.AddCollider();
@@ -38,11 +40,13 @@ namespace EscapeRunner.Animations
                 case AnimationType.ExplosionAnimation:
                     temp = new ExplosionAnimation();
                     break;
+
                 default:
                     return null;
             }
             return temp;
         }
+
         public static Animation CreateEmpyAnimation(AnimationType animationName)
         {
             IndexPair startLocation = new IndexPair(0, 0);
@@ -52,6 +56,7 @@ namespace EscapeRunner.Animations
                     temp = new PlayerAnimation();
                     temp.AddCollider();
                     break;
+
                 case AnimationType.MonsterAnimation:
                     temp = new MonsterAnimation(); // new MonsterAnimation();
                     temp.AddCollider();
@@ -69,6 +74,7 @@ namespace EscapeRunner.Animations
                     temp = new ExplosionAnimation();
                     temp.Collider = new Collider(temp, System.Drawing.Rectangle.Empty);
                     break;
+
                 default:
                     return null;
             }

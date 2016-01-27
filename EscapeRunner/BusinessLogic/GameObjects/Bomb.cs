@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
-    abstract class Bomb : IDrawable
+    internal abstract class Bomb : IDrawable
     {
         protected IndexPair indexPair;
         protected Point isoPoint;
+
         public bool IsTaken
         {
             get; set;

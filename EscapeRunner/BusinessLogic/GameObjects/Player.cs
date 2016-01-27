@@ -1,7 +1,6 @@
 ﻿using EscapeRunner.Animations;
 using EscapeRunner.View;
 using System.Drawing;
-using System;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
@@ -31,17 +30,11 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         public static IndexPair PlayerCoordiantes { set { playerCoordinates = value; } get { return playerCoordinates; } }
 
-        public Point myPoint
-        {
-            get
-            {
-                return playerAnimation.AnimationPosition;
-            }
-        }
+        public Point myPoint { get { return playerAnimation.AnimationPosition; } }
 
         public void Initialize()
         {
-            playerCoordinates = MapLoader.WalkableTiles[0].TileIndecies;
+            playerCoordinates = MapLoader.PlayerStartLocation;
             playerAnimation = (PlayerAnimation)AnimationFactory.CreateEmpyAnimation(AnimationType.PlayerAnimation);
 
             // Initialize the player location to the top of the screen

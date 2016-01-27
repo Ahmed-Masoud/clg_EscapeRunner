@@ -5,8 +5,6 @@ using EscapeRunner.View;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace EscapeRunner.BusinessLogic
@@ -14,24 +12,31 @@ namespace EscapeRunner.BusinessLogic
     public partial class Controller
     {
         private delegate void DrawingOperations(Graphics g);
+
         private static DrawingOperations drawGraphics;
 
         private static Player player;
         private static List<IDrawable> movingObjects = new List<IDrawable>();
         private static List<IDrawable> constantObjects = new List<IDrawable>();
+
         public static List<IDrawable> MovingObjects
         {
             get { return movingObjects; }
         }
+
         public static List<IDrawable> ConstantObjects
         {
             get { return constantObjects; }
         }
+
         private static ProjectilePool projectilePool;
         private static MainWindow window;
 
-        static Timer backgroundIllusionTimer = new Timer();
-        private Controller() { }
+        private static Timer backgroundIllusionTimer = new Timer();
+
+        private Controller()
+        {
+        }
 
         public static void InitializeController()
         {
@@ -45,15 +50,36 @@ namespace EscapeRunner.BusinessLogic
             projectilePool = ProjectilePool.Instance;
             projectilePool.Initialize();
 
-            Monster mon = new Monster();
-            BulletGift giftaya = new BulletGift(new IndexPair(15, 7));
-            CoinGift giftayatanya = new CoinGift(new IndexPair(15, 10));
-            BombA bombaya = new BombA(new IndexPair(15, 4));
-            constantObjects.Add(bombaya);
-            ConstantObjects.Add(giftayatanya);
-            constantObjects.Add(giftaya);
+            /*for (int i = 0; i < MapLoader.MonstersCount; i++)
+            {
+                IndexPair startPoint = new IndexPair(MapLoader.Monsters[i].StartPoint.X, MapLoader.Monsters[i].StartPoint.Y);
+                IndexPair endPoint = new IndexPair(MapLoader.Monsters[i].EndPoint.X, MapLoader.Monsters[i].EndPoint.Y);
+                Monster mon = new Monster(startPoint, endPoint);
+                movingObjects.Add(mon);
+            }*/
+
+            for (int i = 0; i < MapLoader.BombsCount; i++)
+            {
+                IndexPair start = new IndexPair(MapLoader.Bombs[i].StartPoint.X, MapLoader.Bombs[i].StartPoint.Y);
+                BombA bomb = new BombA(start);
+                constantObjects.Add(bomb);
+            }
+
+            for (int i = 0; i < MapLoader.CoinsCount; i++)
+            {
+                IndexPair start = new IndexPair(MapLoader.Coins[i].StartPoint.X, MapLoader.Coins[i].StartPoint.Y);
+                CoinGift coin = new CoinGift(start);
+                constantObjects.Add(coin);
+            }
+
+            for (int i = 0; i < MapLoader.BulletsCount; i++)
+            {
+                IndexPair start = new IndexPair(MapLoader.Bullets[i].StartPoint.X, MapLoader.Bullets[i].StartPoint.Y);
+                BulletGift bullet = new BulletGift(start);
+                constantObjects.Add(bullet);
+            }
+
             movingObjects.Add(player);
-            movingObjects.Add(mon);
             backgroundIllusionTimer.Interval = 100;
             backgroundIllusionTimer.Elapsed += BackgroundIllusionTimer_Elapsed;
             backgroundIllusionTimer.Enabled = true;
@@ -68,7 +94,6 @@ namespace EscapeRunner.BusinessLogic
             drawGraphics += player.UpdateGraphics;
             drawGraphics += UpdateTiles;
             drawGraphics += DrawShots;
-
         }
 
         private static void BackgroundIllusionTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -116,6 +141,7 @@ namespace EscapeRunner.BusinessLogic
                 case Notifing.Up:
                     player.StartMoving(Directions.Up);
                     break;
+
                 default:
                     break;
             }

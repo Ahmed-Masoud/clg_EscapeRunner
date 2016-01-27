@@ -1,7 +1,6 @@
 ﻿using EscapeRunner.BusinessLogic;
 using System.Collections.Generic;
 using System.Drawing;
-using System;
 
 namespace EscapeRunner.Animations
 {
@@ -50,6 +49,7 @@ namespace EscapeRunner.Animations
             imageIndex++;
             imageIndex %= animationImages.Count;
         }
+
         public override string ToString()
         {
             return "monster";

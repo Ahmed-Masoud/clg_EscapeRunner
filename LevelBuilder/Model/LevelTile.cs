@@ -31,7 +31,6 @@ namespace LevelBuilder.Model
         {
             Point tempPoint = LevelBuilder.twoDToIso(twoDimPoint);
             g.DrawImage(texture, tempPoint.X, tempPoint.Y, dimensions.Width, dimensions.Height);
-            
         }
     }
 }
