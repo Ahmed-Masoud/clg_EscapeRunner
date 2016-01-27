@@ -12,7 +12,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             get; set;
         }
 
-        public Point myPoint
+        public Point DrawLocation
         {
             get
             {

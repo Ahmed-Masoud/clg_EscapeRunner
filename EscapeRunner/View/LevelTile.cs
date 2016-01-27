@@ -66,7 +66,7 @@ namespace EscapeRunner.View
         private Point TwoDimPoint
         { get { return twoDimPoint; } }
 
-        public Point myPoint
+        public Point DrawLocation
         {
             get
             {

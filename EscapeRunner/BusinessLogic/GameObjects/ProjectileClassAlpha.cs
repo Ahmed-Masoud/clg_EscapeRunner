@@ -87,11 +87,11 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             }
         }
 
-        public Point myPoint
+        public Point DrawLocation
         {
             get
             {
-                throw new NotImplementedException();
+                return bulletAni.AnimationPosition;
             }
         }
 
