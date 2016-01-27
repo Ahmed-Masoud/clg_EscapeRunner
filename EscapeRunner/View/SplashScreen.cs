@@ -31,14 +31,11 @@ namespace EscapeRunner.View
             opacityTimer.Interval = timerInterval;
             opacityTimer.Tick += OpacityTimer_Tick;
             opacityTimer.Enabled = true;
-            LoadResources();
+
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.ShowInTaskbar = false;
-#if !DEBUG
-            LoadResources();
-            PlaySound();
-#endif
+
             //this.Opacity = 0.5;
             window = new MainWindow();
             window.Opacity = 0.01;
@@ -46,13 +43,13 @@ namespace EscapeRunner.View
             //window.Hide();
             window.Opacity = 0;
             Program.MainWindow = window;
-
-            //this.ClientSize = this.BackgroundImage.Size;
             splashScreenThread = new Thread(InitializeGameWindow);
             splashScreenThread.IsBackground = true;
             splashScreenThread.Start();
+            LoadResources();
+            PlaySound();
 
-
+            //this.ClientSize = this.BackgroundImage.Size;
             Application.Run(this);
         }
 
@@ -109,12 +106,13 @@ namespace EscapeRunner.View
         }
         private void LoadResources()
         {
+
             string resPath = Path.GetDirectoryName(
                           Path.GetDirectoryName(
                               Directory.GetCurrentDirectory())) + "\\Res";
 
             string imagePath = resPath + "\\SplashScreen.jpg";
-            string soundPath = resPath + "\\Sounds\\03_Terrorist.wav";
+            string soundPath = resPath + "\\Sounds\\02_Terrorist.wav";
 
             if (File.Exists(imagePath) && File.Exists(soundPath))
             {

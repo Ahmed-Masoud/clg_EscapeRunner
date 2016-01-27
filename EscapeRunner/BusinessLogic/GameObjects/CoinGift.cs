@@ -1,31 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
-    class CoinGift : Gift
+    internal class CoinGift : Gift
     {
         private static readonly List<Bitmap> animation = Model.CoinGift;
-        int imageIndex = 0;
         private static int imageCount = animation.Count;
-        public CoinGift(IndexPair indexPair)
+
+        public CoinGift(Point location)
         {
-            this.indexPair = indexPair;
-            IsTaken = false;
-            isoPoint = IsometricExtensionMethods.IndexesToCorrdinates(indexPair).TwoDimensionsToIso();
-            isoPoint.X += 10;
-            isoPoint.Y += 10;
+            location.X += 10;
+            location.Y += 10;
+            animationWidth = 40;
+            animationHeight = 40;
+            AnimationPosition = location;
         }
+        public override void AddCollider()
+        {
+            base.AddCollider();
+            this.collider.Collided += Collider_Collided;
+        }
+
+        private void Collider_Collided(CollisionEventArgs e)
+        {
+            // Do stuff
+        }
+
         public override void UpdateGraphics(Graphics g)
         {
-            g.DrawImage(animation[imageIndex], isoPoint.X, isoPoint.Y, dimension.Width, dimension.Height);
-            loadNextImage();
+            DrawFrame(g, animation[imageIndex]);
+
+            LoadNextAnimationImage();
         }
-        private void loadNextImage()
+
+        public override void LoadNextAnimationImage()
         {
             imageIndex++;
             imageIndex %= imageCount;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EscapeRunner.Animations;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -7,24 +8,23 @@ using System.Threading.Tasks;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
-    abstract class Bomb : IDrawable
+    abstract class Bomb : Animation, IDrawable
     {
-        protected IndexPair indexPair;
-        protected Point isoPoint;
         public bool IsTaken
         {
             get; set;
         }
 
+        /// <summary>
+        /// 2D drawing location
+        /// </summary>
         public Point DrawLocation
         {
             get
             {
-                return isoPoint;
+                return animationPosition;
             }
         }
-
-        protected static Size dimension = new Size(32, 32);
 
         public abstract void UpdateGraphics(Graphics g);
     }

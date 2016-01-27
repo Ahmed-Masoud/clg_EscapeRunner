@@ -1,9 +1,7 @@
 ﻿using EscapeRunner.Animations;
-using EscapeRunner.View;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading.Tasks;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
@@ -28,7 +26,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             timer.Elapsed += Timer_Elapsed;
             timer.Enabled = true;
             timer.Interval = 250;
-            
+
             //MapLoader.MonsterStartLocation;
             //monsterAnimation.AnimationTileIndex = new IndexPair(1, 1);//temp.TileIndecies;
 
@@ -38,7 +36,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             // TODO set Monster start position at game start. TODO set Monster Direction at game start.
             monsterAnimation.Collider.Collided += Monster_Collided;
         }
-
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -56,12 +53,8 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
             if (e.CollidingObject.ToString().Equals("bullet"))
             {
-                Task monsterMusic = new Task(() => MainWindow.monsterDie.Play());
-                monsterMusic.Start();
-                //Task.WaitAll(monsterMusic);
-                //MainWindow.backgroundMusic.PlayLooping();
+                AudioController.PlayMonsterDieSound();
             }
-
         }
 
         public static int DX { get; } = 5;
@@ -77,7 +70,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             }
         }
 
-
         //public void Move(Directions direction)
         //{
         //    Point newPosition = monsterAnimation.AnimationPosition;
@@ -87,20 +79,13 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         //            newPosition.Y -= DY;
         //            break;
 
-        //        case Directions.Down:
-        //            newPosition.Y += DY;
-        //            break;
+        // case Directions.Down: newPosition.Y += DY; break;
 
-        //        case Directions.Left:
-        //            newPosition.X -= DX;
-        //            break;
+        // case Directions.Left: newPosition.X -= DX; break;
 
-        //        case Directions.Right:
-        //            newPosition.X += DX;
-        //            break;
-        //    }
+        // case Directions.Right: newPosition.X += DX; break; }
 
-        //    monsterAnimation.AnimationPosition = newPosition;
+        // monsterAnimation.AnimationPosition = newPosition;
 
         //    monsterAnimation.LoadNextAnimationImage();
         //}
@@ -108,7 +93,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         public void UpdateGraphics(Graphics g)
         {
             monsterAnimation.Draw(g, Direction);
-
 
             // Update the collider's location
             monsterAnimation.Collider.Location = monsterAnimation.AnimationPosition = tempPath[counter].IndexesToCorrdinates();

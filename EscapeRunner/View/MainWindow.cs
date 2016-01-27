@@ -12,9 +12,6 @@ namespace EscapeRunner
         private Timer refreshTimer = new Timer();
         public Timer RefreshTimer { get { return refreshTimer; } }
         private bool loaded = false;
-        public static System.Media.SoundPlayer laser;
-        public static System.Media.SoundPlayer monsterDie;
-        public static SoundPlayer backgroundMusic;
 
         public MainWindow()
         {
@@ -33,15 +30,11 @@ namespace EscapeRunner
         {
             await Model.InitializeModelAsync();
             Controller.InitializeController();
+            AudioController.Initialize();
 #if DEBUG
             this.BackgroundImage = Controller.DrawBackgroundImage();
 #endif
-            laser = new SoundPlayer(Model.SoundFiles[0]);
-            monsterDie = new SoundPlayer(Model.SoundFiles[1]);
-            backgroundMusic = new SoundPlayer(Model.SoundFiles[3]);
-            System.Threading.Thread backSound = new System.Threading.Thread(() => backgroundMusic.PlayLooping());
-            backSound.IsBackground = true;
-            backSound.Start();
+            AudioController.PlayBackgroundSound();
 
             loaded = true;
         }

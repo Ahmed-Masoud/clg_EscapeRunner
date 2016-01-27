@@ -11,6 +11,7 @@ namespace EscapeRunner
     /// </summary>
     public static partial class Model
     {
+        
         private static List<Bitmap> backgrounds;
 
         private static List<Bitmap> bulletClassA;

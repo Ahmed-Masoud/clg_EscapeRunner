@@ -14,13 +14,13 @@ namespace EscapeRunner.BusinessLogic
             return tempPt;
         }
 
-        public static Point IsoToTwoDimensions(this Point pt)
-        {
-            Point tempPt = new Point();
-            tempPt.X = (2 * pt.Y + pt.X) / 2;
-            tempPt.Y = (2 * pt.Y - pt.X) / 2;
-            return tempPt;
-        }
+        //public static Point IsoToTwoDimensions(this Point pt)
+        //{
+        //    Point tempPt = new Point();
+        //    tempPt.X = (2 * pt.Y + pt.X) / 2;
+        //    tempPt.Y = (2 * pt.Y - pt.X) / 2;
+        //    return tempPt;
+        //}
 
         /// <summary>
         /// Converts Cartesian coordinates to isometric coordinates

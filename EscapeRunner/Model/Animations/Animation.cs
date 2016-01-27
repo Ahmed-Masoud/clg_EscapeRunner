@@ -32,6 +32,8 @@ namespace EscapeRunner.Animations
         protected Collider collider = new Collider(Rectangle.Empty);
         protected Point animationPosition = Point.Empty;
 
+        private Point isoDrawLocation;   // This point is used for conversion, not needed in child classes
+
         public Collider Collider
         {
             get { return collider; }
@@ -56,7 +58,8 @@ namespace EscapeRunner.Animations
         /// </summary>
         public virtual void DrawFrame(Graphics g, Bitmap animationImage)
         {
-            g.DrawImage(animationImage, AnimationPosition.TwoDimensionsToIso().X, AnimationPosition.TwoDimensionsToIso().Y, animationWidth, animationHeight);
+            isoDrawLocation = animationPosition.TwoDimensionsToIso();
+            g.DrawImage(animationImage, isoDrawLocation.X, isoDrawLocation.Y, animationWidth, animationHeight);
 #if DEBUG
             //g.FillRectangle(Brushes.Yellow, objectBounds);
             //Point isoLocation = AnimationPosition.TwoDimensionsToIso();
@@ -94,7 +97,7 @@ namespace EscapeRunner.Animations
 
             return returnBitmap;
         }
-        public void AddCollider()
+        public virtual void AddCollider()
         {
             this.Collider = new Collider(this, new Rectangle(AnimationPosition, new Size(animationWidth, animationHeight)));
             this.Collider.ColliderActive = true;

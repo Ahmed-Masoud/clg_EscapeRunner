@@ -19,7 +19,7 @@ namespace EscapeRunner.Animations
         bool visible = false;
 
         // Horizontal displacement is bigger because the screen is always horizontally bigger
-        private int verticalDisplacement = 9, horizontalDisplacement = 18;
+        private int verticalDisplacement = 30, horizontalDisplacement = 37;
         public bool Visible
         {
             get { return visible; }
@@ -32,8 +32,8 @@ namespace EscapeRunner.Animations
             if (bulletImages != null)
                 ImageCount = bulletImages.Count;
 
-            animationHeight = 30;
-            animationWidth = 30;
+            animationHeight = 20;
+            animationWidth = 20;
             this.collider = new Collider(new Rectangle(0, 0, animationWidth, animationHeight));
             Point tempEdge =
                 new IndexPair(MapLoader.LevelDimensions.I - 1, MapLoader.LevelDimensions.J - 1).IndexesToCorrdinates();
@@ -61,7 +61,7 @@ namespace EscapeRunner.Animations
             if (bulletDirection == Directions.Up || bulletDirection == Directions.Down)
             {
                 Bitmap temp = bulletImages[imageIndex];
-                DrawFrame(g, RotateAnimation(temp, RotateFlipType.Rotate180FlipNone, RotateFlipType.Rotate180FlipNone));
+                DrawFrame(g, RotateAnimation(temp, RotateFlipType.Rotate180FlipX, RotateFlipType.Rotate180FlipX));
             }
             else
             {

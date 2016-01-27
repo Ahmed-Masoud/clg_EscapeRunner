@@ -10,22 +10,34 @@ namespace EscapeRunner.BusinessLogic.GameObjects
     class BombA : Bomb
     {
         private static readonly List<Bitmap> animation = Model.BombA;
-        int imageIndex = 0;
+
         private static int imageCount = animation.Count;
-        public BombA(IndexPair indexPair)
+        public BombA(Point location)
         {
             IsTaken = false;
-            this.indexPair = indexPair;
-            isoPoint = IsometricExtensionMethods.IndexesToCorrdinates(indexPair).TwoDimensionsToIso();
-            isoPoint.X += 15;
-            isoPoint.Y += 15;
+            this.AnimationPosition = location;
+            animationHeight = 32;
+            animationWidth = 32;
         }
+        public override void AddCollider()
+        {
+            base.AddCollider();
+            this.collider.Collided += Collider_Collided;
+        }
+
+        private void Collider_Collided(CollisionEventArgs e)
+        {
+            if (e.CollidingObject.ToString().Equals("player"))
+                this.IsTaken = true;
+        }
+
         public override void UpdateGraphics(Graphics g)
         {
-            g.DrawImage(animation[imageIndex], isoPoint.X, isoPoint.Y, dimension.Width, dimension.Height);
-            loadNextImage();
+            DrawFrame(g, animation[imageIndex]);
+            LoadNextAnimationImage();
         }
-        private void loadNextImage()
+
+        public override void LoadNextAnimationImage()
         {
             imageIndex++;
             imageIndex %= imageCount;

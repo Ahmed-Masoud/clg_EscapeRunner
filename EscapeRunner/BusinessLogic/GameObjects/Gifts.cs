@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EscapeRunner.Animations;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
-    abstract class Gift : IDrawable
+    abstract class Gift : Animation, IDrawable
     {
         //protected Image myGif;
         protected IndexPair indexPair;
@@ -17,16 +18,19 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             get; set;
         }
 
+        /// <summary>
+        /// 2D location of the object
+        /// </summary>
         public Point DrawLocation
         {
             get
             {
-                return isoPoint;
+                return animationPosition;
             }
         }
 
         protected static Size dimension = new Size(40, 40);
 
-        public abstract  void UpdateGraphics(Graphics g);
+        public abstract void UpdateGraphics(Graphics g);
     }
 }

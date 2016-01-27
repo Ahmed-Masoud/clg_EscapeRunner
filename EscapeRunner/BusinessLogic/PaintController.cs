@@ -42,24 +42,41 @@ namespace EscapeRunner.BusinessLogic
 
         public static void UpdateTiles(Graphics g)
         {
-            allReDrawable = new List<IDrawable>(MapLoader.ObstacleTiles.Count + MovingObjects.Count + ConstantObjects.Count);
-            allReDrawable.AddRange(MapLoader.ObstacleTiles);
-            allReDrawable.AddRange(MovingObjects);
-            allReDrawable.AddRange(ConstantObjects);
 
-            //sorting them
-            try
+            foreach (IDrawable x in ConstantObjects)
             {
-                allReDrawable.Sort((p1, p2) => (p1.DrawLocation.X + p1.DrawLocation.Y).CompareTo(p2.DrawLocation.X + p2.DrawLocation.Y));
-                foreach (IDrawable x in allReDrawable)
+                if (x is Gift)
                 {
-                    x.UpdateGraphics(g);
+                    if (!((Gift)x).IsTaken)
+                        x.UpdateGraphics(g);
+                }
+                else if (x is BombA)
+                {
+                    if (!((Bomb)x).IsTaken)
+                        x.UpdateGraphics(g);
                 }
             }
-            catch (InvalidOperationException)
+            foreach (LevelTile x in MapLoader.ObstacleTiles)
             {
-                Debugger.Break();
+                if (x.TileIndecies.I > Player.PlayerCoordiantes.I
+                    || x.TileIndecies.J > Player.PlayerCoordiantes.J
+                    || x.TileIndecies.I > x.Position.X
+                    || x.TileIndecies.J > Player.PlayerCoordiantes.J)
+                    x.Draw(g);
             }
+            ////sorting them
+            //try
+            //{
+            //    allReDrawable.Sort((p1, p2) => (p1.DrawLocation.X + p1.DrawLocation.Y).CompareTo(p2.DrawLocation.X + p2.DrawLocation.Y));
+            //    foreach (IDrawable x in allReDrawable)
+            //    {
+            //        x.UpdateGraphics(g);
+            //    }
+            //}
+            //catch (InvalidOperationException)
+            //{
+            //    Debugger.Break();
+            //}
 
         }
 

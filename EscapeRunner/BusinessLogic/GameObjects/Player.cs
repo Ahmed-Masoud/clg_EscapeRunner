@@ -108,8 +108,12 @@ namespace EscapeRunner.BusinessLogic.GameObjects
                 if (MapLoader.Level[temp.I, temp.J] == 7)
                 {
                     ProjectilePool pool = ProjectilePool.Instance;
-                    IWeapon y = pool.Acquire(Position, false);
-                    System.Windows.Forms.MessageBox.Show("Gift");
+                    try
+                    {
+                        IWeapon y = pool.Acquire(Position, false);
+                        System.Windows.Forms.MessageBox.Show("Gift");
+                    }
+                    catch (InvalidOperationException) { }
                 }
                 if (MapLoader.Level[temp.I, temp.J] == 6)
                 {
