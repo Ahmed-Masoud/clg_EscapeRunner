@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace EscapeRunner.BusinessLogic.GameObjects
+namespace EscapeRunner.BusinessLogic
 {
     /// <summary>
     /// Objects that exist in the object pool

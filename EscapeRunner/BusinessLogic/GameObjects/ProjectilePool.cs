@@ -30,7 +30,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         {
             projectiles = new List<IWeapon>(numberOfProjectiles);
 
-            // Create normal weapon spawns  
+            // Create normal weapon spawns
             for (int i = 0; i < numberOfProjectiles - 3; i++)
             {
                 projectiles.Add(new ProjectileClassAlpha());
@@ -65,7 +65,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         /// <returns>The actual explosion position</returns>
         private Point SetExplosionPlace(Directions direction, Point position)
         {
-
             // TODO fix for isometric view
             switch (direction)
             {

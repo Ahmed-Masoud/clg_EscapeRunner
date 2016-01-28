@@ -33,6 +33,7 @@ namespace EscapeRunner.BusinessLogic
             tempPt.Y = (pt.X + pt.Y) / 2;
             return tempPt;
         }
+
         /// <summary>
         /// Returns the corresponding Coordinates for an i and j indexes
         /// </summary>

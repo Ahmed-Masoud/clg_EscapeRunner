@@ -1,7 +1,6 @@
 ﻿using EscapeRunner.BusinessLogic;
 using System.Collections.Generic;
 using System.Drawing;
-using System;
 
 namespace EscapeRunner.Animations
 {
@@ -22,6 +21,12 @@ namespace EscapeRunner.Animations
 
             // Initialize Collider
             this.Collider = new Collider(new Rectangle(AnimationPosition.X, AnimationPosition.Y, animationWidth, animationHeight));
+            Controller.GraphicsSynchronizationTimer.Elapsed += GraphicsSynchronizationTimer_Elapsed;
+        }
+
+        private void GraphicsSynchronizationTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            LoadNextAnimationImage();
         }
 
         public void Draw(Graphics g, Directions direction)
@@ -50,6 +55,7 @@ namespace EscapeRunner.Animations
             imageIndex++;
             imageIndex %= animationImages.Count;
         }
+
         public override string ToString()
         {
             return "monster";

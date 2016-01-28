@@ -10,6 +10,5 @@
         /// Location indexes are used to keep the collider updated with the parent object's location
         /// </summary>
         Collider Collider { get; }
-       
     }
 }

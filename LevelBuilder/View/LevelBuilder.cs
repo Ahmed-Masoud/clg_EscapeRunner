@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+
 //using System.Linq;
-using System.Text;
 using System.IO;
+
 //using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LevelBuilder
 {
-
     public enum ToolType
     {
         brush = 1,
@@ -53,6 +51,9 @@ namespace LevelBuilder
         private bool isIsometric;
         private bool choosingPlayer;
         private bool choosingMonster;
+        private bool choosingBomb;
+        private bool choosingCoin;
+        private bool choosingBullet;
 
         private Controller.SelectionTool selection;
 
@@ -60,11 +61,17 @@ namespace LevelBuilder
 
         private int playerCount;
         private int monstersCount;
+        private int bombsCount;
+        private int coinsCount;
+        private int bulletsCount;
 
         private Model.Player player;
-        private List<Model.Monster> monsters;
+        private List<Model.MapMonster> monsters;
+        private List<Model.MapBomb> bombs;
+        private List<Model.MapCoinGift> coins;
+        private List<Model.MapBulletGift> bullets;
 
-        #endregion
+        #endregion private members
 
         #region member functions
 
@@ -297,7 +304,7 @@ namespace LevelBuilder
 
                 if (choosingMonster)
                 {
-                    int index = monstersCount - 1;
+                    int index = monsters.Count - 1;
                     if (monsters[index].Start)
                     {
                         monsters[index].StartPoint = new Point(mapX, mapY);
@@ -316,6 +323,29 @@ namespace LevelBuilder
                     }
                 }
 
+                if (choosingBomb)
+                {
+                    bombs[bombs.Count - 1].StartPoint = new Point(mapX, mapY);
+                    choosingBomb = false;
+                    MessageBox.Show("Bomb " + bombs.Count + " Point x: " + bombs[bombs.Count - 1].StartPoint.X + ", y: " + bombs[bombs.Count - 1].StartPoint.Y);
+                    return;
+                }
+
+                if (choosingCoin)
+                {
+                    coins[coins.Count - 1].StartPoint = new Point(mapX, mapY);
+                    choosingCoin = false;
+                    MessageBox.Show("Coin " + coins.Count + " Point x: " + coins[coins.Count - 1].StartPoint.X + ", y: " + coins[coins.Count - 1].StartPoint.Y);
+                    return;
+                }
+
+                if (choosingBullet)
+                {
+                    bullets[bullets.Count - 1].StartPoint = new Point(mapX, mapY);
+                    choosingBullet = false;
+                    MessageBox.Show("Bullet " + bullets.Count + " Point x: " + bullets[bullets.Count - 1].StartPoint.X + ", y: " + bullets[bullets.Count - 1].StartPoint.Y);
+                    return;
+                }
             }
             else if (e.Button == MouseButtons.Right)
             {
@@ -386,7 +416,6 @@ namespace LevelBuilder
 
         private void mapPicBox_MouseHover(object sender, EventArgs e)
         {
-
         }
 
         private void mapPicBox_MouseUp(object sender, MouseEventArgs e)
@@ -475,7 +504,7 @@ namespace LevelBuilder
             codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
                 tbCode,
-                player, monsters);
+                player, monsters, coins, bullets, bombs);
 
             codesGenerator.GenerateCPP();
 
@@ -491,7 +520,7 @@ namespace LevelBuilder
             codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
                 tbCode,
-                player, monsters);
+                player, monsters, coins, bullets, bombs);
 
             codesGenerator.GenerateCSharp();
 
@@ -507,7 +536,7 @@ namespace LevelBuilder
             codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
                 tbCode,
-                player, monsters);
+                player, monsters, coins, bullets, bombs);
 
             codesGenerator.GenerateXML();
 
@@ -531,7 +560,7 @@ namespace LevelBuilder
                 codesGenerator.setCodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
                 tbCode,
-                player, monsters);
+                player, monsters, coins, bullets, bombs);
 
                 if (rbCPP.Checked)
                     codesGenerator.GenerateCPP();
@@ -632,6 +661,9 @@ namespace LevelBuilder
             isIsometric = false;
             choosingPlayer = false;
             choosingPlayer = false;
+            choosingBomb = false;
+            choosingCoin = false;
+            choosingBullet = false;
 
             selected_tile = null;
             selection = new Controller.SelectionTool();
@@ -656,17 +688,22 @@ namespace LevelBuilder
 
             playerCount = 0;
             monstersCount = 0;
+            bombsCount = 0;
+            coinsCount = 0;
+            bulletsCount = 0;
 
             player = new Model.Player();
-            monsters = new List<Model.Monster>();
+            monsters = new List<Model.MapMonster>();
+            bombs = new List<Model.MapBomb>();
+            coins = new List<Model.MapCoinGift>();
+            bullets = new List<Model.MapBulletGift>();
 
             codesGenerator = new Controller.CodesGenerator(map, map_name, map_width, map_height,
                 tile_library, tile_width, tile_height,
                 tbCode,
-                player, monsters);
+                player, monsters, coins, bullets, bombs);
         }
 
-        #endregion
-
+        #endregion member functions
     }
 }

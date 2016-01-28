@@ -1,96 +1,87 @@
-﻿using System;
-using System.IO;
+﻿using LevelBuilder.Model;
+using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters.Binary;
-
-//using System.Linq;
-//using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace LevelBuilder.Controller
 {
+    [Serializable]
+    public class MapWrapper
+    {
+        public KeyValuePair<Point, Point>[] monsters;
+        public Point[] coins;
+        public Point[] bullets;
+        public Point[] bombs;
+        public int[,] map;
+
+        public MapWrapper()
+        {
+        }
+
+        public MapWrapper(int[,] map, List<MapMonster> monsters, List<MapCoinGift> coins, List<MapBulletGift> bullets, List<MapBomb> bombs)
+        {
+            List<Point> coinsL = new List<Point>();
+            List<Point> bulletsL = new List<Point>();
+            List<Point> bombsL = new List<Point>();
+            List<KeyValuePair<Point, Point>> monstersL = new List<KeyValuePair<Point, Point>>();
+
+            this.map = map;
+
+            // Load the monsters
+            foreach (var item in monsters)
+            {
+                monstersL.Add(new KeyValuePair<Point, Point>(item.StartPoint, item.EndPoint));
+            }
+            // Load the coin points to the wrapper
+            foreach (var item in coins)
+            {
+                coinsL.Add(item.StartPoint);
+            }
+
+            // Load the bullet points to the wrapper
+            foreach (var item in bullets)
+            {
+                bulletsL.Add(item.StartPoint);
+            }
+
+            foreach (var item in bombs)
+            {
+                bombsL.Add(item.StartPoint);
+            }
+            this.bombs = bombsL.ToArray();
+            this.bullets = bulletsL.ToArray();
+            this.coins = coinsL.ToArray();
+            this.monsters = monstersL.ToArray();
+        }
+    }
+
     public class CodesGenerator
     {
-        [Serializable()]
-        public struct IndexPair
-        {
-            int j, i;
-
-            public int J { get { return j; } set { j = value; } }
-            public int I { get { return i; } set { i = value; } }
-            public IndexPair(int i, int j)
-            {
-                this.j = j;
-                this.i = i;
-            }
-            public static bool operator ==(IndexPair p1, IndexPair p2)
-            {
-                if (p1.i == p2.i && p1.j == p2.j)
-                    return true;
-                return false;
-            }
-            public static bool operator !=(IndexPair p1, IndexPair p2)
-            {
-                if (p1.i != p2.i || p1.j != p2.j)
-                    return true;
-                return false;
-            }
-            public override bool Equals(object obj)
-            {
-                if (obj is IndexPair)
-                {
-                    IndexPair p = (IndexPair)obj;
-
-                    if (this.i == p.i && this.j == p.j)
-                        return true;
-                    else
-                        return false;
-                }
-                throw new InvalidCastException();
-            }
-        }
-
-        [Serializable()]
-        public class Wrapper
-        {
-            const int walkableArrayTileNumber = 0;
-            int[,] level;
-            List<IndexPair> MonsterLocations;
-            public Wrapper() { }
-
-            public Wrapper(int[,] level, IndexPair playerLocation)
-            {
-                this.level = level;
-                MonsterLocations = new List<IndexPair>();
-            }
-
-            public void AddMonster(IndexPair location)
-            {
-                if (level[location.I, location.J] == walkableArrayTileNumber)
-                    MonsterLocations.Add(location);
-                else
-                    throw new InvalidOperationException("Tile isn't walkable");
-            }
-
-        }
-
         private int[,] map;
         private int map_height;
         private string map_name;
         private int map_width;
 
         private int tile_height;
-        private Model.Tile[] tile_library;
+        private Tile[] tile_library;
         private int tile_width;
 
         private System.Windows.Forms.TextBox tbCode;
 
-        private Model.Player player;
-        private List<Model.Monster> monsters;
+        private Player player;
+        private List<MapMonster> monsters;
+        private List<MapCoinGift> coins;
+        private List<MapBulletGift> bullets;
+        private List<MapBomb> bombs;
 
+        // Target
         public CodesGenerator(int[,] map, string map_name, int map_width, int map_height,
-            Model.Tile[] tile_library, int tile_width, int tile_height,
+            Tile[] tile_library, int tile_width, int tile_height,
             System.Windows.Forms.TextBox tbCode,
-            Model.Player player, List<Model.Monster> monsters)
+            Player player, List<MapMonster> monsters, List<MapCoinGift> coins, List<MapBulletGift> bullets, List<MapBomb> bombs)
         {
             this.map = map;
             this.map_name = map_name;
@@ -105,12 +96,15 @@ namespace LevelBuilder.Controller
 
             this.player = player;
             this.monsters = monsters;
+            this.coins = coins;
+            this.bullets = bullets;
+            this.bombs = bombs;
         }
 
         public void setCodesGenerator(int[,] map, string map_name, int map_width, int map_height,
-            Model.Tile[] tile_library, int tile_width, int tile_height,
+            Tile[] tile_library, int tile_width, int tile_height,
             System.Windows.Forms.TextBox tbCode,
-            Model.Player player, List<Model.Monster> monsters)
+            Player player, List<MapMonster> monsters, List<MapCoinGift> coins, List<MapBulletGift> bullets, List<MapBomb> bombs)
         {
             this.map = map;
             this.map_name = map_name;
@@ -125,6 +119,9 @@ namespace LevelBuilder.Controller
 
             this.player = player;
             this.monsters = monsters;
+            this.coins = coins;
+            this.bullets = bullets;
+            this.bombs = bombs;
         }
 
         public void GenerateCPP()
@@ -373,7 +370,6 @@ namespace LevelBuilder.Controller
 
                     if ((w + 1) != map_width)
                         code.Write(", ");
-
                 }
                 code.Write("}");
 
@@ -386,102 +382,154 @@ namespace LevelBuilder.Controller
             code.Write("};\r\n");
 
             tbCode.Text = code.ToString();
-
         }
 
         public void saveCSharp(string fileName)
         {
-            StringWriter code = new StringWriter();
-
-            // print player location
-            code.Write("int[] playerPosition = {");
-            code.Write(player.StartPoint.X + ", ");
-            code.Write(player.StartPoint.Y + "};\r\n\r\n");
-            
-            // print monsters locations
-            code.Write("int monstersCount = " + monsters.Count + ";\r\n\r\n");
-            
-            code.Write("int [,] monsters = {\r\n");
-
-            for (int i = 0; i < monsters.Count; i++)
-            {
-                code.Write("\t{ ");
-                code.Write(monsters[i].StartPoint.X + ", " + monsters[i].StartPoint.Y + ", ");
-                code.Write(monsters[i].EndPoint.X + ", " + monsters[i].EndPoint.Y + "}");
-
-                if ((i + 1) != monsters.Count)
-                    code.Write(", ");
-
-                code.Write("\r\n");
-            }
-
-            code.Write("};\r\n\r\n");
-            
-
-            // print rows & columns
-            code.Write("int cols = " + map_width + ";\r\n");
-            code.Write("int rows = " + map_height + ";\r\n\r\n");
-            
-            // print map[x,y]
-            code.Write("int [,] " + map_name + " = {\r\n");
-            
-            for (int h = 0; h < map_height; h++)
-            {
-                code.Write("\t{ ");
-                for (int w = 0; w < map_width; w++)
-                {
-                    code.Write(map[w, h]);
-
-                    if ((w + 1) != map_width)
-                        code.Write(", ");
-
-                }
-                code.Write("}");
-
-                if ((h + 1) != map_height)
-                    code.Write(", ");
-
-                code.Write("\r\n");
-            }
-
-            code.Write("};\r\n");
-
-            fileName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName) + ".game";
-
-            StreamWriter stream = new StreamWriter(fileName);
-            stream.WriteLine(code.ToString());
-
-            stream.Close();
-
-            // Fix variables
-
-            /*string path = Path.GetDirectoryName(
-                            Path.GetDirectoryName(
-                                Directory.GetCurrentDirectory())) + "\\";
-            path = Path.Combine(path, Path.Combine("Res", "Levels"))+ "level.game";
-
-            fileName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName) + ".game";
-
-            FileStream wS = new FileStream(fileName, FileMode.Create);
-            //// Y -> I , X -> J
-            Wrapper wrapper = new Wrapper(map, new IndexPair(player.StartPoint.Y, player.StartPoint.X));
+            //FileStream fs = new FileStream(@"E:\map.json", FileMode.Create);
+            //BinaryWriter bw = new BinaryWriter(fs);
             try
             {
-                // Add all monster locations
-                // foreach(var item in monsterLocations)
-                //  wrapper.AddMonster(new IndexPair(5, 7));
+                MapWrapper wrapper = new MapWrapper(this.map, this.monsters, this.coins, this.bullets, this.bombs);
+                StreamWriter stream = new StreamWriter(@"E:\XML\map.xml");
+                XmlSerializer serializer = new XmlSerializer(typeof(MapWrapper));
+                serializer.Serialize(stream, wrapper);
+                stream.Close();
             }
-            catch (InvalidOperationException)
+            catch (Exception exc)
             {
-                // Monster location is invalid
+                string s = exc.Message;
+                Debugger.Break();
             }
 
-            //BinaryWriter d = new BinaryWriter(s);
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            binaryFormatter.Serialize(wS, wrapper);
+            //bw.Write(wrapper);
+            //bw.Close();
+            //stream.Write(json);
+            //StringWriter code = new StringWriter();
 
-            wS.Close();*/
+            //// print player location
+            //code.Write("int[] playerPosition = {");
+            //code.Write(player.StartPoint.X + ", ");
+            //code.Write(player.StartPoint.Y + "};\r\n\r\n");
 
+            //// print monsters locations
+            //code.Write("int monstersCount = " + monsters.Count + ";\r\n\r\n");
+
+            //code.Write("int [,] monsters = {\r\n");
+
+            //for (int i = 0; i < monsters.Count; i++)
+            //{
+            //    code.Write("\t{ ");
+            //    code.Write(monsters[i].StartPoint.X + ", " + monsters[i].StartPoint.Y + ", ");
+            //    code.Write(monsters[i].EndPoint.X + ", " + monsters[i].EndPoint.Y + "}");
+
+            // if ((i + 1) != monsters.Count) code.Write(", ");
+
+            //    code.Write("\r\n");
+            //}
+
+            //code.Write("};\r\n\r\n");
+
+            //// print bombs locations
+            //code.Write("int bombsCount = " + bombs.Count + ";\r\n\r\n");
+
+            //code.Write("int [,] bombs = {\r\n");
+
+            //for (int i = 0; i < bombs.Count; i++)
+            //{
+            //    code.Write("\t{");
+            //    code.Write(bombs[i].StartPoint.X + ", " + bombs[i].StartPoint.Y + "}");
+
+            // if ((i + 1) != bombs.Count) code.Write(", ");
+
+            //    code.Write("\r\n");
+            //}
+
+            //code.Write("};\r\n\r\n");
+
+            //// print coins locations
+            //code.Write("int coinsCount = " + coins.Count + ";\r\n\r\n");
+
+            //code.Write("int [,] coins = {\r\n");
+
+            //for (int i = 0; i < coins.Count; i++)
+            //{
+            //    code.Write("\t{");
+            //    code.Write(coins[i].StartPoint.X + ", " + coins[i].StartPoint.Y + "}");
+
+            // if ((i + 1) != coins.Count) code.Write(", ");
+
+            //    code.Write("\r\n");
+            //}
+
+            //code.Write("};\r\n\r\n");
+
+            //// print bullets locations
+            //code.Write("int bulletsCount = " + bullets.Count + ";\r\n\r\n");
+
+            //code.Write("int [,] bullets = {\r\n");
+
+            //for (int i = 0; i < bullets.Count; i++)
+            //{
+            //    code.Write("\t{");
+            //    code.Write(bullets[i].StartPoint.X + ", " + bullets[i].StartPoint.Y + "}");
+
+            // if ((i + 1) != bullets.Count) code.Write(", ");
+
+            //    code.Write("\r\n");
+            //}
+
+            //code.Write("};\r\n\r\n");
+
+            //// print rows & columns
+            //code.Write("int cols = " + map_width + ";\r\n");
+            //code.Write("int rows = " + map_height + ";\r\n\r\n");
+
+            //// print map[x,y]
+            //code.Write("int [,] " + map_name + " = {\r\n");
+
+            //for (int h = 0; h < map_height; h++)
+            //{
+            //    code.Write("\t{ ");
+            //    for (int w = 0; w < map_width; w++)
+            //    {
+            //        code.Write(map[w, h]);
+
+            // if ((w + 1) != map_width) code.Write(", "); } code.Write("}");
+
+            // if ((h + 1) != map_height) code.Write(", ");
+
+            //    code.Write("\r\n");
+            //}
+
+            //code.Write("};\r\n");
+
+            //fileName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName) + ".game";
+
+            //StreamWriter stream = new StreamWriter(fileName);
+            //stream.WriteLine(code.ToString());
+
+            //stream.Close();
+
+            //fileName = Path.GetDirectoryName(fileName) + "\\" + Path.GetFileNameWithoutExtension(fileName) + ".game";
+
+            //Wrapper wrapper = new Wrapper(map, new IndexPair(player.StartPoint.Y, player.StartPoint.X));
+            //foreach (var monster in monsters)
+            //{
+            //    wrapper.AddMonster(new KeyValuePair<IndexPair, IndexPair>(
+            //                            new IndexPair(monster.StartPoint.X, monster.StartPoint.Y),
+            //                            new IndexPair(monster.EndPoint.X, monster.EndPoint.Y)));
+            //}
+
+            //string json = JsonConvert.SerializeObject(wrapper, Formatting.Indented, new JsonSerializerSettings()
+            //{
+            //    TypeNameHandling = TypeNameHandling.None
+            //});
+
+            //StreamWriter stream = new StreamWriter(fileName, false);
+            //stream.WriteLine(json);
+
+            //stream.Close();
         }
 
         public void GenerateXML()
@@ -568,6 +616,5 @@ namespace LevelBuilder.Controller
 
             tbCode.Text = code.ToString();
         }
-
     }
 }

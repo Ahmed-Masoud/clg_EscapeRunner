@@ -1,6 +1,6 @@
 ﻿using EscapeRunner.Animations;
+using System;
 using System.Drawing;
-
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
@@ -20,7 +20,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private Point explosionPosition = Point.Empty;
         private ExplosionAnimation explosionAni;   // Change ExplosionAnimation class to public to make this work
 
-
         private bool used;
 
         internal ProjectileClassAlpha()
@@ -29,31 +28,21 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             explosionAni = (ExplosionAnimation)((IPrototype<Animation>)prototypeExplosionAnimation).Clone();
             bulletAni = (BulletAnimation)((IPrototype<Animation>)prototypeBulletAnimation).Clone();
 
-
             explosionAni.AnimationPosition = Point.Empty;
             bulletAni.AnimationPosition = Point.Empty;
             bulletAni.Collider.Collided += BulletCollider_Collided;
         }
 
-        private void ProjectileAlpha_Collided(CollisionEventArgs e)
-        {
-            // TODO collision check for monster and remove it
-            if (e.CollidingObject is Monster)
-                AudioController.PlayMonsterDieSound();
-        }
-
         private void BulletCollider_Collided(CollisionEventArgs e)
         {
-            if (e.CollidingObject.ToString() == "player")
-                return;
-            // Check the colliding object, and do the bullet's reactions
-            //if (e.CollidingObject is Monster)
-            //  System.Diagnostics.Debug.WriteLine("Collided with a monster");
-            System.Diagnostics.Debug.WriteLine("Collision detected from bullet to " + e.CollidingObject.GetType().ToString());
-            bulletAni.Collider.ColliderActive = false;
+            if (e.CollidingObject.ToString() == "monster")
+             {
+                System.Diagnostics.Debug.WriteLine("Collision detected from bullet to " + e.CollidingObject.GetType().ToString());
+                bulletAni.Collider.Active = false;
 
-            // Setting the usage of bullet to false
-            bulletAni.Visible = false;
+                // Setting the usage of bullet to false
+                bulletAni.Visible = false;
+            }    
         }
 
         public Point BulletStartPosition
@@ -76,13 +65,13 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             {
                 if (value == true)
                 {
-                    bulletAni.Collider.ColliderActive = true;
+                    bulletAni.Collider.Active = true;
                     bulletAni.Visible = true;
                 }
                 else
                 {
                     // Deactivate the collider to avoid keeping the bullet's collider when it's not active
-                    bulletAni.Collider.ColliderActive = false;
+                    bulletAni.Collider.Active = false;
                     bulletAni.Locked = false;
                 }
                 used = value;

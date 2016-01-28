@@ -11,7 +11,7 @@ namespace EscapeRunner
     /// </summary>
     public static partial class Model
     {
-        
+
         private static List<Bitmap> backgrounds;
 
         private static List<Bitmap> bulletClassA;
@@ -41,7 +41,7 @@ namespace EscapeRunner
         {
             string projectPath = FindProjectPath();
             resFolderPath = Path.Combine(projectPath, "Res");
-            
+
 
         }
         public static async Task InitializeModelAsync()
@@ -70,8 +70,6 @@ namespace EscapeRunner
 
         private static async Task LoadAnimations()
         {
-            if (flareAnimation != null)
-                return;
             // Check for the main resource folder
             if (Directory.Exists(resFolderPath))
             {
@@ -97,14 +95,14 @@ namespace EscapeRunner
                     && Directory.Exists(bombAFolder)
                     && Directory.Exists(bulletGiftFolder))
                 {
-                    flareAnimation = await LoadResourceFromDisk(bitmapRead, flareFolder, "*.png");
                     characterAnimation = await LoadResourceFromDisk(bitmapRead, charAnimationsFolder, "*.png");
+                    flareAnimation = await LoadResourceFromDisk(bitmapRead, flareFolder, "*.png");
                     explosionAnimation = await LoadResourceFromDisk(bitmapRead, explosionAnimationsFolder, "*.png");
                     bulletClassA = await LoadResourceFromDisk(bitmapRead, bulletAnimationsFolder, "*.png");
                     tileTextures = await LoadResourceFromDisk(bitmapRead, levelTileFolder, "*.png");
 
                     monsterAnimation = await LoadResourceFromDisk(bitmapRead, monsterFolder, "*.png");
-                    backgrounds = await LoadResourceFromDisk(bitmapRead, backgroundFolder, "*.png");
+                    backgrounds = await LoadResourceFromDisk(bitmapRead, backgroundFolder, "*.jpg");
                     coinGift = await LoadResourceFromDisk(bitmapRead, coinGiftFolder, "*.png");
                     bulletGift = await LoadResourceFromDisk(bitmapRead, bulletGiftFolder, "*.png");
                     bombA = await LoadResourceFromDisk(bitmapRead, bombAFolder, "*.png");

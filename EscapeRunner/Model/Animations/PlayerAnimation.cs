@@ -28,31 +28,34 @@ namespace EscapeRunner.Animations
 
         public void Draw(Graphics g, Directions direction)
         {
-            Bitmap animationImage = animationImages[imageIndex];
+            Bitmap animationImage = Model.CharacterAnimation[1];
             // Call the method in a suitable way
-            if (animationImages != null)
+
+            switch (direction)
             {
-                switch (direction)
-                {
-                    case Directions.Up:
-                        //animationImage = RotateAnimation(animationImage, RotateFlipType.RotateNoneFlipX, RotateFlipType.RotateNoneFlipX);
-                        break;
+                case Directions.Up:
+                    animationImage = Model.CharacterAnimation[1];
+                    //animationImage = RotateAnimation(animationImage, RotateFlipType.RotateNoneFlipX, RotateFlipType.RotateNoneFlipX);
+                    break;
 
-                    case Directions.Down:
-                        //animationImage = RotateAnimation(animationImage, RotateFlipType.RotateNoneFlipX, RotateFlipType.RotateNoneFlipNone);
-                        break;
+                case Directions.Down:
+                    animationImage = Model.CharacterAnimation[0];
+                    //animationImage = RotateAnimation(animationImage, RotateFlipType.RotateNoneFlipX, RotateFlipType.RotateNoneFlipNone);
+                    break;
 
-                    case Directions.Left:
-                        //animationImage = RotateAnimation(animationImage, RotateFlipType., RotateFlipType.RotateNoneFlipX);
-                        break;
-                    case Directions.Right:
-                       
-                        break;
-                }
+                case Directions.Left:
+                    animationImage = Model.CharacterAnimation[1];
+                    //animationImage = RotateAnimation(animationImage, RotateFlipType., RotateFlipType.RotateNoneFlipX);
+                    break;
 
-                // Call the base class method to draw the image
-                base.DrawFrame(g, animationImage);
+                case Directions.Right:
+                    animationImage = Model.CharacterAnimation[1];
+                    break;
             }
+
+            // Call the base class method to draw the image
+            base.DrawFrame(g, animationImage);
+            LoadNextAnimationImage();
         }
 
         public override void LoadNextAnimationImage()

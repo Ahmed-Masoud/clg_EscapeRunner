@@ -1,7 +1,6 @@
 ﻿using EscapeRunner.BusinessLogic;
 using EscapeRunner.BusinessLogic.GameObjects;
 using System.Drawing;
-using System;
 
 namespace EscapeRunner.View
 {
@@ -29,15 +28,18 @@ namespace EscapeRunner.View
         public Point Position { get { return twoDimPoint; } }
 
         public TileType Type { get { return type; } }
+
         #region Debug Stuff
 
 #if DEBUG
         private static Pen markingPen = new Pen(Color.Turquoise, 2);
+
         private static Font font = new Font(
            new FontFamily("Arial"),
            8,
            FontStyle.Regular,
            GraphicsUnit.Pixel);
+
 #endif
 
         #endregion Debug Stuff

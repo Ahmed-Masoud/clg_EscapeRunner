@@ -34,8 +34,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,16 +59,19 @@
     <Compile Include="BusinessLogic\GameObjects\BulletGift.cs" />
     <Compile Include="BusinessLogic\GameObjects\CoinGift.cs" />
     <Compile Include="BusinessLogic\GameObjects\Gifts.cs" />
-    <Compile Include="BusinessLogic\ICollide.cs" />
+    <Compile Include="BusinessLogic\GiftStateAlive.cs" />
+    <Compile Include="BusinessLogic\GiftStateDead.cs" />
+    <Compile Include="BusinessLogic\Interfaces\ICollide.cs" />
     <Compile Include="BusinessLogic\IndexPair.cs" />
     <Compile Include="BusinessLogic\GameObjects\Monster.cs" />
     <Compile Include="BusinessLogic\PaintController.cs" />
     <Compile Include="BusinessLogic\PathFinder.cs" />
+    <Compile Include="BusinessLogic\State.cs" />
     <Compile Include="Model\Animations\Animation.cs" />
     <Compile Include="Model\Animations\AnimationFactory.cs" />
     <Compile Include="Model\Animations\BulletAnimation.cs" />
     <Compile Include="BusinessLogic\GameLogicController.cs" />
-    <Compile Include="BusinessLogic\GameObjects\IDrawable.cs" />
+    <Compile Include="BusinessLogic\Interfaces\IDrawable.cs" />
     <Compile Include="Model\Animations\IPrototype.cs" />
     <Compile Include="Model\Animations\IReciever.cs" />
     <Compile Include="Model\Animations\MonsterAnimation.cs" />
@@ -71,7 +79,7 @@
     <Compile Include="Model\Animations\ExplosionAnimation.cs" />
     <Compile Include="BusinessLogic\IsometricExtensionMethods.cs" />
     <Compile Include="Model\AnimationModel.cs" />
-    <Compile Include="BusinessLogic\GameObjects\IWeapon.cs" />
+    <Compile Include="BusinessLogic\Interfaces\IWeapon.cs" />
     <Compile Include="BusinessLogic\GameObjects\Player.cs" />
     <Compile Include="BusinessLogic\GameObjects\ProjectileClassAlpha.cs" />
     <Compile Include="BusinessLogic\GameObjects\ProjectileClassBeta.cs" />
@@ -112,6 +120,7 @@
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

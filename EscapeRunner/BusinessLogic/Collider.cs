@@ -1,23 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EscapeRunner.BusinessLogic
 {
     public class Collider
     {
+        // List of all colliders
         private static Dictionary<ICollide, Rectangle> collidables = new Dictionary<ICollide, Rectangle>(8);
-        ICollide parentObject;
-        public delegate void Colliding(CollisionEventArgs e);
-        private bool colliderActive = false;
-        public event Colliding Collided;
-        // Start placeholder values to avoid null exceptions
-        Rectangle colliderRectangle = Rectangle.Empty;
 
-        public bool ColliderActive
+        // Parent object holding the collider
+        ICollide parentObject;
+        private bool colliderActive = false;
+
+        // Delegate => Method pointer to know the function with the correct signature to recive the event
+        public delegate void Colliding(CollisionEventArgs e);
+        public event Colliding Collided;
+
+        // Specify collision area
+        Rectangle colliderRectangle;
+
+        /// <summary>
+        /// State of the collider is changed to prevent multiple events to be raised during 1 collision
+        /// </summary>
+        public bool Active
         {
             get { return colliderActive; }
             set
@@ -43,50 +49,59 @@ namespace EscapeRunner.BusinessLogic
             }
         }
 
-
         public Point Location
         {
-            get { return colliderRectangle.Location; }
+            // Collision is checked whenever the location of the collider changes ( object moves )
             set
             {
                 colliderRectangle.Location = value;
 
                 // Update value in dictionary
-                if (parentObject != null)
-                    collidables[parentObject] = colliderRectangle;
+                if (parentObject == null)
+                    return;
 
-                // Check collision
+                collidables[parentObject] = colliderRectangle;
                 ICollide another;
                 if ((another = CheckCollision()) != null)
                 {
                     // Fire the event
                     if (Collided != null)
                     {
-                        // Notify Both objects
+                        // Raise the collision event in Both objects
                         Collided(new CollisionEventArgs(another));
-
-                        //if (another.Collider.Collided != null)
-                            another.Collider.Collided(new CollisionEventArgs(this.parentObject));
+                        another.Collider.Collided(new CollisionEventArgs(this.parentObject));
                     }
                 }
             }
+            get { return colliderRectangle.Location; }
         }
 
+        /// <summary>
+        /// Alternate constructor that just makes the collider not null
+        /// </summary>
+        /// <param name="colliderInitialRectangle"></param>
         public Collider(Rectangle colliderInitialRectangle)
         {
             // Placeholder constructor to avoid null exceptions
             this.colliderRectangle = colliderInitialRectangle;
         }
 
-        // I need only the location now, but i'll leave it for simplicity
+        /// <summary>
+        /// Constructs a real functioning collider
+        /// </summary>
+        /// <param name="obj">Object holding the collider</param>
+        /// <param name="colliderRectangle">Dimensions of the collider</param>
         public Collider(ICollide obj, Rectangle colliderRectangle)
         {
             // Set the start location of the collider
             if (obj == null)
                 throw new NullReferenceException("Parent object is null");
+
             this.parentObject = obj;
             this.colliderRectangle = colliderRectangle;
-            collidables.Add(obj, colliderRectangle);
+            
+            // Set the collider to active and check collision
+            this.Active = true;
         }
 
         private ICollide CheckCollision()
@@ -98,20 +113,13 @@ namespace EscapeRunner.BusinessLogic
             {
                 foreach (var item in collidables)
                 {
-
-                    if (this.colliderRectangle.IntersectsWith(item.Value) && item.Key.GetType() != this.parentObject.GetType())
+                    if (item.Key.GetType() != this.parentObject.GetType()   // Objects of the same type don't collide
+                        && this.colliderRectangle.IntersectsWith(item.Value)) // If there is a collision
                     {
+                        // Return the parent object of the colliding item
                         return item.Key;
                     }
                 }
-                //try
-                //{
-                //  //  retVal = collidables.Where(p => p.Value.IntersectsWith(this.colliderRectangle) && p.Key.GetType() != this.parentObject.GetType()).First().Key;
-                //}
-                //catch (InvalidOperationException)
-                //{
-                //    retVal = null;
-                //}
             }
             return retVal;
         }

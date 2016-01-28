@@ -1,31 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
-    class BulletGift : Gift
+    internal class BulletGift : Gift
     {
         private static readonly List<Bitmap> animation = Model.BulletGift;
-        int imageIndex = 0;
         private static int imageCount = animation.Count;
-        public BulletGift(IndexPair indexPair)
+        public BulletGift(Point location) : base()
         {
-            this.indexPair = indexPair;
-            IsTaken = false;
-            isoPoint = IsometricExtensionMethods.IndexesToCorrdinates(indexPair).TwoDimensionsToIso();
-            isoPoint.X += 10;
-            isoPoint.Y += 10;            
+            animationHeight = 40;
+            animationWidth = 40;
+            AnimationPosition = location;
+            giftValue = 8;
         }
+        public override void AddCollider()
+        {
+            base.AddCollider();
+            this.collider.Collided += Collider_Collided;
+        }
+
+        private void Collider_Collided(CollisionEventArgs e)
+        {
+            if (e.CollidingObject.ToString().Equals("player"))
+            {
+                AudioController.PlaySmallPowerUp();
+                this.ChangeState();
+                collider.Active = false;
+                Controller.Score += giftValue;
+            }
+        }
+
         public override void UpdateGraphics(Graphics g)
-        {            
-            g.DrawImage(animation[imageIndex], isoPoint.X, isoPoint.Y, dimension.Width, dimension.Height);
-            loadNextImage();
+        {
+            if (CurrentState is GiftStateDead)
+                return;
+
+            DrawFrame(g, animation[imageIndex]);
+            LoadNextAnimationImage();
         }
-        private void loadNextImage()
+
+        public override void LoadNextAnimationImage()
         {
             imageIndex++;
             imageIndex %= imageCount;

@@ -24,7 +24,7 @@ namespace EscapeRunner.View
         public SplashScreen()
         {
 
-            loadFromFile();
+            //loadFromFile();
 
             this.Opacity = 0;
             InitializeComponent();
@@ -140,6 +140,7 @@ namespace EscapeRunner.View
             //Don't open file dialog every time the application is launched
             if (levelFiles.Length == 1)
             {
+                // TODO read level
                 // A single level exists, load it
                 ReadLevelFile(levelFiles[0]);
             }

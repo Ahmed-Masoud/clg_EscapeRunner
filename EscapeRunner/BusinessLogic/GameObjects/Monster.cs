@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
@@ -11,36 +12,43 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private MonsterAnimation monsterAnimation;
         private PathFinder myPath;
         private List<IndexPair> tempPath;
-        private System.Timers.Timer timer = new System.Timers.Timer();
+        private System.Timers.Timer makeStepTimer = new System.Timers.Timer();
         private bool increasing;
         private int counter;
 
-        public Monster()
+        // TODO change to state
+        public bool Alive { get; set; }
+
+        public Monster(IndexPair startPoint, IndexPair endPoint)
         {
             increasing = true;
             counter = 0;
             AnimationFactory factory = new AnimationFactory();
-            IndexPair temp = new IndexPair(4, 1);
-            myPath = new PathFinder(new RouteInformation(temp, new IndexPair(15, 15)));
+
+            myPath = new PathFinder(new RouteInformation(startPoint, endPoint));
             tempPath = myPath.FindPath();
-            timer.Elapsed += Timer_Elapsed;
-            timer.Enabled = true;
-            timer.Interval = 250;
+            makeStepTimer.Elapsed += Timer_Elapsed;
+            makeStepTimer.Enabled = true;
+            makeStepTimer.Interval = 250;
+            Alive = true;
 
             //MapLoader.MonsterStartLocation;
             //monsterAnimation.AnimationTileIndex = new IndexPair(1, 1);//temp.TileIndecies;
 
             monsterAnimation = (MonsterAnimation)factory.CreateAnimation(AnimationType.MonsterAnimation, tempPath[0]);
-            monsterAnimation.AnimationPosition = temp.IndexesToCorrdinates();
+            monsterAnimation.AnimationPosition = startPoint.IndexesToCorrdinates();
 
             // TODO set Monster start position at game start. TODO set Monster Direction at game start.
             monsterAnimation.Collider.Collided += Monster_Collided;
+        }
+        private void GraphicsSynchronizationTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            monsterAnimation.LoadNextAnimationImage();
         }
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             NextStepIndex();
-            monsterAnimation.LoadNextAnimationImage();
         }
 
         private void Monster_Collided(CollisionEventArgs e)
@@ -48,17 +56,21 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             // Game over
             if (e.CollidingObject.ToString().Equals("player"))
             {
-                System.Windows.Forms.MessageBox.Show("Game Over");
+                monsterAnimation.Collider.Active = false;
+                Controller.GameOver(1);
+                AudioController.PlayTerroristSound();
+                AudioController.PlayExplosion();
             }
 
             if (e.CollidingObject.ToString().Equals("bullet"))
             {
+                monsterAnimation.Collider.Active = false;
+                Alive = false;
+                Controller.Score += 20; // Add score
                 AudioController.PlayMonsterDieSound();
             }
         }
 
-        public static int DX { get; } = 5;
-        public static int DY { get; } = 5;
         public Directions Direction { get; set; }
         public Point Position { get { return monsterAnimation.AnimationPosition; } set { monsterAnimation.AnimationPosition = value; } }
 
@@ -70,28 +82,10 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             }
         }
 
-        //public void Move(Directions direction)
-        //{
-        //    Point newPosition = monsterAnimation.AnimationPosition;
-        //    switch (direction)
-        //    {
-        //        case Directions.Up:
-        //            newPosition.Y -= DY;
-        //            break;
-
-        // case Directions.Down: newPosition.Y += DY; break;
-
-        // case Directions.Left: newPosition.X -= DX; break;
-
-        // case Directions.Right: newPosition.X += DX; break; }
-
-        // monsterAnimation.AnimationPosition = newPosition;
-
-        //    monsterAnimation.LoadNextAnimationImage();
-        //}
 
         public void UpdateGraphics(Graphics g)
         {
+            // TODO Check state
             monsterAnimation.Draw(g, Direction);
 
             // Update the collider's location

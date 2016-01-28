@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
@@ -18,7 +14,14 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             this.AnimationPosition = location;
             animationHeight = 32;
             animationWidth = 32;
+            Controller.GraphicsSynchronizationTimer.Elapsed += GraphicsSynchronizationTimer_Elapsed;
         }
+
+        private void GraphicsSynchronizationTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            LoadNextAnimationImage();
+        }
+
         public override void AddCollider()
         {
             base.AddCollider();
@@ -28,13 +31,17 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private void Collider_Collided(CollisionEventArgs e)
         {
             if (e.CollidingObject.ToString().Equals("player"))
+            {
+                AudioController.PlayBombExplosion();
                 this.IsTaken = true;
+                // TODO Game Over
+                Controller.GameOver(1);
+            }
         }
 
         public override void UpdateGraphics(Graphics g)
         {
             DrawFrame(g, animation[imageIndex]);
-            LoadNextAnimationImage();
         }
 
         public override void LoadNextAnimationImage()

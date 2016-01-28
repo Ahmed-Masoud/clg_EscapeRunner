@@ -29,11 +29,15 @@ namespace EscapeRunner.Animations
         #endregion
         protected int animationWidth, animationHeight;
         protected int imageIndex;
-        protected Collider collider = new Collider(Rectangle.Empty);
+        protected Collider collider;
         protected Point animationPosition = Point.Empty;
 
         private Point isoDrawLocation;   // This point is used for conversion, not needed in child classes
-
+        public Animation()
+        {
+            // Initialize the collider to avoid null reference exception
+            this.collider = new Collider(Rectangle.Empty);
+        }
         public Collider Collider
         {
             get { return collider; }
@@ -100,7 +104,7 @@ namespace EscapeRunner.Animations
         public virtual void AddCollider()
         {
             this.Collider = new Collider(this, new Rectangle(AnimationPosition, new Size(animationWidth, animationHeight)));
-            this.Collider.ColliderActive = true;
+            this.Collider.Active = true;
         }
     }
 }

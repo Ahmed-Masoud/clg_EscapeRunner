@@ -15,6 +15,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             animationWidth = 40;
             animationHeight = 40;
             AnimationPosition = location;
+            giftValue = 15;
         }
         public override void AddCollider()
         {
@@ -24,13 +25,29 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         private void Collider_Collided(CollisionEventArgs e)
         {
-            // Do stuff
+
+            if (e.CollidingObject.ToString().Equals("player"))
+            {
+                // Shutdown the collider
+                collider.Active = false;
+
+                // Change the state to dead
+                this.ChangeState();
+
+                // Play sound
+                AudioController.PlayBigPowerUp();
+
+                // Increase the score
+                Controller.Score += giftValue;
+            }
         }
 
         public override void UpdateGraphics(Graphics g)
         {
-            DrawFrame(g, animation[imageIndex]);
+            if (CurrentState is GiftStateDead)
+                return;
 
+            DrawFrame(g, animation[imageIndex]);
             LoadNextAnimationImage();
         }
 

@@ -1,7 +1,6 @@
 ﻿using EscapeRunner.Animations;
 using EscapeRunner.View;
 using System.Drawing;
-using System;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
@@ -11,11 +10,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private static Player playerInstance;
         private static IndexPair playerCoordinates;
 
-        //private short stepHorizontalCounter = 0;
-        //private short stepVerticalCounter = 0;
-        //int dx = 2;
-        //int dy = 2;
-        //private Collider collider;
         public static Directions Direction { get; set; }
 
         public static Player PlayerInstance
@@ -31,13 +25,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         public static IndexPair PlayerCoordiantes { set { playerCoordinates = value; } get { return playerCoordinates; } }
 
-        public Point DrawLocation
-        {
-            get
-            {
-                return playerAnimation.AnimationPosition;
-            }
-        }
+        public Point DrawLocation { get { return playerAnimation.AnimationPosition; } }
 
         public void Initialize()
         {
@@ -52,12 +40,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         private void Collider_Collided(CollisionEventArgs e)
         {
-            //System.Threading.Tasks.Task.Run(() =>
-            //{
-            //    //System.Threading.Thread.Sleep(100);
-            //    //Program.MainWindow.RefreshTimer.Enabled = false;
-
-            //});
         }
 
         /// <summary>
@@ -65,6 +47,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         /// </summary>
         public void StartMoving(Directions direction)
         {
+            Direction = direction;
             Move(direction);
         }
 
@@ -105,28 +88,10 @@ namespace EscapeRunner.BusinessLogic.GameObjects
                 playerCoordinates = temp;
                 playerAnimation.AnimationPosition = temp.IndexesToCorrdinates();
                 Direction = direction;
-                if (MapLoader.Level[temp.I, temp.J] == 7)
-                {
-                    ProjectilePool pool = ProjectilePool.Instance;
-                    try
-                    {
-                        IWeapon y = pool.Acquire(Position, false);
-                        System.Windows.Forms.MessageBox.Show("Gift");
-                    }
-                    catch (InvalidOperationException) { }
-                }
+
                 if (MapLoader.Level[temp.I, temp.J] == 6)
                 {
-                    playerCoordinates = temp;
-                    playerAnimation.AnimationPosition = temp.IndexesToCorrdinates();
-                    Direction = direction;
-
-                    System.Threading.Tasks.Task.Run(() =>
-                    {
-                        System.Threading.Thread.Sleep(100);
-                        Program.MainWindow.RefreshTimer.Enabled = false;
-                        System.Windows.Forms.MessageBox.Show("Game Over");
-                    });
+                    Controller.GameOver(2);
                 }
             }
         }
