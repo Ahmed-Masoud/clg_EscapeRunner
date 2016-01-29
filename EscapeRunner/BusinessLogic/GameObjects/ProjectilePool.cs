@@ -25,6 +25,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         public ProjectilePool()
         {
         }
+
         // The singleton
         public void Initialize()
         {

@@ -10,15 +10,17 @@ namespace EscapeRunner.BusinessLogic
         private static Dictionary<ICollide, Rectangle> collidables = new Dictionary<ICollide, Rectangle>(8);
 
         // Parent object holding the collider
-        ICollide parentObject;
+        private ICollide parentObject;
+
         private bool colliderActive = false;
 
         // Delegate => Method pointer to know the function with the correct signature to recive the event
         public delegate void Colliding(CollisionEventArgs e);
+
         public event Colliding Collided;
 
         // Specify collision area
-        Rectangle colliderRectangle;
+        private Rectangle colliderRectangle;
 
         /// <summary>
         /// State of the collider is changed to prevent multiple events to be raised during 1 collision
@@ -99,7 +101,7 @@ namespace EscapeRunner.BusinessLogic
 
             this.parentObject = obj;
             this.colliderRectangle = colliderRectangle;
-            
+
             // Set the collider to active and check collision
             this.Active = true;
         }

@@ -52,21 +52,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessLogic\Collider.cs" />
-    <Compile Include="BusinessLogic\CollisionEvent.cs" />
+    <Compile Include="BusinessLogic\Collision\Collider.cs" />
+    <Compile Include="BusinessLogic\Collision\CollisionEvent.cs" />
     <Compile Include="BusinessLogic\GameObjects\Bomb.cs" />
     <Compile Include="BusinessLogic\GameObjects\BombA.cs" />
     <Compile Include="BusinessLogic\GameObjects\BulletGift.cs" />
     <Compile Include="BusinessLogic\GameObjects\CoinGift.cs" />
     <Compile Include="BusinessLogic\GameObjects\Gifts.cs" />
-    <Compile Include="BusinessLogic\GiftStateAlive.cs" />
-    <Compile Include="BusinessLogic\GiftStateDead.cs" />
+    <Compile Include="BusinessLogic\GiftStates\GiftStateAlive.cs" />
+    <Compile Include="BusinessLogic\GiftStates\GiftStateDead.cs" />
     <Compile Include="BusinessLogic\Interfaces\ICollide.cs" />
     <Compile Include="BusinessLogic\IndexPair.cs" />
     <Compile Include="BusinessLogic\GameObjects\Monster.cs" />
     <Compile Include="BusinessLogic\PaintController.cs" />
     <Compile Include="BusinessLogic\PathFinder.cs" />
-    <Compile Include="BusinessLogic\State.cs" />
+    <Compile Include="BusinessLogic\GiftStates\State.cs" />
     <Compile Include="Model\Animations\Animation.cs" />
     <Compile Include="Model\Animations\AnimationFactory.cs" />
     <Compile Include="Model\Animations\BulletAnimation.cs" />
@@ -82,7 +82,6 @@
     <Compile Include="BusinessLogic\Interfaces\IWeapon.cs" />
     <Compile Include="BusinessLogic\GameObjects\Player.cs" />
     <Compile Include="BusinessLogic\GameObjects\ProjectileClassAlpha.cs" />
-    <Compile Include="BusinessLogic\GameObjects\ProjectileClassBeta.cs" />
     <Compile Include="BusinessLogic\GameObjects\ProjectilePool.cs" />
     <Compile Include="Model\AudioModel.cs" />
     <Compile Include="View\KeyChangedEventArgs.cs" />
@@ -119,7 +118,6 @@
     <EmbeddedResource Include="View\SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

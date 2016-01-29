@@ -177,7 +177,8 @@ namespace EscapeRunner.BusinessLogic
                 if (node.State == NodeState.Closed)
                     continue;
 
-                // Already-open nodes are only added to the list if their G-value is lower going via this route.
+                // Already-open nodes are only added to the list if their G-value is lower going via
+                // this route.
                 if (node.State == NodeState.Open)
                 {
                     float traversalCost = Node.GetTraversalCost(node.Location, node.ParentNode.Location);

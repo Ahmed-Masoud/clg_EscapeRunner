@@ -56,6 +56,7 @@ namespace EscapeRunner.Animations
                     temp = new PlayerAnimation();
                     temp.AddCollider();
                     break;
+
                 case AnimationType.MonsterAnimation:
                     temp = new MonsterAnimation(); // new MonsterAnimation();
                     temp.AddCollider();

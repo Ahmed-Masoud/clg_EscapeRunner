@@ -33,7 +33,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             playerAnimation = (PlayerAnimation)AnimationFactory.CreateEmpyAnimation(AnimationType.PlayerAnimation);
 
             // Initialize the player location to the top of the screen
-            playerAnimation.AnimationPosition = playerCoordinates.IndexesToCorrdinates();
+            playerAnimation.AnimationPosition = playerCoordinates.IndexesToCoordinates();
             playerAnimation.Collider.Collided += Collider_Collided;
             Direction = Directions.Right;
         }
@@ -86,7 +86,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             if (MapLoader.IsWalkable(temp) || MapLoader.Level[temp.I, temp.J] == 6 || MapLoader.Level[temp.I, temp.J] == 7)
             {
                 playerCoordinates = temp;
-                playerAnimation.AnimationPosition = temp.IndexesToCorrdinates();
+                playerAnimation.AnimationPosition = temp.IndexesToCoordinates();
                 Direction = direction;
 
                 if (MapLoader.Level[temp.I, temp.J] == 6)

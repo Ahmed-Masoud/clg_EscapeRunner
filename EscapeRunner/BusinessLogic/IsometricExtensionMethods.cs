@@ -39,26 +39,21 @@ namespace EscapeRunner.BusinessLogic
         /// </summary>
         /// <param name="pair"></param>
         /// <returns></returns>
-        public static Point IndexesToCorrdinates(this IndexPair pair)
+        public static Point IndexesToCoordinates(this IndexPair pair)
         {
-            // Adapter Design pattern
-
             if (pair.J > MapLoader.LevelDimensions.J || pair.I > MapLoader.LevelDimensions.I || pair.J < 0 || pair.I < 0)
                 throw new InvalidOperationException("Out of level bounds");
 
-            // TODO complete the method
-            Point tempPt = MapLoader.LevelStartLocation;
-            for (int j = 0; j < pair.I; j++)
-            {
-                tempPt.Y += 32;
-                tempPt.X = MapLoader.LevelStartLocation.X;
+            Point tempPt = new Point(MapLoader.LevelStartLocation.X + (pair.J * 32),
+                MapLoader.LevelStartLocation.Y + (pair.I * 32));
 
-                for (int i = 0; i < pair.J; i++)
-                {
-                    tempPt.X += 32;
-                }
-            }
             return tempPt;
+        }
+
+        public static IndexPair CoordinatesToIndexes(this Point point)
+        {
+            IndexPair tempPair = new IndexPair((point.Y - MapLoader.LevelStartLocation.Y) / 32, (point.X - MapLoader.LevelStartLocation.X) / 32);
+            return tempPair;
         }
     }
 }

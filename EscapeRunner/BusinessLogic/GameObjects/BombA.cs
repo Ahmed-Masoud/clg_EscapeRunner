@@ -3,14 +3,15 @@ using System.Drawing;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
-    class BombA : Bomb
+    internal class BombA : Bomb
     {
         private static readonly List<Bitmap> animation = Model.BombA;
 
         private static int imageCount = animation.Count;
+
         public BombA(Point location)
         {
-            IsTaken = false;
+            Exploded = false;
             this.AnimationPosition = location;
             animationHeight = 32;
             animationWidth = 32;
@@ -33,8 +34,8 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             if (e.CollidingObject.ToString().Equals("player"))
             {
                 AudioController.PlayBombExplosion();
-                this.IsTaken = true;
-                // TODO Game Over
+                // Hide the bomb
+                this.Exploded = true;
                 Controller.GameOver(1);
             }
         }

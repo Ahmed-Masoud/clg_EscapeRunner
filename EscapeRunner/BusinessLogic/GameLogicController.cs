@@ -21,7 +21,7 @@ namespace EscapeRunner.BusinessLogic
         private static int score = 0;
         private static int tempScore = 0;
         public static int Score { get { return score; } set { score = value; } }
-
+        public static bool IsGameOver { get; set; } = false;
         private static Font font = new Font(new FontFamily("Segoe UI"), 42, FontStyle.Regular, GraphicsUnit.Pixel);
 
         public static List<IDrawable> MovingObjects
@@ -39,7 +39,9 @@ namespace EscapeRunner.BusinessLogic
 
         private static Timer backgroundIllusionTimer = new Timer();
 
-        private Controller() { }
+        private Controller()
+        {
+        }
 
         public static void InitializeController()
         {
@@ -65,7 +67,7 @@ namespace EscapeRunner.BusinessLogic
             for (int i = 0; i < MapLoader.BombsCount; i++)
             {
                 start = new IndexPair(MapLoader.Bombs[i].StartPoint.X, MapLoader.Bombs[i].StartPoint.Y);
-                BombA bomb = new BombA(start.IndexesToCorrdinates());
+                BombA bomb = new BombA(start.IndexesToCoordinates());
                 bomb.AddCollider();
                 constantObjects.Add(bomb);
             }
@@ -73,7 +75,7 @@ namespace EscapeRunner.BusinessLogic
             for (int i = 0; i < MapLoader.CoinsCount; i++)
             {
                 start = new IndexPair(MapLoader.Coins[i].StartPoint.X, MapLoader.Coins[i].StartPoint.Y);
-                CoinGift coin = new CoinGift(start.IndexesToCorrdinates());
+                CoinGift coin = new CoinGift(start.IndexesToCoordinates());
                 coin.AddCollider();
                 constantObjects.Add(coin);
             }
@@ -81,7 +83,7 @@ namespace EscapeRunner.BusinessLogic
             for (int i = 0; i < MapLoader.BulletsCount; i++)
             {
                 start = new IndexPair(MapLoader.Bullets[i].StartPoint.X, MapLoader.Bullets[i].StartPoint.Y);
-                BulletGift bullet = new BulletGift(start.IndexesToCorrdinates());
+                BulletGift bullet = new BulletGift(start.IndexesToCoordinates());
                 bullet.AddCollider();
                 constantObjects.Add(bullet);
             }
@@ -130,59 +132,54 @@ namespace EscapeRunner.BusinessLogic
 
         private static void Window_ViewNotification(ViewNotificationEventArgs e)
         {
-            switch (e.Notification)
-            {
-                case Notifing.Space:
-                    FireBullet();
+            if (!IsGameOver)
+                switch (e.Notification)
+                {
+                    case Notifing.Space:
+                        FireBullet();
 
-                    break;
+                        break;
 
-                case Notifing.Right:
-                    player.StartMoving(Directions.Right);
-                    break;
+                    case Notifing.Right:
+                        player.StartMoving(Directions.Right);
+                        break;
 
-                case Notifing.Left:
-                    player.StartMoving(Directions.Left);
-                    break;
+                    case Notifing.Left:
+                        player.StartMoving(Directions.Left);
+                        break;
 
-                case Notifing.Down:
-                    player.StartMoving(Directions.Down);
-                    break;
+                    case Notifing.Down:
+                        player.StartMoving(Directions.Down);
+                        break;
 
-                case Notifing.Up:
-                    player.StartMoving(Directions.Up);
-                    break;
+                    case Notifing.Up:
+                        player.StartMoving(Directions.Up);
+                        break;
 
-                default:
-                    break;
-            }
+                    default:
+                        break;
+                }
         }
+
         public static void DrawScore(Graphics g)
         {
             g.DrawString($"{tempScore.ToString("000"),3}", font, Brushes.White, new Point(20, 20));
         }
+
         private static void GraphicsSynchronizationTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             // Update score animatedly
             if (score > tempScore)
                 tempScore++;
         }
+
         public static void GameOver(int imageNumber)
         {
-            AudioController.StopBackgroundSound();
-            drawGraphics -= DrawMovingBackground;
-            drawGraphics -= MapLoader.DrawGameFlares;
-            drawGraphics -= MapLoader.DrawLevelFloor;
-            drawGraphics -= MapLoader.DrawLevelObstacles;
-            drawGraphics -= player.UpdateGraphics;
-            drawGraphics -= UpdateTiles;
-            drawGraphics -= DrawShots;
-            drawGraphics -= DrawScore;
+            IsGameOver = true;
 
+            drawGraphics = null;
             window.BackgroundImage = Model.Backgrounds[imageNumber];
-            Program.MainWindow.RefreshTimer.Enabled = false;
-            graphicsSynchronizationTimer.Enabled = false;
-            window.Refresh();
+            AudioController.StopBackgroundSound();
         }
     }
 }

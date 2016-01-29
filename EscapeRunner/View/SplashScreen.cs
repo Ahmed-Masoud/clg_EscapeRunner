@@ -1,11 +1,8 @@
-﻿using EscapeRunner.BusinessLogic;
-using System;
+﻿using System;
 using System.Drawing;
 using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Collections.Generic;
 
 namespace EscapeRunner.View
 {
@@ -19,11 +16,10 @@ namespace EscapeRunner.View
         private static int timerInterval = 50;
         private static System.Windows.Forms.Timer opacityTimer = new System.Windows.Forms.Timer();
         private static bool doneLoading = false;
-        System.Media.SoundPlayer player;
+        private System.Media.SoundPlayer player;
 
         public SplashScreen()
         {
-
             //loadFromFile();
 
             this.Opacity = 0;
@@ -96,7 +92,6 @@ namespace EscapeRunner.View
 
         public async void InitializeGameWindow()
         {
-
 #if !DEBUG
             // Make the splash screen wait
             await Task.Run(() => Thread.Sleep(2500));
@@ -104,9 +99,9 @@ namespace EscapeRunner.View
             await window.InitializeStaticClasses();
             doneLoading = true;
         }
+
         private void LoadResources()
         {
-
             string resPath = Path.GetDirectoryName(
                           Path.GetDirectoryName(
                               Directory.GetCurrentDirectory())) + "\\Res";
@@ -118,11 +113,11 @@ namespace EscapeRunner.View
             {
                 this.BackgroundImage = Image.FromFile(imagePath);
                 player = new System.Media.SoundPlayer(soundPath);
-
             }
             else
                 throw new FileNotFoundException();
         }
+
         private void PlaySound()
         {
             if (player != null)
@@ -140,8 +135,7 @@ namespace EscapeRunner.View
             //Don't open file dialog every time the application is launched
             if (levelFiles.Length == 1)
             {
-                // TODO read level
-                // A single level exists, load it
+                // TODO read level A single level exists, load it
                 ReadLevelFile(levelFiles[0]);
             }
             else
@@ -264,14 +258,13 @@ namespace EscapeRunner.View
                         break;
                     }
                 }
-
             }
         }
 
         public struct Monster
         {
-            Point startPoint;
-            Point endPoint;
+            private Point startPoint;
+            private Point endPoint;
 
             public Point StartPoint
             {

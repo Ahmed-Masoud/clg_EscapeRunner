@@ -21,6 +21,7 @@ namespace EscapeRunner.BusinessLogic
         public static void WindowRefresh(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             Graphics g = e.Graphics;
+
             if (drawGraphics != null)
                 drawGraphics(e.Graphics);
             else
@@ -61,7 +62,7 @@ namespace EscapeRunner.BusinessLogic
                 }
                 else if (x is BombA)
                 {
-                    if (!((Bomb)x).IsTaken)
+                    if (!((Bomb)x).Exploded)
                         x.UpdateGraphics(g);
                 }
             }

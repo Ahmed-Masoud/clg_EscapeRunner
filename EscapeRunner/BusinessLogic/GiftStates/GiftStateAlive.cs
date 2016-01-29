@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EscapeRunner.BusinessLogic.GameObjects
+﻿namespace EscapeRunner.BusinessLogic.GameObjects
 {
     internal class GiftStateAlive : State
     {

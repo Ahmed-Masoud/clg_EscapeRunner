@@ -1,9 +1,8 @@
 ﻿using EscapeRunner.BusinessLogic;
 using EscapeRunner.BusinessLogic.GameObjects;
+using EscapeRunner.View;
 using System.Collections.Generic;
 using System.Drawing;
-using System;
-using EscapeRunner.View;
 
 namespace EscapeRunner.Animations
 {
@@ -11,19 +10,28 @@ namespace EscapeRunner.Animations
     {
         // List is marked static to avoid loading the resources from the hard disk each time an
         private static readonly List<Bitmap> bulletImages = Model.BulletAnimation;
+
         private Directions bulletDirection;
         private new int imageIndex = 0;
         private bool needDirection = true;  // Bullets needs a direction and plays
-        private Point levelOrigin = new IndexPair(1, 1).IndexesToCorrdinates();
-        private Point levelEdge = MapLoader.LevelDimensions.IndexesToCorrdinates();
-        bool visible = false;
+        private Point levelOrigin = new IndexPair(1, 1).IndexesToCoordinates();
+        private Point levelEdge = MapLoader.LevelDimensions.IndexesToCoordinates();
+        private bool visible = false;
 
         // Horizontal displacement is bigger because the screen is always horizontally bigger
         private int verticalDisplacement = 30, horizontalDisplacement = 37;
+
         public bool Visible
         {
             get { return visible; }
-            set { visible = value; }
+            set
+            {
+                visible = value;
+                if (value)
+                    collider.Active = true;
+                else
+                    collider.Active = false;
+            }
         }
 
         public BulletAnimation()
@@ -36,14 +44,13 @@ namespace EscapeRunner.Animations
             animationWidth = 20;
             this.collider = new Collider(new Rectangle(0, 0, animationWidth, animationHeight));
             Point tempEdge =
-                new IndexPair(MapLoader.LevelDimensions.I - 1, MapLoader.LevelDimensions.J - 1).IndexesToCorrdinates();
+                new IndexPair(MapLoader.LevelDimensions.I - 1, MapLoader.LevelDimensions.J - 1).IndexesToCoordinates();
             levelEdge = tempEdge;
         }
 
         public int ImageCount { get; private set; }
 
         public bool Locked { get; set; }
-
 
         /// <summary>
         /// Draws the bullet and updates to the next animation
@@ -125,12 +132,14 @@ namespace EscapeRunner.Animations
             // Set the bullet's new position
             AnimationPosition = position;
         }
+
         public bool BulletReachedEnd()
         {
             // The bullet is reads to be redrawn when it reaches the end of the screen or collides
             // with an object
             return needDirection;
         }
+
         public override string ToString()
         {
             return "bullet";

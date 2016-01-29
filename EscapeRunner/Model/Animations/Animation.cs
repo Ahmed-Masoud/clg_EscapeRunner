@@ -18,31 +18,39 @@ namespace EscapeRunner.Animations
     public abstract class Animation : ICollide
     {
         #region DebugStuff
+
 #if DEBUG
         private static Pen markingPen = new Pen(Color.Turquoise, 2);
+
         private static Font font = new Font(
            new FontFamily("Arial"),
            8,
            FontStyle.Regular,
            GraphicsUnit.Pixel);
+
 #endif
+
         #endregion
+
         protected int animationWidth, animationHeight;
         protected int imageIndex;
         protected Collider collider;
         protected Point animationPosition = Point.Empty;
 
         private Point isoDrawLocation;   // This point is used for conversion, not needed in child classes
+
         public Animation()
         {
             // Initialize the collider to avoid null reference exception
             this.collider = new Collider(Rectangle.Empty);
         }
+
         public Collider Collider
         {
             get { return collider; }
             set { collider = value; }
         }
+
         // Trigger an event to alert the bullet that it has been relocated, and set its lock state
         /// <summary>
         /// 2D point of the player position
@@ -101,6 +109,7 @@ namespace EscapeRunner.Animations
 
             return returnBitmap;
         }
+
         public virtual void AddCollider()
         {
             this.Collider = new Collider(this, new Rectangle(AnimationPosition, new Size(animationWidth, animationHeight)));

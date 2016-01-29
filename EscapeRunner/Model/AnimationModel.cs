@@ -11,7 +11,6 @@ namespace EscapeRunner
     /// </summary>
     public static partial class Model
     {
-
         private static List<Bitmap> backgrounds;
 
         private static List<Bitmap> bulletClassA;
@@ -41,14 +40,14 @@ namespace EscapeRunner
         {
             string projectPath = FindProjectPath();
             resFolderPath = Path.Combine(projectPath, "Res");
-
-
         }
+
         public static async Task InitializeModelAsync()
         {
             await LoadAnimations();
             LoadSounds();
         }
+
         public static List<Bitmap> Backgrounds { get { return backgrounds; } }
         public static List<Bitmap> BulletAnimation { get { return bulletClassA; } }
         public static List<Bitmap> CharacterAnimation { get { return characterAnimation; } }
@@ -66,7 +65,6 @@ namespace EscapeRunner
         public static List<Bitmap> BombA { get { return bombA; } }
 
         private static Func<string, Bitmap> bitmapRead = ((string file) => ((Bitmap)Image.FromFile(file)));
-
 
         private static async Task LoadAnimations()
         {
@@ -106,7 +104,6 @@ namespace EscapeRunner
                     coinGift = await LoadResourceFromDisk(bitmapRead, coinGiftFolder, "*.png");
                     bulletGift = await LoadResourceFromDisk(bitmapRead, bulletGiftFolder, "*.png");
                     bombA = await LoadResourceFromDisk(bitmapRead, bombAFolder, "*.png");
-
                 }
                 else
                     throw new InvalidOperationException("Animation Folder cannot be found");
@@ -115,7 +112,6 @@ namespace EscapeRunner
             {
                 throw new InvalidOperationException("Animation Folder cannot be found");
             }
-
         }
 
         /// <summary>
@@ -140,6 +136,7 @@ namespace EscapeRunner
 
             return loadedAnimation;
         }
+
         private static string FindProjectPath()
         {
             // Get the project folder on the hard disk
@@ -152,6 +149,5 @@ namespace EscapeRunner
 
             throw new DirectoryNotFoundException();
         }
-
     }
 }

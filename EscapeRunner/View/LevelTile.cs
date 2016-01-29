@@ -16,6 +16,7 @@ namespace EscapeRunner.View
 
     public class LevelTile : IDrawable
     {
+        static Bitmap floorTexture;
         private Size dimensions;
 
         private Bitmap texture;
@@ -46,6 +47,9 @@ namespace EscapeRunner.View
 
         public LevelTile(Point twoDimPoint, int textureIndex, TileType type, IndexPair tileIndecies)
         {
+            if (floorTexture == null)
+                floorTexture = Model.TileTextures[0];
+
             if (type == TileType.Corner)
             {
                 dimensions = new Size(64, 128);
@@ -55,7 +59,11 @@ namespace EscapeRunner.View
             else
                 dimensions = new Size(64, 64);
 
-            this.texture = Model.TileTextures[textureIndex];
+            if (type == TileType.Floor)
+                this.texture = null;
+            else
+                this.texture = Model.TileTextures[textureIndex];
+
             this.type = type;
             this.twoDimPoint = twoDimPoint;
             this.tileIndecies = tileIndecies;
@@ -85,7 +93,12 @@ namespace EscapeRunner.View
         public void Draw(Graphics g)
         {
             Point tempPoint = twoDimPoint.TwoDimensionsToIso();
-            g.DrawImage(texture, tempPoint.X, tempPoint.Y, dimensions.Width, dimensions.Height);
+
+            // Draw cached ground tile
+            if (this.type == TileType.Floor)
+                g.DrawImage(floorTexture, tempPoint.X, tempPoint.Y, dimensions.Width, dimensions.Height);
+            else
+                g.DrawImage(texture, tempPoint.X, tempPoint.Y, dimensions.Width, dimensions.Height);
 
             #region Debug Stuff
 

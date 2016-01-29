@@ -17,6 +17,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             AnimationPosition = location;
             giftValue = 15;
         }
+
         public override void AddCollider()
         {
             base.AddCollider();
@@ -25,7 +26,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         private void Collider_Collided(CollisionEventArgs e)
         {
-
             if (e.CollidingObject.ToString().Equals("player"))
             {
                 // Shutdown the collider

@@ -16,13 +16,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         /// <summary>
         /// 2D location of the object
         /// </summary>
-        public Point DrawLocation
-        {
-            get
-            {
-                return animationPosition;
-            }
-        }
+        public Point DrawLocation { get { return animationPosition; } }
 
         protected static Size dimension = new Size(40, 40);
 

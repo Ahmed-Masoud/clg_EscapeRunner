@@ -1,10 +1,8 @@
 ﻿using EscapeRunner.BusinessLogic;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Runtime.Serialization;
 
 namespace EscapeRunner.View
 {
@@ -15,31 +13,8 @@ namespace EscapeRunner.View
 
         //private static int[,] level;
 
-        private static int[,] level = {
-                { 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3},
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 1, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 4},
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 1, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-                { 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3}
-            };
+        private static int[,] level;
 
-        private static int levelColomns;
-        private static int levelRows;
         private static Point startLocation = new Point(390, -280);
         private static IndexPair levelDimensions;
         private static Point location = startLocation;
@@ -48,7 +23,7 @@ namespace EscapeRunner.View
         private static Random randomNumberGenerator = new Random();
 
         private static int monstersCount = -1;
-        private static EscapeRunner.View.MapLoader.Monster[] monsters;
+        private static Monster[] monsters;
 
         private static int bombsCount = -1;
         private static StaticObject[] bombs;
@@ -59,18 +34,13 @@ namespace EscapeRunner.View
         private static int bulletsCount = -1;
         private static StaticObject[] bullets;
 
-        private static IndexPair playerStartLocation;// = new IndexPair(18, 16);
+        private static IndexPair playerStartLocation = new IndexPair(18, 16);
 
         /// <summary>
         /// Tile types that make the level
         /// </summary>
         private static List<Bitmap> tileBlocks = Model.TileTextures;
 
-        /// <summary>
-        /// Floor tiles that will be drawn only once
-        /// </summary>
-        //public static int LevelColomns { get { return levelColomns; } }
-        //public static int LevelRows { get { return levelRows; } }
         public static int[,] Level { get { return level; } }
 
         public static List<LevelTile> WalkableTiles { get { return walkableTiles; } }
@@ -110,11 +80,11 @@ namespace EscapeRunner.View
         {
             try
             {
-                loadFromFile();
+                LoadFromFile();
             }
-            catch (Exception)
+            catch (Exception exc)
             {
-                Debugger.Break();
+                System.Windows.Forms.MessageBox.Show(exc.Message);
             }
 
             flares = Model.FlareAnimation;
@@ -122,16 +92,10 @@ namespace EscapeRunner.View
             walkableTiles = new List<LevelTile>(256);
             obstacleTiles = new List<LevelTile>(32);
 
-            //TODO LoadLevel
-            //  = level.GetLength(1);
-            //TODO read binary array From File
-            levelRows = level.GetLength(0);
-            levelColomns = level.GetLength(1);
+            int levelRows = level.GetLength(0);
+            int levelColomns = level.GetLength(1);
             levelDimensions = new IndexPair(levelRows, levelColomns);
             LoadLevel();
-
-            // Determine the player start location
-            //playerStartLocation = walkableTiles[0].Position;
         }
 
         public static bool IsWalkable(IndexPair pair)
@@ -166,9 +130,9 @@ namespace EscapeRunner.View
 
         public static void LoadLevel()
         {
-            for (int i = 0; i < levelRows; i++)
+            for (int i = 0; i < levelDimensions.I; i++)
             {
-                for (int j = 0; j < levelColomns; j++)
+                for (int j = 0; j < levelDimensions.J; j++)
                 {
                     TileType tempType = (TileType)level[i, j];
 
@@ -188,7 +152,7 @@ namespace EscapeRunner.View
             location = startLocation;
         }
 
-        public static void loadFromFile()
+        public static void LoadFromFile()
         {
             string path = Path.GetDirectoryName(
                             Path.GetDirectoryName(
@@ -196,27 +160,6 @@ namespace EscapeRunner.View
             path = Path.Combine(path, Path.Combine("Res", "Levels"));
             string[] levelFiles = Directory.GetFiles(path, "*.game");
 
-            //Don't open file dialog every time the application is launched
-            /*if (levelFiles.Length == 1)
-            {
-                // A single level exists, load it
-                MapLoader.ReadLevelFile(levelFiles[0]);
-            }
-            else
-            {
-                OpenFileDialog openLevelDialog = new OpenFileDialog();
-                openLevelDialog.Title = "Open Level";
-                openLevelDialog.Filter = "GAME Files (*.game) | *.game";
-                openLevelDialog.DefaultExt = "game";
-                openLevelDialog.InitialDirectory = path;
-
-                DialogResult openGame = openLevelDialog.ShowDialog();
-                if (openGame == DialogResult.OK)
-                {
-                    string fileName = openLevelDialog.FileName;
-                    MapLoader.ReadLevelFile(fileName);
-                }
-            }*/
             path = Path.GetDirectoryName(
                             Path.GetDirectoryName(
                                 Directory.GetCurrentDirectory())) + "\\Res\\Levels";
@@ -517,45 +460,6 @@ namespace EscapeRunner.View
             public StaticObject(Point point)
             {
                 this.startPoint = point;
-            }
-        }
-
-        [DataContract]
-        public class Wrapper
-        {
-            [DataMember]
-            private const int walkableArrayTileNumber = 0;
-
-            [DataMember]
-            private int[,] level;
-
-            [DataMember]
-            private Dictionary<IndexPair, IndexPair> MonsterLocations;
-
-            [DataMember]
-            private IndexPair playerLocation;
-
-            public Wrapper()
-            {
-            }
-
-            public Wrapper(int[,] level, IndexPair playerLocation)
-            {
-                this.level = level;
-                this.MonsterLocations = new Dictionary<IndexPair, IndexPair>();
-                this.playerLocation = playerLocation;
-            }
-
-            public Wrapper(int[,] level, IndexPair playerLocation, Dictionary<IndexPair, IndexPair> MonsterLocations)
-            {
-                this.level = level;
-                this.MonsterLocations = MonsterLocations;
-                this.playerLocation = playerLocation;
-            }
-
-            public void AddMonster(KeyValuePair<IndexPair, IndexPair> monsterLocation)
-            {
-                MonsterLocations.Add(monsterLocation.Key, monsterLocation.Value);
             }
         }
     }

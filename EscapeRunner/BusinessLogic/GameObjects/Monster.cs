@@ -1,5 +1,4 @@
 ﻿using EscapeRunner.Animations;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -8,10 +7,9 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 {
     internal class Monster : IDrawable
     {
-        private static Random random = new Random();
         private MonsterAnimation monsterAnimation;
-        private PathFinder myPath;
-        private List<IndexPair> tempPath;
+
+        private List<IndexPair> monsterPath;
         private System.Timers.Timer makeStepTimer = new System.Timers.Timer();
         private bool increasing;
         private int counter;
@@ -24,23 +22,22 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             increasing = true;
             counter = 0;
             AnimationFactory factory = new AnimationFactory();
+            PathFinder myPath = new PathFinder(new RouteInformation(startPoint, endPoint));
+            monsterPath = myPath.FindPath();
 
-            myPath = new PathFinder(new RouteInformation(startPoint, endPoint));
-            tempPath = myPath.FindPath();
             makeStepTimer.Elapsed += Timer_Elapsed;
             makeStepTimer.Enabled = true;
             makeStepTimer.Interval = 250;
+
             Alive = true;
 
-            //MapLoader.MonsterStartLocation;
-            //monsterAnimation.AnimationTileIndex = new IndexPair(1, 1);//temp.TileIndecies;
-
-            monsterAnimation = (MonsterAnimation)factory.CreateAnimation(AnimationType.MonsterAnimation, tempPath[0]);
-            monsterAnimation.AnimationPosition = startPoint.IndexesToCorrdinates();
+            monsterAnimation = (MonsterAnimation)factory.CreateAnimation(AnimationType.MonsterAnimation, monsterPath[0]);
+            monsterAnimation.AnimationPosition = startPoint.IndexesToCoordinates();
 
             // TODO set Monster start position at game start. TODO set Monster Direction at game start.
             monsterAnimation.Collider.Collided += Monster_Collided;
         }
+
         private void GraphicsSynchronizationTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             monsterAnimation.LoadNextAnimationImage();
@@ -56,13 +53,12 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             // Game over
             if (e.CollidingObject.ToString().Equals("player"))
             {
-                monsterAnimation.Collider.Active = false;
-                Controller.GameOver(1);
-                AudioController.PlayTerroristSound();
-                AudioController.PlayExplosion();
-            }
+                Task.Run(() => AudioController.PlayExplosion());
 
-            if (e.CollidingObject.ToString().Equals("bullet"))
+                Controller.GameOver(1);
+                monsterAnimation.Collider.Active = false;
+            }
+            else if (e.CollidingObject.ToString().Equals("bullet"))
             {
                 monsterAnimation.Collider.Active = false;
                 Alive = false;
@@ -82,14 +78,13 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             }
         }
 
-
         public void UpdateGraphics(Graphics g)
         {
             // TODO Check state
             monsterAnimation.Draw(g, Direction);
 
             // Update the collider's location
-            monsterAnimation.Collider.Location = monsterAnimation.AnimationPosition = tempPath[counter].IndexesToCorrdinates();
+            monsterAnimation.Collider.Location = monsterAnimation.AnimationPosition = monsterPath[counter].IndexesToCoordinates();
         }
 
         /// <summary>
@@ -99,7 +94,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         {
             if (increasing)
             {
-                if (counter++ == tempPath.Count - 1)
+                if (counter++ == monsterPath.Count - 1)
                 {
                     increasing = false;
                     counter -= 2;

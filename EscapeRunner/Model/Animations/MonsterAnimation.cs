@@ -32,22 +32,20 @@ namespace EscapeRunner.Animations
         public void Draw(Graphics g, Directions direction)
         {
             Bitmap animationImage = animationImages[imageIndex];
-            if (animationImages != null)
+
+            switch (direction)
             {
-                switch (direction)
-                {
-                    case Directions.Up:
-                        break;
+                case Directions.Up:
+                    break;
 
-                    case Directions.Down:
-                        break;
+                case Directions.Down:
+                    break;
 
-                    case Directions.Left:
-                        //animationImage = RotateAnimation(animationImage, RotateFlipType.RotateNoneFlipX, RotateFlipType.RotateNoneFlipX);
-                        break;
-                }
-                base.DrawFrame(g, animationImage);
+                case Directions.Left:
+                    //animationImage = RotateAnimation(animationImage, RotateFlipType.RotateNoneFlipX, RotateFlipType.RotateNoneFlipX);
+                    break;
             }
+            base.DrawFrame(g, animationImage);
         }
 
         public override void LoadNextAnimationImage()

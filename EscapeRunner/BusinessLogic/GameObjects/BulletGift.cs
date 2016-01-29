@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
@@ -8,6 +7,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
     {
         private static readonly List<Bitmap> animation = Model.BulletGift;
         private static int imageCount = animation.Count;
+
         public BulletGift(Point location) : base()
         {
             animationHeight = 40;
@@ -15,6 +15,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             AnimationPosition = location;
             giftValue = 8;
         }
+
         public override void AddCollider()
         {
             base.AddCollider();

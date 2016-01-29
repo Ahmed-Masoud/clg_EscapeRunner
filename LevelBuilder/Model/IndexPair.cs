@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace LevelBuilder.Model
 {
-    [DataContract]
+#pragma warning disable
     public struct IndexPair
     {
         [DataMember]
@@ -18,20 +18,6 @@ namespace LevelBuilder.Model
             this.i = i;
         }
 
-        public static bool operator ==(IndexPair p1, IndexPair p2)
-        {
-            if (p1.i == p2.i && p1.j == p2.j)
-                return true;
-            return false;
-        }
-
-        public static bool operator !=(IndexPair p1, IndexPair p2)
-        {
-            if (p1.i != p2.i || p1.j != p2.j)
-                return true;
-            return false;
-        }
-
         public override bool Equals(object obj)
         {
             if (obj is IndexPair)
@@ -44,6 +30,22 @@ namespace LevelBuilder.Model
                     return false;
             }
             throw new InvalidCastException();
+        }
+
+        // Operator overloads
+
+        public static bool operator ==(IndexPair p1, IndexPair p2)
+        {
+            if (p1.i == p2.i && p1.j == p2.j)
+                return true;
+            return false;
+        }
+
+        public static bool operator !=(IndexPair p1, IndexPair p2)
+        {
+            if (p1.i != p2.i || p1.j != p2.j)
+                return true;
+            return false;
         }
     }
 }

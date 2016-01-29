@@ -1,5 +1,4 @@
 ﻿using EscapeRunner.Animations;
-using System;
 using System.Drawing;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
@@ -36,13 +35,10 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private void BulletCollider_Collided(CollisionEventArgs e)
         {
             if (e.CollidingObject.ToString() == "monster")
-             {
-                System.Diagnostics.Debug.WriteLine("Collision detected from bullet to " + e.CollidingObject.GetType().ToString());
-                bulletAni.Collider.Active = false;
-
-                // Setting the usage of bullet to false
+            {
+                // Release the bullet
                 bulletAni.Visible = false;
-            }    
+            }
         }
 
         public Point BulletStartPosition

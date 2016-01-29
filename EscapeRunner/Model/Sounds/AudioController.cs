@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿
 using WMPLib;
 
 namespace EscapeRunner
@@ -12,11 +12,11 @@ namespace EscapeRunner
         private static WindowsMediaPlayer laserPlayer = new WindowsMediaPlayer();
         private static WindowsMediaPlayer terroristPlayer = new WindowsMediaPlayer();
         private static WindowsMediaPlayer spaceTrashPlayer = new WindowsMediaPlayer();
-        private static WindowsMediaPlayer explosionPlayer = new WindowsMediaPlayer();
+        private static WindowsMediaPlayer monsterExplosionPlayer = new WindowsMediaPlayer();
         private static WindowsMediaPlayer bombExplosionPlayer = new WindowsMediaPlayer();
         private static WindowsMediaPlayer smallPowerUp = new WindowsMediaPlayer();
         private static WindowsMediaPlayer bigPowerUp = new WindowsMediaPlayer();
-        private static IWMPPlaylist playlist = explosionPlayer.playlistCollection.newPlaylist("myplaylist");
+        private static IWMPPlaylist playlist = monsterExplosionPlayer.playlistCollection.newPlaylist("myplaylist");
 
         public static void Initialize()
         {
@@ -27,7 +27,7 @@ namespace EscapeRunner
                 terroristPlayer.settings.autoStart = false;
                 backgroundPlayer.settings.autoStart = false;
                 backgroundPlayer.settings.volume = 20;
-                explosionPlayer.settings.autoStart = false;
+                monsterExplosionPlayer.settings.autoStart = false;
                 bombExplosionPlayer.settings.autoStart = false;
                 smallPowerUp.settings.autoStart = false;
                 bigPowerUp.settings.autoStart = false;
@@ -36,19 +36,18 @@ namespace EscapeRunner
                 spaceTrashPlayer.URL = Model.SoundFiles[1];
                 terroristPlayer.URL = Model.SoundFiles[2];
                 backgroundPlayer.URL = Model.SoundFiles[3];
-                //explosionPlayer.URL = Model.SoundFiles[4];
                 bombExplosionPlayer.URL = Model.SoundFiles[4];
                 bigPowerUp.URL = Model.SoundFiles[5];
                 smallPowerUp.URL = Model.SoundFiles[6];
 
-                playlist.appendItem(explosionPlayer.newMedia(Model.SoundFiles[2]));
-                playlist.appendItem(explosionPlayer.newMedia(Model.SoundFiles[4]));
-                explosionPlayer.currentPlaylist = playlist;
+                playlist.appendItem(monsterExplosionPlayer.newMedia(Model.SoundFiles[2]));
+                playlist.appendItem(monsterExplosionPlayer.newMedia(Model.SoundFiles[4]));
+                monsterExplosionPlayer.currentPlaylist = playlist;
                 (backgroundPlayer.settings as IWMPSettings).setMode("loop", true);
             }
-            catch (System.Exception)
+            catch (System.Exception exc)
             {
-                Debugger.Break();
+                System.Windows.Forms.MessageBox.Show(exc.Message);
             }
         }
 
@@ -71,10 +70,12 @@ namespace EscapeRunner
         {
             laserPlayer.controls.play();
         }
+
         public static void PlayExplosion()
         {
-            explosionPlayer.controls.play();
+            monsterExplosionPlayer.controls.play();
         }
+
         public static void PlayTerroristSound()
         {
             terroristPlayer.controls.play();
@@ -84,10 +85,12 @@ namespace EscapeRunner
         {
             spaceTrashPlayer.controls.play();
         }
+
         public static void PlaySmallPowerUp()
         {
             smallPowerUp.controls.play();
         }
+
         public static void PlayBigPowerUp()
         {
             bigPowerUp.controls.play();

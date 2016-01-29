@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelBuilder", "LevelBuilde
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsoleApplication", "TestConsoleApplication\TestConsoleApplication.csproj", "{5DF9D5B8-11E1-493F-BF46-4C580F9F7BA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingMapLoader", "WorkingMapLoader\WorkingMapLoader.csproj", "{FE83FA39-AE64-48DA-AB8E-647BFEB2D05A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{5DF9D5B8-11E1-493F-BF46-4C580F9F7BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DF9D5B8-11E1-493F-BF46-4C580F9F7BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DF9D5B8-11E1-493F-BF46-4C580F9F7BA9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE83FA39-AE64-48DA-AB8E-647BFEB2D05A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE83FA39-AE64-48DA-AB8E-647BFEB2D05A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE83FA39-AE64-48DA-AB8E-647BFEB2D05A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE83FA39-AE64-48DA-AB8E-647BFEB2D05A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

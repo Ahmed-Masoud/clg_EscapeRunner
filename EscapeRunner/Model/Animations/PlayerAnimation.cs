@@ -44,12 +44,12 @@ namespace EscapeRunner.Animations
                     break;
 
                 case Directions.Left:
-                    animationImage = Model.CharacterAnimation[1];
+                    animationImage = Model.CharacterAnimation[2];
                     //animationImage = RotateAnimation(animationImage, RotateFlipType., RotateFlipType.RotateNoneFlipX);
                     break;
 
                 case Directions.Right:
-                    animationImage = Model.CharacterAnimation[1];
+                    animationImage = Model.CharacterAnimation[3];
                     break;
             }
 
