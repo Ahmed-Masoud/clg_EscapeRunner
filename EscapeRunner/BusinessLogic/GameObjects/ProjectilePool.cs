@@ -40,11 +40,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             weaponIndexes = new IndexPair(0, numberOfProjectiles - 3);
 
             // Create super weapon spawns
-            for (int i = numberOfProjectiles - 3; i < numberOfProjectiles - 1; i++)
-            {
-                projectiles.Add(new ProjectileClassBeta());
-                projectiles[i].Used = false;
-            }
             superWeaponIndexes = new IndexPair(numberOfProjectiles - 3, numberOfProjectiles - 1);
         }
 
