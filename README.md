@@ -1,5 +1,6 @@
 # EscapeRunner
 Maze runner game using C# and windows forms, as requested as a college project
+The game is solely based on windows forms without using ANY graphics library or game engines
 
 This project implements the following design patterns:
 - Factory
