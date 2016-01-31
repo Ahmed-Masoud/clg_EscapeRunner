@@ -15,3 +15,4 @@ Features:
 - Sound is handled by Windows media player library
 - Resources are laoded on a separate thread while the splashscreen is displayed
 - Clean object orientation and code documentation
+- Level builder with monster/gif positioning
