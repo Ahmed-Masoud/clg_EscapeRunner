@@ -13,7 +13,7 @@ namespace EscapeRunner.Animations
         private static readonly List<Bitmap> bulletImages = Model.BulletAnimation;
 
         private static Point levelEdge = MapLoader.LevelDimensions.IndexesToCoordinates();
-        private static Point levelOrigin = new IndexPair(1, 1).IndexesToCoordinates();
+        private static Point levelOrigin = new IndexPair(0, 0).IndexesToCoordinates();
         private Directions bulletDirection;
         private new int imageIndex = 0;
 
@@ -58,6 +58,11 @@ namespace EscapeRunner.Animations
 
             Point tempEdge =
                 new IndexPair(MapLoader.LevelDimensions.I - 1, MapLoader.LevelDimensions.J - 1).IndexesToCoordinates();
+
+            // Shift bullet bounds
+            tempEdge.X -= 30;
+            tempEdge.Y -= 30;
+
             levelEdge = tempEdge;
         }
 
@@ -65,7 +70,7 @@ namespace EscapeRunner.Animations
         /// Draws the bullet and updates to the next animation
         /// </summary>
         /// <param name="g"></param>
-        public void DrawBullet(Graphics g)
+        public void DrawBullet(Graphics g) 
         {
             if (!Active)
                 return;
