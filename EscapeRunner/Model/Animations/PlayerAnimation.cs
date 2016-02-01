@@ -52,7 +52,8 @@ namespace EscapeRunner.Animations
 
             // Call the base class method to draw the image
             DrawFrame(g, animationImage);
-            LoadNextAnimationImage();
+            
+            //LoadNextAnimationImage();
         }
 
         public override void LoadNextAnimationImage()

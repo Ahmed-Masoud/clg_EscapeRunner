@@ -88,7 +88,6 @@
     <Compile Include="BusinessLogic\GameLogicController.cs" />
     <Compile Include="BusinessLogic\Interfaces\IDrawable.cs" />
     <Compile Include="Model\Animations\IPrototype.cs" />
-    <Compile Include="Model\Animations\IReciever.cs" />
     <Compile Include="Model\Animations\MonsterAnimation.cs" />
     <Compile Include="Model\Animations\PlayerAnimation.cs" />
     <Compile Include="Model\Animations\ExplosionAnimation.cs" />
