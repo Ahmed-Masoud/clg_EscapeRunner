@@ -20,7 +20,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private ExplosionAnimation explosionAni;   // Change ExplosionAnimation class to public to make this work
 
         private bool used;
-
+        public int ZOrder { get; set; } = 5;
         internal ProjectileClassAlpha()
         {
             // Used for lazy initialization in the bullet pool

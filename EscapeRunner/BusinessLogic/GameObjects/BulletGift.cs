@@ -8,7 +8,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private static readonly List<Bitmap> animation = Model.BulletGift;
         private static int imageCount = animation.Count;
 
-        public BulletGift(Point location) : base()
+        public BulletGift(Point location) : base(location)
         {
             animationHeight = 40;
             animationWidth = 40;

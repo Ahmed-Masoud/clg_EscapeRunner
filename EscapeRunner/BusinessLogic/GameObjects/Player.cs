@@ -11,6 +11,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private static IndexPair playerCoordinates;
 
         public static Directions Direction { get; set; }
+        public int ZOrder { get; set; } = 4;
 
         public static Player PlayerInstance
         {
@@ -23,8 +24,6 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         /// </summary>
         public static Point Position { get { return playerAnimation.AnimationPosition; } }
 
-        public static IndexPair PlayerCoordiantes { set { playerCoordinates = value; } get { return playerCoordinates; } }
-
         public Point DrawLocation { get { return playerAnimation.AnimationPosition; } }
 
         public void Initialize()
@@ -33,7 +32,10 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             playerAnimation = (PlayerAnimation)AnimationFactory.CreateEmpyAnimation(AnimationType.PlayerAnimation);
 
             // Initialize the player location to the top of the screen
-            playerAnimation.AnimationPosition = playerCoordinates.IndexesToCoordinates();
+            Point tempConverted = playerCoordinates.IndexesToCoordinates();
+            playerAnimation.AnimationPosition = tempConverted;
+            ZOrder = tempConverted.X + tempConverted.Y;
+
             playerAnimation.Collider.Collided += Collider_Collided;
             Direction = Directions.Right;
         }
@@ -85,8 +87,13 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             // Wall detection
             if (MapLoader.IsWalkable(temp) || MapLoader.Level[temp.I, temp.J] == 6 || MapLoader.Level[temp.I, temp.J] == 7)
             {
+
+
+
                 playerCoordinates = temp;
-                playerAnimation.AnimationPosition = temp.IndexesToCoordinates();
+                Point tempConverted = temp.IndexesToCoordinates();
+                playerAnimation.AnimationPosition = tempConverted;
+                playerInstance.ZOrder = tempConverted.X + tempConverted.Y;
                 Direction = direction;
 
                 if (MapLoader.Level[temp.I, temp.J] == 6)

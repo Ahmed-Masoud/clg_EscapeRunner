@@ -8,7 +8,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private static readonly List<Bitmap> animation = Model.CoinGift;
         private static int imageCount = animation.Count;
 
-        public CoinGift(Point location)
+        public CoinGift(Point location) : base(location)
         {
             location.X += 10;
             location.Y += 10;

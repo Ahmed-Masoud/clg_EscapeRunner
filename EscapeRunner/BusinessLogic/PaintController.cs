@@ -1,7 +1,9 @@
 ﻿using EscapeRunner.BusinessLogic.GameObjects;
 using EscapeRunner.View;
 using System.Drawing;
+using System.Collections.Generic;
 using System.Timers;
+using System.Linq;
 
 namespace EscapeRunner.BusinessLogic
 {
@@ -12,6 +14,7 @@ namespace EscapeRunner.BusinessLogic
     {
         private static PointF backgroundIllusionPoint = new PointF();
         private static bool increasing = true;
+        private static List<IDrawable> graphicObjects;
 
         private static Timer graphicsSynchronizationTimer = new Timer();
 
@@ -23,7 +26,13 @@ namespace EscapeRunner.BusinessLogic
             Graphics g = e.Graphics;
 
             if (drawGraphics != null)
+            {
                 drawGraphics(e.Graphics);
+                SortGraphics();
+
+                DrawGraphics(g);
+                DrawScore(g);
+            }
             else
             {
                 // End of game
@@ -51,30 +60,96 @@ namespace EscapeRunner.BusinessLogic
             }
             return returnBitmap;
         }
-
-        public static void UpdateTiles(Graphics g)
+        public static void InitializeSortedGraphics()
         {
-            foreach (IDrawable x in ConstantObjects)
+            graphicObjects = new List<IDrawable>(32);
+            // Obstacles are initially added
+            graphicObjects.AddRange(MapLoader.ObstacleTiles);
+
+            graphicObjects.Sort((x, y) => x.ZOrder.CompareTo(y.ZOrder));
+        }
+        public static void SortGraphics()
+        {
+            for (int i = 0; i < constantObjects.Count; i++)
             {
-                if (x is Gift)
+                var item = constantObjects[i];
+                if (item is BombA)
                 {
-                    x.UpdateGraphics(g);
+                    if (((Bomb)item).Exploded)
+                    {
+                        constantObjects.Remove(item);
+                        graphicObjects.Remove(item);
+                        i--;
+                        continue;   // Skip adding the item if it was removed
+                    }
                 }
-                else if (x is BombA)
-                {
-                    if (!((Bomb)x).Exploded)
-                        x.UpdateGraphics(g);
-                }
+                if (!graphicObjects.Contains(item))
+                    graphicObjects.Add(item);
             }
-            foreach (LevelTile x in MapLoader.ObstacleTiles)
+            for (int i = 0; i < movingObjects.Count; i++)
             {
-                if (x.TileIndecies.I > Player.PlayerCoordiantes.I
-                    || x.TileIndecies.J > Player.PlayerCoordiantes.J
-                    || x.TileIndecies.I > x.Position.X
-                    || x.TileIndecies.J > Player.PlayerCoordiantes.J)
-                    x.Draw(g);
+                var item = movingObjects[i];
+                if (item is Monster)
+                    if (!((Monster)item).Alive)
+                    {
+                        movingObjects.Remove(item);
+                        graphicObjects.Remove(item);
+                        i--;
+                        continue;
+                    }
+
+                if (item is IWeapon)
+                    if (!((IWeapon)item).Used)
+                    {
+                        movingObjects.Remove(item);
+                        graphicObjects.Remove(item);
+
+                        i--;
+                        continue;
+                    }
+
+                if (!graphicObjects.Contains(item))
+                    graphicObjects.Add(item);
+            }
+
+            graphicObjects.Sort((x, y) => x.ZOrder.CompareTo(y.ZOrder));
+        }
+        public static void DrawGraphics(Graphics g)
+        {
+            // Ground tiles are drawn first
+            foreach (var item in MapLoader.WalkableTiles)
+            {
+                item.UpdateGraphics(g);
+            }
+            foreach (var item in graphicObjects)
+            {
+                item.UpdateGraphics(g);
             }
         }
+        //public static void UpdateTiles(Graphics g)
+        //{
+
+        //    foreach (IDrawable x in ConstantObjects)
+        //    {
+        //        if (x is Gift)
+        //        {
+        //            x.UpdateGraphics(g);
+        //        }
+        //        else if (x is BombA)
+        //        {
+        //            if (!((Bomb)x).Exploded)
+        //                x.UpdateGraphics(g);
+        //        }
+        //    }
+        //    foreach (LevelTile x in MapLoader.ObstacleTiles)
+        //    {
+        //        if (x.TileIndecies.I > Player.PlayerCoordiantes.I
+        //            || x.TileIndecies.J > Player.PlayerCoordiantes.J
+        //            || x.TileIndecies.I > x.Position.X
+        //            || x.TileIndecies.J > Player.PlayerCoordiantes.J)
+        //            x.Draw(g);
+        //    }
+        //}
 
         public static void DrawMovingBackground(Graphics g)
         {
@@ -82,41 +157,41 @@ namespace EscapeRunner.BusinessLogic
                 MainWindow.RightBound, MainWindow.LowerBound + 100);
         }
 
-        public static void DrawShots(Graphics g)
-        {
-            if (movingObjects.Count > 0)
-            {
-                // Draw the bullets
-                for (int i = 0; i < movingObjects.Count; i++)
-                {
-                    var temp = movingObjects[i];
-                    if (temp is Monster)
-                    {
-                        if (((Monster)temp).Alive)
-                            temp.UpdateGraphics(g);
-                        else
-                            movingObjects.Remove(temp);
-                    }
-                    else
-                    {
-                        if (temp is IWeapon)
-                        {
-                            if (((IWeapon)temp).Used == true)
-                                temp.UpdateGraphics(g);
-                            // Delete the shot directly if it finished animation
-                            else
-                            {
-                                // Release bullet resources
-                                movingObjects.RemoveAt(i);
-                                i--;
-                                if (movingObjects.Count == 0)
-                                    break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        //public static void DrawShots(Graphics g)
+        //{
+        //    if (movingObjects.Count > 0)
+        //    {
+        //        // Draw the bullets
+        //        for (int i = 0; i < movingObjects.Count; i++)
+        //        {
+        //            var temp = movingObjects[i];
+        //            if (temp is Monster)
+        //            {
+        //                if (((Monster)temp).Alive)
+        //                    temp.UpdateGraphics(g);
+        //                else
+        //                    movingObjects.Remove(temp);
+        //            }
+        //            else
+        //            {
+        //                if (temp is IWeapon)
+        //                {
+        //                    if (((IWeapon)temp).Used == true)
+        //                        temp.UpdateGraphics(g);
+        //                    // Delete the shot directly if it finished animation
+        //                    else
+        //                    {
+        //                        // Release bullet resources
+        //                        movingObjects.RemoveAt(i);
+        //                        i--;
+        //                        if (movingObjects.Count == 0)
+        //                            break;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
 
         public static void Next()
         {

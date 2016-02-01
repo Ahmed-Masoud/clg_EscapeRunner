@@ -9,7 +9,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         private static int imageCount = animation.Count;
 
-        public BombA(Point location)
+        public BombA(Point location): base(location)
         {
             Exploded = false;
             this.AnimationPosition = location;
