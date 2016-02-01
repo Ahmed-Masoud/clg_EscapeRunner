@@ -1,5 +1,6 @@
 ﻿using EscapeRunner.BusinessLogic;
 using EscapeRunner.BusinessLogic.GameObjects;
+using System;
 using System.Drawing;
 
 namespace EscapeRunner.View
@@ -16,7 +17,7 @@ namespace EscapeRunner.View
 
     public class LevelTile : IDrawable
     {
-        static Bitmap floorTexture;
+        private static Bitmap floorTexture;
         private Size dimensions;
 
         private Bitmap texture;
@@ -27,6 +28,11 @@ namespace EscapeRunner.View
 
         public IndexPair TileIndecies { get { return tileIndecies; } }
         public Point Position { get { return twoDimPoint; } }
+
+        /// <summary>
+        /// Order by which graphics are organized
+        /// </summary>
+        public int ZOrder { get; set; }
 
         public TileType Type { get { return type; } }
 
@@ -60,16 +66,22 @@ namespace EscapeRunner.View
                 dimensions = new Size(64, 64);
 
             if (type == TileType.Floor)
+            {
                 this.texture = null;
+                // Floor tiles are the first to be drawn, they cause no problems
+                this.ZOrder = 0;
+            }
             else
+            {
                 this.texture = Model.TileTextures[textureIndex];
+                Point temp = tileIndecies.IndexesToCoordinates();
+                this.ZOrder = temp.X + temp.Y;
+            }
 
             this.type = type;
             this.twoDimPoint = twoDimPoint;
             this.tileIndecies = tileIndecies;
         }
-
-        public bool Walkable { get { return type == TileType.Floor ? true : false; } }
 
         private Point TwoDimPoint
         { get { return twoDimPoint; } }
@@ -117,7 +129,10 @@ namespace EscapeRunner.View
         public void UpdateGraphics(Graphics g)
         {
             Point tempPoint = twoDimPoint.TwoDimensionsToIso();
-            g.DrawImage(texture, tempPoint.X, tempPoint.Y, dimensions.Width, dimensions.Height);
+            if (texture == null)
+                g.DrawImage(floorTexture, tempPoint.X, tempPoint.Y, dimensions.Width, dimensions.Height);
+            else
+                g.DrawImage(texture, tempPoint.X, tempPoint.Y, dimensions.Width, dimensions.Height);
         }
     }
 }

@@ -10,5 +10,9 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         void UpdateGraphics(Graphics g);
 
         Point DrawLocation { get; }
+        /// <summary>
+        /// Z order
+        /// </summary>
+        int ZOrder { get; set; }
     }
 }

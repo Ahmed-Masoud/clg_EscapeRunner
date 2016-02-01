@@ -58,7 +58,7 @@ namespace LevelBuilder
         private Controller.SelectionTool selection;
 
         private Controller.CodesGenerator codesGenerator;
-
+#pragma warning disable
         private int playerCount;
         private int monstersCount;
         private int bombsCount;

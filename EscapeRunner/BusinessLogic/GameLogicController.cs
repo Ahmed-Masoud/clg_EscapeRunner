@@ -97,17 +97,18 @@ namespace EscapeRunner.BusinessLogic
 
 #endif
             drawGraphics += DrawMovingBackground;
-            drawGraphics += MapLoader.DrawGameFlares;
-            drawGraphics += MapLoader.DrawLevelFloor;
-            drawGraphics += MapLoader.DrawLevelObstacles;
-            drawGraphics += player.UpdateGraphics;
-            drawGraphics += UpdateTiles;
-            drawGraphics += DrawShots;
-            drawGraphics += DrawScore;
+            //drawGraphics += MapLoader.DrawGameFlares;
+            //drawGraphics += MapLoader.DrawLevelFloor;
+            //drawGraphics += MapLoader.DrawLevelObstacles;
+            //drawGraphics += player.UpdateGraphics;
+            //drawGraphics += UpdateTiles;
+            //drawGraphics += DrawShots;
+            //drawGraphics += DrawScore;
 
             graphicsSynchronizationTimer.Interval = 100;
             graphicsSynchronizationTimer.Enabled = true;
             graphicsSynchronizationTimer.Elapsed += GraphicsSynchronizationTimer_Elapsed;
+            InitializeSortedGraphics();
         }
 
         private static void BackgroundIllusionTimer_Elapsed(object sender, ElapsedEventArgs e)

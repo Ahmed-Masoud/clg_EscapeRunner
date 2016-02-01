@@ -16,7 +16,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
 
         // TODO change to state
         public bool Alive { get; set; }
-
+        public int ZOrder { get; set; } = 4;
         public Monster(IndexPair startPoint, IndexPair endPoint)
         {
             increasing = true;
@@ -46,6 +46,9 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             NextStepIndex();
+
+            // Change Z order when monster moves
+            this.ZOrder = Position.X + Position.Y;
         }
 
         private void Monster_Collided(CollisionEventArgs e)
@@ -62,6 +65,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             {
                 monsterAnimation.Collider.Active = false;
                 Alive = false;
+
                 Controller.Score += 20; // Add score
                 AudioController.PlayMonsterDieSound();
             }

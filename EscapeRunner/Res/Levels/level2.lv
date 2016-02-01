@@ -3,10 +3,10 @@
 <LVMap MapName="Untitled" MapWidth="18" MapHeight="20" TileWidth="30" TileHeight="25">
     <Player PlayerX="16" PlayerY="18" />
     <Monsters>
-        <Monster id="1" startX="10" startY="6" endX="15" endY="14" />
-        <Monster id="2" startX="1" startY="2" endX="11" endY="2" />
-        <Monster id="3" startX="7" startY="10" endX="13" endY="14" />
-        <Monster id="4" startX="1" startY="15" endX="2" endY="6" />
+        
+        
+        
+        
     </Monsters>
     <Bombs>
         <Bomb id="1" X="5" Y="8" />
