@@ -22,11 +22,11 @@ namespace EscapeRunner
         {
             try
             {
+                backgroundPlayer.settings.volume = 20;
                 laserPlayer.settings.autoStart = false;
                 spaceTrashPlayer.settings.autoStart = false;
                 terroristPlayer.settings.autoStart = false;
                 backgroundPlayer.settings.autoStart = false;
-                backgroundPlayer.settings.volume = 20;
                 monsterExplosionPlayer.settings.autoStart = false;
                 bombExplosionPlayer.settings.autoStart = false;
                 smallPowerUp.settings.autoStart = false;
