@@ -14,7 +14,8 @@ namespace EscapeRunner.BusinessLogic
 
         private bool colliderActive = false;
 
-        // Delegate => Method pointer to know the function with the correct signature to recive the event
+        // Delegate => Method pointer to know the function with the correct signature to recive the 
+
         public delegate void Colliding(CollisionEventArgs e);
 
         public event Colliding Collided;

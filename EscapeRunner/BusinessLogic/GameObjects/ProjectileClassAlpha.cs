@@ -11,35 +11,12 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         private static BulletAnimation prototypeBulletAnimation =
             (BulletAnimation)AnimationFactory.CreateEmpyAnimation(AnimationType.BulletAnimation);
 
-        private static ExplosionAnimation prototypeExplosionAnimation =
-            (ExplosionAnimation)AnimationFactory.CreateEmpyAnimation(AnimationType.ExplosionAnimation);
-
         private BulletAnimation bulletAni;
         private Point bulletStartPosition = Point.Empty;
+        private ExplosionAnimation explosionAni;
         private Point explosionPosition = Point.Empty;
-        private ExplosionAnimation explosionAni;   // Change ExplosionAnimation class to public to make this work
 
         private bool used;
-        public int ZOrder { get; set; } = 5;
-        internal ProjectileClassAlpha()
-        {
-            // Used for lazy initialization in the bullet pool
-            explosionAni = (ExplosionAnimation)((IPrototype<AnimationObject>)prototypeExplosionAnimation).Clone();
-            bulletAni = (BulletAnimation)((IPrototype<AnimationObject>)prototypeBulletAnimation).Clone();
-
-            explosionAni.AnimationPosition = Point.Empty;
-            bulletAni.AnimationPosition = Point.Empty;
-            bulletAni.Collider.Collided += BulletCollider_Collided;
-        }
-
-        private void BulletCollider_Collided(CollisionEventArgs e)
-        {
-            if (e.CollidingObject.ToString() == "monster")
-            {
-                // Release the bullet
-                bulletAni.Visible = false;
-            }
-        }
 
         public Point BulletStartPosition
         {
@@ -47,12 +24,17 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             get { return bulletStartPosition; }
         }
 
+        public Point DrawLocation => bulletAni.AnimationPosition;
+
         public Point ExplosionPosition
         {
             set { explosionPosition = explosionAni.AnimationPosition = value; }
             get { return explosionPosition; }
         }
 
+        /// <summary>
+        /// Changes the state of visibility and collider of the bullet
+        /// </summary>
         public bool Used
         {
             get
@@ -61,37 +43,49 @@ namespace EscapeRunner.BusinessLogic.GameObjects
             {
                 if (value == true)
                 {
-                    bulletAni.Collider.Active = true;
-                    bulletAni.Visible = true;
+                    bulletAni.Active = true;
                 }
                 else
                 {
-                    // Deactivate the collider to avoid keeping the bullet's collider when it's not active
-                    bulletAni.Collider.Active = false;
+                    bulletAni.Active = false;
                     bulletAni.Locked = false;
                 }
                 used = value;
             }
         }
 
-        public Point DrawLocation
+        public int ZOrder { get; set; }
+
+        internal ProjectileClassAlpha()
         {
-            get
-            {
-                return bulletAni.AnimationPosition;
-            }
+            // Used for lazy initialization in the bullet pool
+            bulletAni = (BulletAnimation)((IPrototype<AnimationObject>)prototypeBulletAnimation).Clone();
+            explosionAni = (ExplosionAnimation)AnimationFactory.CreateEmpyAnimation(AnimationType.ExplosionAnimation);
+
+            explosionAni.AnimationPosition = Point.Empty;
+            bulletAni.AnimationPosition = Point.Empty;
+            bulletAni.Collider.Collided += BulletCollider_Collided;
+            bulletAni.BulletOutOfBounds += BulletAni_BulletOutOfBounds;
         }
 
         public void UpdateGraphics(Graphics g)
         {
             bulletAni.DrawBullet(g);
-            UpdateShotState();
+            ZOrder = bulletAni.AnimationPosition.X + bulletAni.AnimationPosition.Y;
         }
 
-        private void UpdateShotState()
+        private void BulletAni_BulletOutOfBounds(object sender, System.EventArgs e)
         {
-            if (bulletAni.Visible == false)
+            this.Used = false;
+        }
+
+        private void BulletCollider_Collided(CollisionEventArgs e)
+        {
+            if (e.CollidingObject.ToString() == "monster")
+            {
+                // Release the bullet
                 this.Used = false;
+            }
         }
     }
 }

@@ -15,36 +15,36 @@ namespace EscapeRunner.Animations
     /// </summary>
     public class AnimationFactory
     {
-        private static AnimationObject temp;
+        private static AnimationObject factoryTemp;
 
         public AnimationObject CreateAnimation(AnimationType animationName, IndexPair startLocation)
         {
             switch (animationName)
             {
                 case AnimationType.PlayerAnimation:
-                    temp = new PlayerAnimation();
+                    factoryTemp = new PlayerAnimation();
                     break;
 
                 case AnimationType.MonsterAnimation:
-                    temp = new MonsterAnimation(); // new MonsterAnimation();
-                    temp.AddCollider();
+                    factoryTemp = new MonsterAnimation(); // new MonsterAnimation();
+                    factoryTemp.AddCollider();
                     //((MonsterAnimation)temp).Collider = new Collider(((MonsterAnimation)temp));
                     break;
                 // The animation point will be set when its requested from the pool
                 case AnimationType.BulletAnimation:
-                    temp = new BulletAnimation();
-                    temp.AddCollider();
+                    factoryTemp = new BulletAnimation();
+                    factoryTemp.AddCollider();
                     //((BulletAnimation)temp).Collider = new Collider(((BulletAnimation)temp));
                     break;
                 // The animation point will be set when its requested from the pool
                 case AnimationType.ExplosionAnimation:
-                    temp = new ExplosionAnimation();
+                    factoryTemp = new ExplosionAnimation();
                     break;
 
                 default:
                     return null;
             }
-            return temp;
+            return factoryTemp;
         }
 
         public static AnimationObject CreateEmpyAnimation(AnimationType animationName)
@@ -53,31 +53,31 @@ namespace EscapeRunner.Animations
             switch (animationName)
             {
                 case AnimationType.PlayerAnimation:
-                    temp = new PlayerAnimation();
-                    temp.AddCollider();
+                    factoryTemp = new PlayerAnimation();
+                    factoryTemp.AddCollider();
                     break;
 
                 case AnimationType.MonsterAnimation:
-                    temp = new MonsterAnimation(); // new MonsterAnimation();
-                    temp.AddCollider();
+                    factoryTemp = new MonsterAnimation(); // new MonsterAnimation();
+                    factoryTemp.AddCollider();
                     break;
 
                 // The animation point will be set when its requested from the pool
                 case AnimationType.BulletAnimation:
-                    temp = new BulletAnimation();
-                    temp.AddCollider();
+                    factoryTemp = new BulletAnimation();
+                    factoryTemp.AddCollider();
                     break;
 
                 // The animation point will be set when its requested from the pool
                 case AnimationType.ExplosionAnimation:
-                    temp = new ExplosionAnimation();
-                    temp.Collider = new Collider(temp, System.Drawing.Rectangle.Empty);
+                    factoryTemp = new ExplosionAnimation();
+                    factoryTemp.Collider = new Collider(factoryTemp, System.Drawing.Rectangle.Empty);
                     break;
 
                 default:
                     return null;
             }
-            return temp;
+            return factoryTemp;
         }
     }
 }

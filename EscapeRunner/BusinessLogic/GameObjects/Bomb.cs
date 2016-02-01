@@ -13,7 +13,7 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         /// <summary>
         /// 2D drawing location
         /// </summary>
-        public Point DrawLocation { get { return animationPosition; } }
+        public Point DrawLocation => animationPosition;
 
         public int ZOrder { get; set; } = 3;
 
