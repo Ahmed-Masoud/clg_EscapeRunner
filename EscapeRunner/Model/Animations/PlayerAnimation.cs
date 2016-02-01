@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace EscapeRunner.Animations
 {
-    public sealed class PlayerAnimation : Animation
+    public sealed class PlayerAnimation : AnimationObject
     {
         private static List<Bitmap> animationImages;
 
@@ -35,17 +35,14 @@ namespace EscapeRunner.Animations
             {
                 case Directions.Up:
                     animationImage = Model.CharacterAnimation[1];
-                    //animationImage = RotateAnimation(animationImage, RotateFlipType.RotateNoneFlipX, RotateFlipType.RotateNoneFlipX);
                     break;
 
                 case Directions.Down:
                     animationImage = Model.CharacterAnimation[0];
-                    //animationImage = RotateAnimation(animationImage, RotateFlipType.RotateNoneFlipX, RotateFlipType.RotateNoneFlipNone);
                     break;
 
                 case Directions.Left:
                     animationImage = Model.CharacterAnimation[2];
-                    //animationImage = RotateAnimation(animationImage, RotateFlipType., RotateFlipType.RotateNoneFlipX);
                     break;
 
                 case Directions.Right:
@@ -54,7 +51,7 @@ namespace EscapeRunner.Animations
             }
 
             // Call the base class method to draw the image
-            base.DrawFrame(g, animationImage);
+            DrawFrame(g, animationImage);
             LoadNextAnimationImage();
         }
 

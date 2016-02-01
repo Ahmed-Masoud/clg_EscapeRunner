@@ -7,6 +7,6 @@
     {
         AnimationType Type { set; }
 
-        Animation GetAnimationCommandResult();
+        AnimationObject GetAnimationCommandResult();
     }
 }

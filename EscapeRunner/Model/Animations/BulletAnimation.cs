@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace EscapeRunner.Animations
 {
-    internal sealed class BulletAnimation : Animation, ICollide, IPrototype<Animation>
+    internal sealed class BulletAnimation : AnimationObject, ICollide, IPrototype<AnimationObject>
     {
         // List is marked static to avoid loading the resources from the hard disk each time an
         private static readonly List<Bitmap> bulletImages = Model.BulletAnimation;
@@ -77,7 +77,7 @@ namespace EscapeRunner.Animations
             LoadNextAnimationImage();
         }
 
-        Animation IPrototype<Animation>.Clone()
+        AnimationObject IPrototype<AnimationObject>.Clone()
         {
             BulletAnimation clone = (BulletAnimation)this.MemberwiseClone();
             // The clone starts animating from the first frame

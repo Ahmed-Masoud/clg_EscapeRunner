@@ -6,7 +6,7 @@ namespace EscapeRunner.Animations
     /// <summary>
     /// Explosion animation is implemented using prototype design pattern
     /// </summary>
-    public class ExplosionAnimation : Animation, IPrototype<Animation>
+    public class ExplosionAnimation : AnimationObject, IPrototype<AnimationObject>
     {
         // List is marked static to avoid loading the resources from the hard disk each time an
         // explosion occurs Load the contents of the explosion animation
@@ -35,7 +35,7 @@ namespace EscapeRunner.Animations
         /// <summary>
         /// Returns a copy of the object
         /// </summary>
-        Animation IPrototype<Animation>.Clone()
+        AnimationObject IPrototype<AnimationObject>.Clone()
         {
             // Ensuring type-safety
             ExplosionAnimation clone = (ExplosionAnimation)this.MemberwiseClone();

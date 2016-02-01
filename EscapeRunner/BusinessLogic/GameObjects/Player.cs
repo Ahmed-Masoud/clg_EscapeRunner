@@ -7,41 +7,29 @@ namespace EscapeRunner.BusinessLogic.GameObjects
     public sealed class Player : IDrawable
     {
         private static PlayerAnimation playerAnimation;
-        private static Player playerInstance;
         private static IndexPair playerCoordinates;
-
+        private static Player playerInstance;
         public static Directions Direction { get; set; }
-        public int ZOrder { get; set; } = 4;
-
-        public static Player PlayerInstance
-        {
-            get { return playerInstance == null ? playerInstance = new Player() : playerInstance; }
-            private set { playerInstance = value; }
-        }
 
         /// <summary>
         /// 2D point of the player position
         /// </summary>
-        public static Point Position { get { return playerAnimation.AnimationPosition; } }
-
         public Point DrawLocation { get { return playerAnimation.AnimationPosition; } }
 
-        public void Initialize()
+        public int ZOrder { get; set; } = 4;
+
+        private Player()
         {
-            playerCoordinates = MapLoader.WalkableTiles[0].TileIndecies;
-            playerAnimation = (PlayerAnimation)AnimationFactory.CreateEmpyAnimation(AnimationType.PlayerAnimation);
-
-            // Initialize the player location to the top of the screen
-            Point tempConverted = playerCoordinates.IndexesToCoordinates();
-            playerAnimation.AnimationPosition = tempConverted;
-            ZOrder = tempConverted.X + tempConverted.Y;
-
-            playerAnimation.Collider.Collided += Collider_Collided;
-            Direction = Directions.Right;
         }
 
-        private void Collider_Collided(CollisionEventArgs e)
+        public static Player GetInstance()
         {
+            if (playerInstance == null)
+            {
+                playerInstance = new Player();
+                playerInstance.Initialize();
+            }
+            return playerInstance;
         }
 
         /// <summary>
@@ -51,6 +39,37 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         {
             Direction = direction;
             Move(direction);
+        }
+
+        public void UpdateGraphics(Graphics g)
+        {
+            playerAnimation.Draw(g, Direction);
+        }
+
+        private void Collider_Collided(CollisionEventArgs e)
+        {
+        }
+
+        private void GraphicsSynchronizationTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            // Move the player slowly to the next point
+        }
+
+        private void Initialize()
+        {
+            // Start location of the player
+            playerCoordinates = MapLoader.PlayerStartLocation;
+
+            playerAnimation = (PlayerAnimation)AnimationFactory.CreateEmpyAnimation(AnimationType.PlayerAnimation);
+
+            // Set Z order
+            Point tempConverted = playerCoordinates.IndexesToCoordinates();
+            playerAnimation.AnimationPosition = tempConverted;
+            ZOrder = tempConverted.X + tempConverted.Y;
+
+            playerAnimation.Collider.Collided += Collider_Collided;
+            Direction = Directions.Right;
+            //Controller.GraphicsSynchronizationTimer.Elapsed += GraphicsSynchronizationTimer_Elapsed;
         }
 
         /// <summary>
@@ -79,37 +98,17 @@ namespace EscapeRunner.BusinessLogic.GameObjects
                 case Directions.Right:
                     temp.J++;
                     break;
-
-                default:
-                    break;
             }
 
             // Wall detection
-            if (MapLoader.IsWalkable(temp) || MapLoader.Level[temp.I, temp.J] == 6 || MapLoader.Level[temp.I, temp.J] == 7)
+            if (MapLoader.IsWalkable(temp))
             {
-
-
-
                 playerCoordinates = temp;
                 Point tempConverted = temp.IndexesToCoordinates();
                 playerAnimation.AnimationPosition = tempConverted;
                 playerInstance.ZOrder = tempConverted.X + tempConverted.Y;
                 Direction = direction;
-
-                if (MapLoader.Level[temp.I, temp.J] == 6)
-                {
-                    Controller.GameOver(2);
-                }
             }
-        }
-
-        public void UpdateGraphics(Graphics g)
-        {
-            playerAnimation.Draw(g, Direction);
-        }
-
-        private Player()
-        {
         }
     }
 }

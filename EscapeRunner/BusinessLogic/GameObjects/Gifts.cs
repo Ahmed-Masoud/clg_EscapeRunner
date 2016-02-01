@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
-    internal abstract class Gift : Animation, IDrawable
+    internal abstract class Gift : AnimationObject, IDrawable
     {
         public Gift(Point location)
         {

@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace EscapeRunner.Animations
 {
-    public sealed class MonsterAnimation : Animation, ICollide
+    public sealed class MonsterAnimation : AnimationObject, ICollide
     {
         private static List<Bitmap> animationImages;
 

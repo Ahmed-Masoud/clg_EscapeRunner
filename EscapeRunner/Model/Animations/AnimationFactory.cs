@@ -15,9 +15,9 @@ namespace EscapeRunner.Animations
     /// </summary>
     public class AnimationFactory
     {
-        private static Animation temp;
+        private static AnimationObject temp;
 
-        public Animation CreateAnimation(AnimationType animationName, IndexPair startLocation)
+        public AnimationObject CreateAnimation(AnimationType animationName, IndexPair startLocation)
         {
             switch (animationName)
             {
@@ -47,7 +47,7 @@ namespace EscapeRunner.Animations
             return temp;
         }
 
-        public static Animation CreateEmpyAnimation(AnimationType animationName)
+        public static AnimationObject CreateEmpyAnimation(AnimationType animationName)
         {
             IndexPair startLocation = new IndexPair(0, 0);
             switch (animationName)

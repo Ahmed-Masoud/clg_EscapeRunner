@@ -1,10 +1,9 @@
 ﻿using EscapeRunner.Animations;
 using System.Drawing;
-using System;
 
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
-    internal abstract class Bomb : Animation, IDrawable
+    internal abstract class Bomb : AnimationObject, IDrawable
     {
         public bool Exploded { get; set; }
         public Bomb(Point location)

@@ -3,7 +3,7 @@
 namespace EscapeRunner.BusinessLogic.GameObjects
 {
     /// <summary>
-    /// Interface to declare the objects that can be drawn, used to update the GUI easily
+    /// Declares the ability to be drawn for GameLogic objects
     /// </summary>
     public interface IDrawable
     {

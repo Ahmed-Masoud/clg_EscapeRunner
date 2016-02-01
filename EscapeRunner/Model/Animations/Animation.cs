@@ -15,7 +15,7 @@ namespace EscapeRunner.Animations
         Right,
     }
 
-    public abstract class Animation : ICollide
+    public abstract class AnimationObject : ICollide
     {
         #region DebugStuff
 
@@ -39,7 +39,7 @@ namespace EscapeRunner.Animations
 
         private Point isoDrawLocation;   // This point is used for conversion, not needed in child classes
 
-        public Animation()
+        public AnimationObject()
         {
             // Initialize the collider to avoid null reference exception
             this.collider = new Collider(Rectangle.Empty);

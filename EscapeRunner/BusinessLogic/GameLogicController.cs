@@ -49,8 +49,7 @@ namespace EscapeRunner.BusinessLogic
 
             // Subscribe to the notify event
             window.ViewNotification += Window_ViewNotification;
-            player = Player.PlayerInstance;
-            player.Initialize();
+            player = Player.GetInstance();
             // Lazy initialization of projectile pool
             projectilePool = ProjectilePool.Instance;
             projectilePool.Initialize();
@@ -121,7 +120,7 @@ namespace EscapeRunner.BusinessLogic
             try
             {
                 // Create a new explosion and add it to the drawable list
-                IWeapon projectile = projectilePool.Acquire(Player.Position, false);
+                IWeapon projectile = projectilePool.Acquire(player.DrawLocation, false);
                 movingObjects.Add((ProjectileClassAlpha)projectile);
                 AudioController.PlayLaserSound();
             }

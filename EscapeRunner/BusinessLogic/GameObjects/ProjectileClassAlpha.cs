@@ -24,8 +24,8 @@ namespace EscapeRunner.BusinessLogic.GameObjects
         internal ProjectileClassAlpha()
         {
             // Used for lazy initialization in the bullet pool
-            explosionAni = (ExplosionAnimation)((IPrototype<Animation>)prototypeExplosionAnimation).Clone();
-            bulletAni = (BulletAnimation)((IPrototype<Animation>)prototypeBulletAnimation).Clone();
+            explosionAni = (ExplosionAnimation)((IPrototype<AnimationObject>)prototypeExplosionAnimation).Clone();
+            bulletAni = (BulletAnimation)((IPrototype<AnimationObject>)prototypeBulletAnimation).Clone();
 
             explosionAni.AnimationPosition = Point.Empty;
             bulletAni.AnimationPosition = Point.Empty;
